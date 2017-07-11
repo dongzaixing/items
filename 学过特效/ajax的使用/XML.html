@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/js.js"></script>
+		<style type="text/css">
+			.dd{
+				width:100px;
+				height:100px;
+				display: inline-block;
+				background: #ccc;
+			}
+			#con{
+				
+				background: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="con">
+			
+		
+			<div class="dd" name="d1">1</div>
+			<div class="dd" name="d1">2</div>
+			<div class="dd" name="d1">3</div>
+			<div class="dd" name="d1">4</div>
+			<div class="dd" name="d1">5</div>
+			<div class="dd" name="d1">6</div>
+			
+		</div>
+		
+		<!--
+			
+			
+			
+			
+			
+			
+		同步及异步加载：
+		1.同步：一步接着一步，不能同时执行，加载xml完成之前，代码不会执行，xhr.async=false;
+		表示同步，xhr.async=true;表示异步
+		使用同步加载如果延迟了,浏览器会假死
+		
+		2.异步：是同时执行多个事件，JavaScript任务交给浏览器内部去处理，不糊造成堵塞
+		在服务器端默认使用的是异步加载，如果load（）还没加载完毕就去执行后面的代码，
+		会导致代码执行不了，所以异步加载的时候要配合就绪状态程序：readystatechange来处理。
+		
+		readystatechange：有四种状态
+		1：表示正在加载
+		2：已经加载完毕
+		3：已经可以使用，但某些部分还访问不到
+		4：已经完全加载
+		
+		xhr.readyState==4:表示就绪完成
+		xhr.parseError.errorCode==0:表示代码运行没出错
+		
+		xhr.parseError.line:错误所在的行数
+		xhr.parseError.errorCode:错误代号
+		xhr.parseError.reason:错误解释
+		
+		
+		
+		
+		dom2级的xml中不支持loadXML()方法。
+		
+		
+		
+		
+		
+		-->
+		
+		<script type="text/javascript">
+		
+		
+			var str="sfdcfcfcffsdcfccfffsfss";
+			function change(str){
+				var obj={};
+				var num=0;
+				var a="";
+				for(var i=0;i<str.length;i++){//for循环遍历数组、字符串
+					if(!obj[str[i]]){//判断json对象里面是否有该数组
+						obj[str[i]]=[];//如果没有就建立一个数组
+					}
+					obj[str[i]].push(str[i]);//往相对应的数组里面添加内容
+				}
+				for(var x in obj){//for in循环去遍历对象
+					if(obj[x].length>num){
+						num=obj[x].length;
+						a=obj[x][0];
+					}
+				}
+				alert("最多的字符是："+a+"，个数是："+num)
+			}
+			change(str)
+			
+			
+		
+//		
+			
+			
+		</script>
+	</body>
+</html>

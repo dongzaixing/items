@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#pp{
+				width:60px;
+				height:60px;
+				background: #333;
+			}
+		</style>
+	</head>
+	<body>
+		
+		
+		<div id="pp">
+			
+		</div>
+		<div id="box"></div>
+		<script type="text/javascript" src="../../3.29/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/js.js"></script>
+		<script type="text/javascript">
+			var str='   sdss     ';
+			str=$.leftTrim(str);
+			console.log(str)
+		
+			$.centerBox($('#pp'));
+		
+		
+//			$('#box').tabs();
+			$('#box').tabs({
+				'header':['娱乐','八卦','保健','新闻','电影'],
+				'content':['张柏芝',"陈冠希","33333",'4444','3d']
+			});
+		</script>
+	</body>
+</html>

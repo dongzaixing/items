@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>冒泡</title>
+		<style type="text/css">
+			div{
+				/*height:40px;*/
+				border: 1px solid blue;
+				padding: 20px;
+			}
+			h1{
+				background: deeppink;
+				width:200px;
+				margin: 0;
+				padding: 0;
+				
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				width:200px;
+				background: orchid;
+				display: none;
+			}
+			ul li{
+				margin: 0;
+				padding: 0;
+			}
+			ul li:hover{
+				background:orange;
+			}
+		</style>
+	</head>
+	<body>
+		
+		
+		<div id="box1">box1
+			<div id="box2">box2
+				<div id="box3">box3
+					
+				</div>
+			</div>
+		</div>
+		<h1>标题</h1>
+		<ul>
+			<li>明月</li>
+			<li>明月</li>
+			<li>明月</li>
+			<li>明月</li>
+			<li>明月</li>
+		</ul>
+	</body>
+	<script type="text/javascript">
+		//冒泡：从最内层开始一层一层往上触发，绑定事件带的参数是false；捕获：从最外层开始查找，一层一层往里面查找，绑定事件带的参数是true。
+		//并会触发相应的节点的时间，不是所有的事件都支持冒泡
+		//所以我们要阻止冒泡和捕获：阻止代码放到事件的函数里面。
+               //主流浏览器用：ev.stopPropagation()；IE浏览器用：ev.cancleBuble=true;
+             
+               
+        document.body.addEventListener('click',function(ev){
+//			
+			console.log('body')
+		},true)
+               
+        window.addEventListener('click',function(ev){
+//			
+			console.log('window')
+		},true)
+		box1.addEventListener('click',function(ev){
+//			
+			console.log('box1')
+		},true)
+		
+		box2.addEventListener('click',function(){
+			console.log('box2')
+		},false)
+		
+		box3.addEventListener('click',function(ev){
+			var ev=ev||event;//阻止了事件往外冒泡
+			if(ev.stopPropagation){
+				ev.stopPropagation()
+			}else{
+				ev.cancleBuble=true;
+			}
+			console.log('box3')
+		},true)
+//		
+//		var h=document.getElementsByTagName("h1")[0];
+//		var oul=document.getElementsByTagName("ul")[0];
+//		h.addEventListener('click',function(ev){
+//			oul.style.display="block";
+//			var ev=ev||event;
+//			if(ev.stopPropagation){//阻止冒泡
+//				ev.stopPropagation()//主流浏览器
+//			}else{
+//				ev.cancelBubble=true;//IE浏览器
+//			}
+//		},false);
+//		document.onclick=function(){
+//			oul.style.display="none";
+//		}
+	</script>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				border: 2px solid black;
+				padding: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box1">box1
+				<div id="box2">box2
+					<div id="box3">box3</div>
+				</div>
+		</div>
+		<script type="text/javascript">
+//			box1.onmouseover = function  () {
+//				box1.innerHTML +=1
+//			}
+//			box1.onmouseenter = function  () {
+//				box1.innerHTML +=1
+//			}
+//			box1.onmouseout = function  () {
+//				box1.innerHTML +=1
+//			}
+			box1.onmouseleave = function  () {
+				box1.innerHTML +=1
+			}
+		</script>
+	</body>
+</html>-->

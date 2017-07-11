@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>拖拽换位</title>
+		
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				
+			}
+			ul{
+				margin: 100px auto;
+				padding: 0;
+				border: 1px solid #F08080;
+				width:666px;
+				height:290px;
+				position: relative;
+				padding-top:10px ;
+			}
+			li{
+				list-style: none;
+				width:200px;
+				height:120px;
+				line-height: 120px;
+				font-size: 30px;
+				border: 5px solid blue;
+				float: left;
+				text-align: center;
+				position: absolute;
+				
+			}
+			.pic{
+				width:100%;
+				height: 100%;
+				/*background: #f60;*/
+				position: absolute;
+				transition: all 1s;
+			}
+			.pic img{
+				width:100%;
+				height:100%;
+				display: block;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js">
+			
+		</script>
+	</head>
+	<body>
+		<ul>
+			<li><div class="pic"><img src="img/21.jpg"/></div></li>
+			<li><div class="pic"><img src="img/22.jpg"/></div></li>
+			<li><div class="pic"><img src="img/23.jpg"/></div></li>
+			<li><div class="pic"><img src="img/24.jpg"/></div></li>
+			<li><div class="pic"><img src="img/25.jpg"/></div></li>
+			<li><div class="pic"><img src="img/26.jpg"/></div></li>
+		</ul>
+		<button id="upset">打乱</button>
+		<script type="text/javascript">
+		
+			$(function(){
+				var oli=document.getElementsByTagName("li");
+				var oul=document.getElementsByTagName("ul");
+//				var pic=document.getElementsByClassName("pic");
+				var arr=[]
+				var n=0;
+				var t=-140;
+				for(var i=0;i<oli.length;i++){
+					if(i%3==0){
+						t+=150;
+					}
+					oli[i].style.left=((i%3)*212)+20+"px";
+					oli[i].style.top=t+"px";
+					arr.push({
+						'left':oli[i].offsetLeft,
+						'top':oli[i].offsetTop
+					});
+					oli[i].onmousedown=function(ev){
+						var minDistance=null;//距离最近的元素
+						finalL=null;
+						finalT=null;
+						n++;
+						var ev=ev||event;
+						var x=ev.clientX-this.offsetLeft;
+						var y=ev.clientY-this.offsetTop;
+						this.style.zIndex=n;
+						var current=this;
+						var nowLeft=current.offsetLeft;//被拖拽的元素的left
+						var nowTop=current.offsetTop;//被拖拽的元素的top
+						
+						document.onmousemove=function(ev){
+							var min=Infinity;//定义变量让它的值为负无穷。用来装距离最小的变量
+							var nx=ev.clientX-x;
+							var ny=ev.clientY-y;
+							var arrcontact=[];//装碰撞到的li
+							var arrstation=[];//装碰撞到的li的定位
+							var left1=ev.clientX-x;
+							var top1=ev.clientY-y;
+							current.style.left=left1+"px";
+							current.style.top=top1+"px";
+							for(var i=0;i<oli.length;i++){	
+								oli[i].index=i;
+								if (current == oli[i])continue;
+								if(test(current,oli[i])){//碰撞成功的元素就放到数组里面
+									arrcontact.push(oli[i])
+									arrstation.push({
+										left2:oli[i].offsetLeft,
+										top2:oli[i].offsetTop
+									})
+								}
+							}	
+							var aar=[]
+//							console.log(arrcontact.length);
+							for(var i=0;i<arrstation.length;i++){//这个for循环是用来找最小距离的
+								var s=arrstation[i];
+								L=left1-s.left2;
+								T=top1-s.top2;
+								
+								var c = Math.sqrt(Math.pow(L,2)+Math.pow(T,2))
+								if(c<min){
+									min=c;
+									minDistance=arrcontact[i];//距离最近的元素，要交换位置的元素。
+									finalL=minDistance.offsetLeft;//交换位置元素的left值
+									finalT=minDistance.offsetTop;//交换位置元素的top值
+								}
+								arrcontact[i].style.border='5px solid blue';
+							}
+							if(minDistance){
+								minDistance.style.border='5px solid red';//碰撞到的li颜色都为红色
+							}
+							
+//							console.log(minDistance.index)
+							
+						}
+						document.onmouseup=function(){
+							//交换位置
+							if(minDistance){//如果有碰撞到其他li
+								minDistance.style.left=nowLeft+'px';
+								minDistance.style.top=nowTop+'px';
+								current.style.left=finalL+'px';
+								current.style.top=finalT+'px';
+								minDistance.style.border='5px solid blue';
+							}else{//如果没有碰撞到任何的li，就让它回到原来的位置
+								current.style.left=nowLeft+'px';
+								current.style.top=nowTop+'px';
+							}
+								
+							this.onmousemove=null;//清空鼠标移动事件和抬起事件
+							this.onmouseup=null;
+							
+						}
+						return false;//这里是阻止图片的点击默认事件
+					}
+				}
+				//检测碰撞
+				function test(r, b) {
+			        if (r.offsetLeft + r.offsetWidth < b.offsetLeft || r.offsetTop + r.offsetHeight < b.offsetTop || r.offsetLeft > b.offsetLeft + b.offsetWidth || r.offsetTop > b.offsetTop + b.offsetHeight) {
+			            return false;//以上没有相撞
+			        } else {
+			            return true;
+			        }
+			    }
+				
+				
+			})
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		</script>
+	</body>
+</html>

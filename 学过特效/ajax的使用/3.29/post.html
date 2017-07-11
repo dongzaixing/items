@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" name="txt" id="txt" value="" />
+		<input type="password" name="txt" id="txt1" value="" />
+		<input type="button" name="btn" id="btn" value="提交2" />
+		<span id="sp"></span>
+		
+		
+		<script type="text/javascript">
+			var btn = document.getElementById('btn');
+			var txt = document.getElementById('txt');
+			var txt1 = document.getElementById('txt1');
+			var sp = document.getElementById('sp');
+			/*
+			 post :
+			 		1. 传输的数据不是放在地址栏url里面
+			 * 		2. 数据是放在send里面传输的
+			 * 		3. 理论上，数据传输没有长度限制
+			 * 		4. 在send之前必须添加请求头
+			 * 		5. 传输数据是走的请求头，所以浏览器获取不到，保证数据的安全
+			 * 		6. 在ie里面不需要再用encodedURI转义成utf-8编码，因为在请求头里面就已经转了
+			 * 
+			 * 
+			 * ajax状态码：
+			 * 		readyState
+			 * 		readyState=4，整个流程走完
+			 * 
+			 * HTTP状态码：
+			 * 		ajax.status
+			 * 		ajax.status = 200-207，说明服务器没有问题
+			 * 
+			 * onreadystatechange ：
+			 * 		ajax状态码改变。触发这个事件，兼容所以浏览器，但是它不是标准
+			 * 
+			 * onload:ajax状态码改变。触发这个事件,而且是w3c标准，但是不兼容低版本ie
+			 * 
+			 */
+			
+			btn.onclick = function(){
+				var val = txt.value;
+				var val1 = txt1.value;
+				var ajax = new XMLHttpRequest();  //创建一个ajax实例
+
+			    ajax.open('post','php/post.php',true); 
+			    ajax.onload = function(){  //4,5
+			    	
+			    	if(ajax.readyState == 4){
+			    		if(200<=ajax.status&&ajax.status<=207){
+			    			alert(ajax.responseText)
+			    		}		    		
+			    	}    	
+			    }
+			    
+			    ajax.setRequestHeader( 'Content-Type','application/x-www-form-urlencoded');
+			    
+			    ajax.send('user='+val);          
+			   
+			    
+			}
+		</script>
+	</body>
+</html>

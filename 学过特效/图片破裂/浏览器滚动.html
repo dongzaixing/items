@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>浏览器滚动</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				position: fixed;
+				top: 300px;
+				right: 5px;
+			}
+			ul li{
+				list-style: none;
+				width:20px;
+				height:20px;
+				border-radius: 50%;
+				margin: 5px 0;
+				background: white;
+			}
+			.active{
+				background: red;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	</head>
+	<body>
+		<div class="section"></div>
+		<div class="section"></div>
+		<div class="section"></div>
+		<div class="section"></div>
+		<div class="section"></div>
+		<ul>
+			<li class="active"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		
+	<script type="text/javascript">
+		var colorArr=['pink','orange','green','#ccc','#ff0066']
+		$('div').each(function(index,element){
+			$(this).css({'width':'100%','height':'700px','background':colorArr[index]})
+		})
+				
+//		$(document).scroll(function(){
+//			var reg=/./;
+//			var arr=String($(window).scrollTop()/600).match(reg)
+//			$('li').eq(arr[0]).addClass('active').siblings().removeClass('active')
+//		})
+		$(document).scroll(function(){
+//			console.log(Math.floor($(window).scrollTop()/680))
+			var num=Math.floor($(window).scrollTop()/680)
+			$('li').eq(num).addClass('active').siblings().removeClass('active')
+		})
+			
+			$('li').click(function(){
+				$(this).addClass('active').siblings().removeClass('active')
+				$(window).scrollTop($(this).index()*700)
+			})
+			
+		
+		
+		
+	</script>	
+	</body>
+</html>

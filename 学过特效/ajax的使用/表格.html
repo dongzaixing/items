@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>表格</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			form{
+				max-width: 800px;
+				padding: 5px;
+				position: relative;
+				margin: 0 auto;
+			}
+			table{
+				width:100%;
+				border: 2px solid black;
+				font-size: 16px;
+			}
+			caption{
+				font-size: 18px;
+				margin-bottom: 50px;
+			}
+			
+			.bh{
+				display: block;
+				position: relative;
+				top: 60px;
+				left: 0px;
+			}
+			.bh input{
+				outline: 0 none;
+			}
+			td{
+				margin: 0;
+				padding: 0;
+				text-align: center;
+				max-width:150px;
+				height:50px;
+				border-bottom: 1px solid black;
+				border-right: 1px solid black;
+			}
+			td input{
+				width:100%;
+				height:100%;
+				border: none;
+				outline: 0 none;
+				text-indent: 5px;
+			}
+			.power{
+				height:120px
+			}
+			.cuoshi{
+				height:120px
+			}
+			.beizhu{
+				height:120px
+			}
+			textarea{
+				resize: none;
+				outline: 0 none;
+				box-sizing: border-box;
+				padding: 5px;
+				border: none;
+				width:100%;
+				height:100%;
+				float: left;
+				
+			}
+			td select{
+				width:80%;
+				height:60%;
+				outline: 0 none;
+				text-align: center;
+			}
+			.inp{
+				width:120px;
+				height:40px;
+				text-align: center;
+				line-height: 40px;
+				outline: 0 none;
+				font-size: 20px;
+				margin: 50px 0;
+				border: none;
+				border-radius: 5px;
+				position: absolute;
+				/*bottom: 0;*/
+			}
+			#tj{
+				left: 25%;
+			}
+			#qx{
+				right: 25%;
+			}
+		</style>
+	</head>
+	<body>
+		<form action="" method="post">
+			<table  cellspacing="0" cellpadding="0">
+				<caption>制高点情况采集表</caption>
+				<span class="bh">编号：<input type="text" name="" id="" value="" /></span>
+				<thead>
+					<!--<tr>
+						<th colspan="6">Header</th>
+					</tr>-->
+				</thead>
+				<tbody>
+					<tr>
+						<td>名称</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+						<td>类别</td>
+						<td colspan="2">
+							<select name="">
+								<option value="">--请选择--</option>
+								<option value="">楼</option>
+								<option value="">塔</option>
+								<option value="">桥</option>
+								<option value="">山</option>
+								<option value="">其他</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>所属单位</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+						<td>所属单位<br/>类别</td>
+						<td colspan="2">
+							<select name="">
+								<option value="">--请选择--</option>
+								<option value="">党政机关</option>
+								<option value="">部队</option>
+								<option value="">驻华机构</option>
+								<option value="">企事业单位</option>
+								<option value="">教育机构</option>
+								<option value="">医疗单位</option>
+								<option value="">商业</option>
+								<option value="">其它</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>省市县（区）</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+						<td>详细地址</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+					</tr>
+					<tr>
+						<td>占地面积</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+						<td>高度</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+					</tr>
+					<tr>
+						<td>内部保卫<br/>归属单位</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+						<td>所属派出所<br/>名称</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+					</tr>
+					<tr>
+						<td>保卫工作<br/>负责人姓名</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+						<td>保卫工作<br/>负责人电话</td>
+						<td colspan="2"><input type="text" name="" id="" value="" /></td>
+					</tr>
+					<tr class="power">
+						<td>控制力量</td>
+						<td colspan="5"><textarea name="" rows="" cols=""></textarea></td>
+						
+					</tr>
+					<tr class="cuoshi">
+						<td>控制措施</td>
+						<td colspan="5"><textarea name="" rows="" cols=""></textarea></td>
+					</tr>
+					<tr>
+						<td class="beizhu">备注</td>
+						<td colspan="5"><textarea name="" rows="" cols=""></textarea></td>
+					</tr>
+					
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class="tu">照片说明:</td>
+						<td colspan="5"><input type="text" name="" id="" value="" /></td>
+					</tr>
+				</tfoot>
+				
+			</table>
+			<input type="submit" name="" id="tj" class="inp" value="提交" />
+			<input type="button" name="" id="qx" class="inp" value="取消" />
+		</form>
+	</body>
+</html>

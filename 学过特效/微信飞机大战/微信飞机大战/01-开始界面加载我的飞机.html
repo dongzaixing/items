@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #startdiv{
+            width: 320px;
+            height: 568px;
+            background: url(image/开始背景.png) no-repeat;
+        }
+        #content{
+            width: 320px;
+            height: 568px;
+            position: absolute;
+            top: 5px;
+            overflow:hidden;
+            left: 500px;
+            cursor: pointer;
+        }
+        
+        #btstart{
+            width: 150px;
+            height: 30px;
+            background: burlywood;
+            border-radius: 30px;
+            position: absolute;
+            top:450px;
+            left:80px;
+        }
+        #maindiv{
+            width: 320px;
+            height:568px;
+            background: url(image/background_1.png);
+            position:absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+<div id="content">
+    <div id="startdiv">
+        <input id="btstart" type="button" value="开始游戏"/>
+    </div>
+    <div id="maindiv"></div>
+</div>
+
+<script>
+    //开始按钮
+    var oBtStart=document.getElementById("btstart");
+    //游戏界面
+    var oMainDiv=document.getElementById("maindiv");
+    //游戏总定时器
+    var timer;
+    //游戏界面的背景定位坐标。
+    var MainDivBKPositionY=0;
+
+    //记录我的飞机
+    var myPlan;
+
+    //开始按钮的点击事件
+    oBtStart.onclick=function (){
+        //进入主界面。  隐藏开始界面，显示主界面。
+        var oStartDiv=document.getElementById("startdiv");
+        oStartDiv.style.display="none";
+        oMainDiv.style.display="block";
+
+        //创建我的飞机
+        myPlan=createMyPlan();
+        moveMyPlan();
+        startGame();
+    }
+
+    //创建我的飞机
+    function createMyPlan(){
+        var oMyPlan=document.createElement("div");
+        oMyPlan.style.width="66px";
+        oMyPlan.style.height="80px";
+        oMyPlan.style.position="absolute";
+        oMyPlan.style.background="url(image/我的飞机.gif) no-repeat";
+        oMyPlan.style.top="480px";
+        oMyPlan.style.left="127px";
+        oMainDiv.appendChild(oMyPlan);
+        return oMyPlan;
+    }
+
+    //开始游戏
+    function startGame(){
+        clearInterval(timer);
+        timer=setInterval(function(){
+            //1.背景动起来
+            oMainDiv.style.backgroundPositionY=MainDivBKPositionY+"px";
+            MainDivBKPositionY+=0.5;
+            //2.我的飞机动起来。
+
+        },30);
+    }
+
+    //移动我的飞机
+    function moveMyPlan(){
+        document.onmousemove=function(event){
+            //
+            event=event||window.event;
+
+            var mLeft=event.clientX-500-33;
+            var mTop=event.clientY-41;
+            //边界
+            if(mTop<=0){
+                mTop=0;
+            }
+            if(mTop>=568-82){
+                mTop=486;
+            }
+            if(mLeft<=-33){
+                mLeft=-33;
+            }
+            if(mLeft>=320-33){
+                mLeft=287;
+            }
+
+            myPlan.style.top=mTop+"px";
+            myPlan.style.left=mLeft+"px";
+        }
+    }
+
+</script>
+</body>
+</html>

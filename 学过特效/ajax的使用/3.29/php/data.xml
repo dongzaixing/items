@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content>
+	<person>
+		<name>小明</name>
+		<age>18</age>
+		<sex>男</sex>
+		<info>我是一个快乐的逗逼青年。</info>
+	</person>
+	<person>
+		<name>小红</name>
+		<age>16</age>
+		<sex>女</sex>
+		<info>有人陪我逛街么？</info>
+	</person>
+	<person>
+		<name>小梅</name>
+		<age>17</age>
+		<sex>女</sex>
+		<info>只要你看到我的笑容，不要你看到我的笑纹</info>
+	</person>
+	<person>
+		<name>小赵</name>
+		<age>19</age>
+		<sex>男</sex>
+		<info>普京就是屌，说干就干！</info>
+	</person>
+	<person>
+		<name>小码</name>
+		<age>19</age>
+		<sex>男</sex>
+		<info>十一还加班，码农真心伤不起....</info>
+	</person>
+</content>

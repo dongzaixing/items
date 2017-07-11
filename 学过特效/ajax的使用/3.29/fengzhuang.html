@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			ajax('get','php/data.xml','',true,'xml',function(data){
+				console.log(data);
+			},function(data){
+				console.log(data);
+			})
+			
+			function ajax(method,url,name,bool,type,success,fail){
+				var ajax=new XMLHttpRequest();
+				if(method=='get'){
+					ajax.open(method,url+"?"+name,bool);
+					ajax.send();
+				}
+				if(method=='post'){
+					ajax.open(method,url,bool);
+					ajax.setRequestHeader( 'Content-Type','application/x-www-form-urlencoded');
+					ajax.send(name);
+				}
+				if(ajax.onreadystatechange){//做事件兼容
+					ajax.onreadystatechange=fn;
+				}else{
+					ajax.onload=fn;
+				}
+				function fn(){
+					if(ajax.readyState==4){
+						if(ajax.status>=200&&ajax.status<=207){
+							var str=''
+							if(type=="json"){
+								str=(new Function('','return'+ajax.responseText))();
+							}else if(type=="xml"){
+								str=ajax.responseXML;
+							}else{
+								str=ajax.responseText;
+							}
+							success&&success(str);
+						}else{//出错
+							fail&&fail(ajax.status);
+						}
+					}
+				}
+				
+				
+			}
+			
+			
+		</script>
+	</body>
+</html>

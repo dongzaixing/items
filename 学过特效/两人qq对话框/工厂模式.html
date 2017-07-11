@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>工厂模式</title>
+	</head>
+
+	<body>
+	</body>
+	<script type="text/javascript">
+		function Person(name, age, job) {
+			this.name = name;
+			this.age = age;
+			this.job = job;
+			this.sayName = function() {
+				alert(this.name);
+			};
+		}
+		var olivia = {};
+		Person.call(olivia, "tanya", "30", "female");
+		olivia.sayName();
+		var philip = {}
+		Person.apply(philip, ["ansel", "30", "male"]);
+		philip.sayName();
+	</script>
+
+</html>

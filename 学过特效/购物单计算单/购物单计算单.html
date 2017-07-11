@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购物单</title>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<style type="text/css">
+			table{
+				width:500px;
+				border: 1px solid blue;
+				margin-left: 300px;
+				margin-top: 100px;
+			}
+			th{
+				height:40px;
+				text-align: center;
+				line-height: 30px;				
+				font-size: 20px;
+			}
+			td{
+				width:100px;
+				height:40PX;
+				text-align: center;
+				line-height: 30px;				
+				font-size: 20px;
+			}
+			tr>td:nth-child(2){
+				position: relative;
+			}
+			tr>td:nth-child(2) button:nth-child(1){
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
+			tr>td:nth-child(2) span{
+				display: block;
+				width:15px;
+				height:30px;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			button{
+				display: inline-block;
+				width:20px;
+				height:20px;
+			}
+			tr>td:nth-child(2) button:nth-child(2){
+				position: absolute;
+				bottom: 0px;
+				right: 0px;
+			}
+			p{
+				margin-left: 300px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<table border="1" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>商品</th>
+					<th>数量</th>
+					<th>价格</th>
+					<th>总量</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>苹果</td>
+					<td><button>+</button><button>-</button></td>
+					<td>17元/kg</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>黄瓜</td>
+					<td><button>+</button><button>-</button></td>
+					<td>5元/kg</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>太阳镜</td>
+					<td><button>+</button><button>-</button></td>
+					<td>80元/副</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>雨伞</td>
+					<td><button>+</button><button>-</button></td>
+					<td>15元/把</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>篮球</td>
+					<td><button>+</button><button>-</button></td>
+					<td>20元/个</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>梳子</td>
+					<td><button>+</button><button>-</button></td>
+					<td>4元/把</td>
+					<td></td>
+				</tr>
+			</tbody>
+			<tfoot></tfoot>
+		</table>
+		<p>商品合计：件，共花了：元</p>
+		<p>其中最贵的商品单价是：元</p>
+		
+		
+		
+		
+	<script type="text/javascript">
+		$(function(){
+			var num=0
+			var n=0
+//			var btn=document.getElementsByTagName('button');
+//			for(var i=0;i<$('tbody tr').length;i++){
+//				for(var j=0;j<$('tbody tr button').length;j++){
+//					btn[j].onclick=function(){
+//						$(this).parent().next().next().html(function(ovalue){
+//							
+//						})
+//					}
+//				}
+//			}
+			$('tr>td:nth-child(2) button:nth-child(1)').click(function(){
+				num++
+				$(this).parent().next().next().text(num*parseInt($(this).parent().next().text()))
+			})
+			$('tr>td:nth-child(2) button:nth-child(2)').click(function(){
+				n++
+				$(this).parent().next().next().text($(this).parent().next().next().text()-n*$(this).parent().next().text().substring(0,$(this).parent().next().text().indexOf("元")))
+				if($(this).parent().next().next().text()<0){
+					$(this).parent().next().next().text('0')
+				}
+			})
+			
+		})
+	</script>	
+	</body>
+</html>

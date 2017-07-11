@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>冲突解决</title>
+	</head>
+	<body>
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript">
+		//在引进jq之后就重新声明一下jq对象，使用$.noConflict()技术实现不同版本或者不同的库共存
+			var jQuery1_11_3=$.noConflict(true)
+		</script>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript">
+			var jQuery3=$.noConflict(true);
+		</script>
+		<script type="text/javascript">
+			jQuery1_11_3(function($){
+				console.log($.fn.jquery)
+				var body=$('body')
+				$('<p>这是'+$.fn.jquery+'版本的jQuery<p/>').appendTo(body)
+			})
+			jQuery3(function($){
+				console.log($.fn.jquery)
+				var body=$('body')
+				$('<p>这是'+$.fn.jquery+'版本的jQuery<p/>').appendTo(body)
+			})
+		</script>
+	</body>
+</html>

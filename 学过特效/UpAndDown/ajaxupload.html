@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				width:300px;
+				height:30px;
+				background: green;
+				text-align: center;
+				border: 1px solid red;
+				line-height: 30px;
+			}
+			span{
+				font-size: 30px;
+				transition: 1s;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="file" name="" id="f" value="" />
+		<input type="button" name="" id="btn" value="上传" />
+		<div id="box">
+			<span id="sp">0%</span>
+		</div>
+		<script type="text/javascript">
+			/*
+			 上传只能用post方式
+			 formD.append(key,value);key:由后台定；value:要转换的对象
+			 * 
+			 */
+			var btn = document.getElementById('btn');
+			var sp = document.getElementById('sp');
+			upload(btn,'post_file.php',sp)
+			function upload(obj1,url,obj2){//点击事件的对象、上传的文件、输出上传的百分比的元素
+				obj1.addEventListener('click',function(){
+					var f = document.getElementById('f');
+					var f_text = f.files[0];//获取input选中的文件
+					var formD = new FormData();//实例化对象，用于将文件名换成二进制
+					formD.append('file',f_text);//转换成二进制，以二进制的形式传到后台，在这里要上传的文件已经转换成二进制文件
+					var ajax = new XMLHttpRequest();
+					ajax.open('post',url,true);
+//					ajax.setRequestHeader( 'Content-Type','application/x-www-form-urlencoded');//这里的请求头信息不能设置
+					ajax.onload = function(){
+						console.log(ajax.responseText);
+					}
+					//检测上传的进度
+					ajax.upload.onprogress = function(ev){ 
+						/*
+						 ev.loaded 已结上传了多少
+						 ev.total  文件的大小
+						 */
+						var s = ev.loaded/ev.total;
+						s = s.toFixed(2)*100;
+						s = Math.round(parseInt(s));
+						obj2.innerHTML = s+'%';
+						//console.log(s)
+					}
+					ajax.send(formD);
+				})
+			
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+		<style type="text/css">
+			.main{
+				margin: 100px 0 0 500px;
+				width:320px;
+				height:568px;
+				background: url(img/background_1.png);
+				position: relative;
+				cursor: pointer;
+				overflow: hidden;
+			}
+			.rady{
+				width:100%;
+				height:100%;
+				background: url(img/开始背景.png);
+				position: relative;
+				
+			}
+			.rady input{
+				width:150px;
+				height:40px;
+				line-height: 40px;
+				font-size: 30px;
+				text-align: center;
+				border: none;
+				outline: 0 none;
+				position: absolute;
+				top: 60%;
+				left: 30%;
+				color: blue;
+				cursor: pointer;
+			}
+			#zd{
+				background: red;
+				position: absolute;
+				top: 30px;
+				height:30px;
+				
+			}
+			.jieshu{
+				width:100%;
+				height:100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 999;
+				display: none;
+			}
+			.jieshu input{
+				margin: 30px 70px;
+				border: none;
+				outline: 0 none;
+				background:orchid;
+				color: white;
+				
+			}
+			#restar{
+				width:200px;
+				height:30px;
+				margin-top: 300px;
+				
+			}
+			#out{
+				width:200px;
+				height:30px;
+			}
+			#fenshu{
+				width:50px;
+				height:25px;
+				line-height: 25px;
+				text-align: center;
+				font-size: 20px;
+				border:1px solid #191970;
+				position: absolute;
+				top: 0;
+				z-index: 10;
+				color: blue;
+				background: rgba(255,255,255,0.4);
+				display: none;
+			}
+			#defen{
+				width:200px;
+				height:50px;
+				line-height: 50px;
+				text-align: center;
+				font-size: 20px;
+				position: absolute;
+				top: 50px;
+				left: 50%;
+				background: skyblue;
+				border: 1px solid orange;
+				transform: translate(-50%,0);
+				display: none;
+				z-index: 10;
+			}
+			#binggan{
+				width:10px;
+				height:10px;
+				background: red;
+				position: absolute;
+				
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<span id="fenshu"></span>
+			<div id="defen"></div>
+			<div class="rady">
+				<input type="button" id="star" value="开始游戏" />
+			</div>
+			<div class="jieshu">
+				<input type="button" name="" id="restar" value="重新开始" />
+				<input type="button" name="" id="out" value="退出" />
+			</div>
+		</div>
+	<script type="text/javascript">
+		
+		$(function(){
+			var time1=null;
+			var time2=null;
+			var time3=null;
+			var positiony=0;
+			//装子弹的数组
+			var zdarr=[];
+			//子弹速度
+			var zdspeed=30;
+			//存放敌方飞机的数组
+			var planesarr=[];
+			//敌方飞机的移动速度
+			var planesSpeed=2
+			//创建大飞机，中飞机参考数
+			var num=0;
+			//积分牌数目
+			var fenshu=0;
+			//是否获取到果实
+			var get=false;
+			//、、、、点击开始游戏、、、、//
+			$('#star').click(function(){
+				fenshu=0;//初始化
+				//显示记分牌
+				$('#fenshu').show()
+				
+				//点击后隐藏点击按钮
+				$(this).parent().hide();
+				$('.jieshu').hide();
+				//创建我的飞机
+				creatPlane();
+				//创建敌方飞机
+				time1=setInterval(function(){
+					num++;
+					console.log(num);
+					//小飞机
+					creatPlanes(34, 24, 'url(img/enemy1_fly_1.png)','url(img/小飞机爆炸.gif)','url(img/小飞机爆炸.gif)',5);
+					//中飞机
+					if(num%15==0){
+						creatPlanes(46,60,'url(img/enemy3_fly_1.png)','url(img/中飞机爆炸.gif)','url(img/中飞机挨打.png)',15);
+					}
+					//大飞机
+					if(num%40==0){
+						creatPlanes(110,164,'url(img/enemy2_fly_1.png)','url(img/大飞机爆炸.gif)','url(img/大飞机挨打.png)',30);
+					}
+					//隔一定时间穿件果实
+					if(num%80==0){
+	                	creatFod()
+	                	setTimeout(function(){
+	                		get=false;
+	                	},20000)
+	                	
+	                	
+	                }
+					//判断飞机是否吃到果实吃了就加子弹
+					if(getFood()==true){
+						var bing=document.getElementById('binggan');
+						$('.main')[0].removeChild(bing);
+						get=true;
+					}
+					
+					
+				},300)
+				time2=setInterval(function(){
+					//背景动起来
+					backgroundMove();
+					//敌方飞机运动
+					movePlanes();
+					//创建子弹
+					if(get==true){
+						creatZd3();
+					}else{
+						creatZd1();
+					}
+					
+					
+					//子弹运动
+					moveZd();
+					//碰撞检测
+					check();
+				},20)	
+			})
+			
+			//开始游戏背景动起来
+			function backgroundMove(){
+				positiony+=1.5
+				$('.main').css({'background-position-y':positiony+'px'});
+			}
+			//创建我的飞机
+			function creatPlane(){
+				//创建节点添加到界面
+				$('<div id="myplane"></div>').appendTo('.main');
+				$('#myplane').css({
+					'width':'66px',
+				'height':'80px',
+				'background':'red',
+				position:'absolute',
+				'background':'url(img/我的飞机.gif)'
+				});
+			}
+			//我的飞机在是界面中移动
+			$('.main').mousemove(function(ev){
+				var ev=ev||event;
+				x=ev.pageX-$('.main').offset().left;
+				y=ev.pageY-$('.main').offset().top;
+				if(y<=40){
+					y=40;
+				}
+				if(y>=568-40){
+					y=568-40;
+				}
+				if(x<33){
+					x=33;
+				}
+				if(x>288){
+					x=288;
+				}
+				$('#myplane').css({'top':y-40+'px','left':x-33+'px'});
+				
+			
+			})
+
+			
+			//创建一排子弹
+			function creatZd1(){
+					var zd=$('<div id="zd"></div>')
+					$('.main').append(zd)
+					$(zd).css({
+						'width':'6px',
+						'height':'14px',
+						'background':'url(img/bullet1.png)',
+						'position':'absolute',
+						'top':y-40+'px',
+						'left':x+'px'
+					})
+					zdarr.push(zd);
+			}	
+			//创建三排子弹
+			function creatZd3(){
+				for(var i=0;i<3;i++){
+					var zd=$('<div id="zd"></div>')
+					$('.main').append(zd)
+					$(zd).css({
+						'width':'6px',
+						'height':'14px',
+						'background':'url(img/bullet1.png)',
+						'position':'absolute',
+						'top':y-40+'px',
+						'left':(x+(i*20-20))+'px'
+					})
+					zdarr.push(zd);
+				}
+			}	
+			//子弹的运动
+			function moveZd(){
+				for(var i=0;i<zdarr.length;i++){
+					zdarr[i].get(0).style.top=zdarr[i].get(0).offsetTop-zdspeed+'px';
+				}
+				for(var j=0;j<zdarr.length;j++){
+					if(zdarr[j].get(0).offsetTop<-14){
+						$('.main').get(0).removeChild(zdarr[j].get(0));
+						zdarr.splice(j,1);
+					}
+				}
+			}
+			
+			//创建敌方飞机
+			function creatPlanes(a,b,c,d,e,n){//
+					var x=Math.random()*260
+					var y=0
+					var planes=$('<div id="difang"></div>')
+					$('.main').append(planes)
+					$(planes).css({
+						'width':a+'px',
+						'height':b+'px',
+						'background':c,
+						'position':'absolute',
+						'top':(-b)+'px',
+						'left':x+'px'
+					})
+					planes.bac=d;//爆炸时的背景图片
+					planes.aida=e;//挨打时的背景图片
+					planes.live=n;//生命数
+					planesarr.push(planes);
+			}
+			function creatFod(){
+				var bg=$('<div id="binggan"></div>');//创建果实
+	            $('.main').append(bg)
+				var binggan=document.getElementById("binggan");
+				var pla=document.getElementById("myplane");
+				var left=Math.random()*300;
+				var top=Math.random()*300;
+				binggan.style.left=left+'px';
+				binggan.style.top=top+'px';
+				foodHide();
+			}
+			function foodHide(){
+				var bing=document.getElementById('binggan');
+				setTimeout(function(){//饼干出现12秒后消失
+					$('.main')[0].removeChild(bing);
+				},12000)
+			}
+			function getFood(){
+				var binggan=document.getElementById("binggan");
+				var pla=document.getElementById("myplane");
+				var l1=binggan.offsetLeft;
+				var w1=binggan.offsetWidth;
+				var h1=binggan.offsetHeight;
+				var t1=binggan.offsetTop;
+				var l2=pla.offsetLeft;
+				var t2=pla.offsetTop;
+				var w2=pla.offsetWidth;
+				var h2=pla.offsetHeight;
+					
+					if(l2>(l1+w1)||(l2+w2)<l1||t2>(t1+h1)||(t2+h2)<t1){
+						return false;//没碰撞
+					}else{
+						return true;//碰撞成功
+					}
+			}
+			
+			//移动敌机
+		    function movePlanes(){
+		        for(var i=0;i<planesarr.length;i++){
+		        	if(!planesarr[i].isDead){
+		                //没有爆炸 才能移动
+		                planesarr[i].get(0).style.top=planesarr[i].get(0).offsetTop+planesSpeed+"px";
+		            }else{
+		                //如果飞机是爆炸状态，秒后删除爆炸的飞机。
+		                planesarr[i].deadTime=planesarr[i].deadTime+1;
+		                if(planesarr[i].deadTime==30){//爆炸一定时间后删除爆炸的飞机
+		                    $('.main').get(0).removeChild(planesarr[i].get(0));
+		                    planesarr.splice(i,1);
+		                    i--;
+		                }
+		            }
+		            
+		        }
+		        for(var j=0;j<planesarr.length;j++){//飞机超出了界面后删除
+		            if(planesarr[j].get(0).offsetTop>=$('.main').height()){
+		                $('.main').get(0).removeChild(planesarr[j].get(0));
+		                planesarr.splice(j,1);
+		                j--;
+		                //删除j位置的元素后，后面的元素都向前移动了一位。为了不漏掉元素的遍历，j--
+		            }
+		        }
+		    }
+			
+			//子弹跟敌方飞机的碰撞
+			function check(){
+		        //子弹 top  小于  飞机的 top+height ；   子弹的上边 小于 飞机的下边
+		        //子弹的 top+ height  大于  飞机的 top ；   子弹的 下边  大于 飞机的上面
+		        //子弹的left +width  大于 飞机的left；   子弹的右边大于飞机的左边
+		        //子弹的left 小于  飞机的left +width ；   子弹的左边小于飞机的右边
+		        for(var k=0;k<zdarr.length;k++){//对所有的子弹循环
+		            for(var i=0;i<planesarr.length;i++){//对所有的飞机循环
+		                 if(planesarr[i].isDead) {
+		                     //如果飞机爆炸，不用再检测碰撞。
+		                     continue;
+		                 }
+		                 if(zdarr[k].get(0).offsetTop<planesarr[i].get(0).offsetTop+planesarr[i].get(0).offsetHeight){
+		                     if(zdarr[k].get(0).offsetTop+zdarr[k].get(0).offsetHeight>planesarr[i].get(0).offsetTop){
+		                         if(zdarr[k].get(0).offsetLeft+zdarr[k].get(0).offsetWidth>planesarr[i].get(0).offsetLeft){
+		                             if(zdarr[k].get(0).offsetLeft<planesarr[i].get(0).offsetLeft+planesarr[i].get(0).offsetWidth){
+		                                 //子弹打中了敌机
+//		                                  planesarr[i].css({'background':planesarr[i].aida})
+		                                 //1.变更爆炸的效果图片
+		                                 planesarr[i].live=planesarr[i].live-1;
+		                                 if(planesarr[i].live==0){
+		                                 	fenshu++
+		                                 	$('#fenshu').html(fenshu);
+		                                     //爆炸
+		                                     console.log(planesarr[i].bac)
+		                                     planesarr[i].css({'background':planesarr[i].bac})
+		                                     planesarr[i].isDead=true;
+		                                     planesarr[i].deadTime=0;
+//		                                    
+		                                 }
+		                                 //子弹打中飞机后，就删除哪个子弹，这样子弹就不会穿过飞机了
+		                                 $('.main').get(0).removeChild(zdarr[k].get(0));
+		                                 zdarr.splice(k,1);
+		                                 k--;
+//		                                 console.log(k)
+		                                 break;
+		                             }
+		                         }
+		                     }
+		                 }
+		            }
+		        }
+		        //敌机跟本机的碰撞
+		        for(var j=0;j<planesarr.length;j++){
+		            if(planesarr[j].isDead) continue; //跳过已经爆炸的敌机；
+		            if($('#myplane').get(0).offsetTop+$('#myplane').get(0).offsetHeight>planesarr[j].get(0).offsetTop){
+		                if($('#myplane').get(0).offsetTop<planesarr[j].get(0).offsetTop+planesarr[j].get(0).offsetHeight){
+		                    if($('#myplane').get(0).offsetLeft+$('#myplane').get(0).offsetWidth>planesarr[j].get(0).offsetLeft){
+		                        if($('#myplane').get(0).offsetLeft<planesarr[j].get(0).offsetLeft+planesarr[j].get(0).offsetWidth){
+		                            //本机与敌机碰撞了。
+		                            $('#myplane').css({'background':'url(img/本方飞机爆炸.gif)'});
+		                            //结束游戏
+		                            gameOver();
+		                        }
+		                    }
+		                }
+		            }
+		
+		        }
+		    }
+			//游戏结束
+			function gameOver(){
+				$('.main').get(0).onmousemove=null;
+				$('.main').css({'z-index':'10'})
+				clearInterval(time1);
+				clearInterval(time2);
+				$('.jieshu').show();
+				$('#defen').css({'display':'block'}).html('你的得分是：'+$('#fenshu').html()+'分');
+			}
+			//重新开始
+			$('#restar').click(function(){
+//				$('.main').children().remove().not('#fenshu #defen .ready .jieshu')
+				positiony=0;
+				zdarr=[];
+				planesarr=[];
+				$('#myplane').remove();
+				$('#fenshu').css('display','none');
+				$('#defen').css('display','none');
+				$('#difang,#zd').remove();
+				$('#star').trigger('click');
+				if($('#binggan')[0]){//删除果实
+					$('.main')[0].removeChild($('#binggan')[0])
+				}
+				
+			})
+			//退出游戏
+			$('#out').click(function(){
+				positiony=0;//背景图片归位
+				zdarr=[];//清空子弹数组
+				planesarr=[];//清空敌方飞机数组
+				$('#myplane').remove();//删除我的飞机
+				$(this).parent().hide();//隐藏界面
+				$('.rady').show();//显示最初界面
+				$('#fenshu').css('display','none');//分数展示隐藏
+				$('#defen').css('display','none');//记分牌隐藏
+				$('#difang,#zd').remove()//删除所有的子弹和敌方飞机
+				if($('#binggan')[0]){//删除果实
+					$('.main')[0].removeChild($('#binggan')[0])
+				}
+				
+			})
+			
+		})
+	</script>	
+	</body>
+</html>

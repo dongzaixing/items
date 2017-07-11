@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="box"></canvas>
+		
+		<script type="text/javascript">
+//		box.arc(500,500,300,360,false)
+//		var c = document.getElementById('box');
+//		
+//		cxt.fillStyle="#FF0000";
+//		cxt.arc(70, 30, 25, 0, 1, true);
+//		cxt.stroke();
+//		var cxt=document.getElementById("cxt")
+//		var drops=[];
+//		cxt.arc(350,350,100,0,2*Math.PI,false)
+//		cxt.fill();//填充方法
+//		cxt.stroke();//触笔方法
+//		var x=0,y=0;
+//		var w=20,h=20;
+//		cxt.fillStyle="red"
+//		setInterval(function(){
+//			cxt.clearRect(0,0,w,h)
+//			y+=10;
+//			cxt.fillRect(100,y,50,50)
+//		},100)
+//	
+//		
+		//new Date();new Array(); Math.PI;
+		//雨滴对象
+		function Drops(){
+			Drops.prototype={//添加原型链
+				init:function(){//初始化方法，随机生成雨滴
+					this.x=random(0,w);//生成随机坐标
+					this.y=0;
+					this.vy=random(4,5);//y
+					this.l=random(0.8*h,0.9*h)
+					this.r=1;
+					this.vr=1;
+					this.a=1;
+					this.va=0.9;//透明度变化速率
+				},
+				draw:function(){//绘制雨滴
+					if(this.y>=this.l){
+						cxt.strokeStyle="rgba(0,255,255,"+this.a+")"
+						cxt.beginPath();
+						cxt.arc(this.x,this.y,his.r,0,2*Math.PI,false)
+						cxt.stroke();
+					}
+					cxt.fillStyle="rgba(0,225,225,1)";
+					cxt.fillRect(this.x.this.y,2,10);
+					//绘制完成一次就更新坐标
+					this.update();
+				},
+				update:function(){//更新坐标
+					if(this.y<this.h){
+						this.y+=this.vy
+					}else{//绘制圆形
+						if(this.a>0.03){
+							this.r+=this.vr
+							if(this.r>50){
+								this.a*=this.va
+							}
+						}else{
+							this.init()
+						}
+						
+					}
+				}
+				
+			}
+		}
+		//实例化雨滴对象的时候拥有的属性和方法都是从原型链上继承的
+		var drop=new Drops();
+		drop.init();初始化雨滴
+		drop.draw();绘制雨滴
+		//定时器不断调用draw
+		setInterval(function(){
+			cxt.fillStyle="rgba(0,0,0,0.1)"
+			cxt.fillRect(0,0,w,h);
+			drop.draw()//绘制雨滴
+		},100);
+		
+		function move(){
+			cxt.fillStyle="rgba(0,0,0,0.1)"
+			cxt.fillRect(0,0,w,h);
+			for(var i=0;i<drops.length;i++){
+				drops[i].draw();
+			}
+			requestAnimationFrame(move)//递归
+		}
+		//延迟添加每个雨滴
+		function addDrop(){
+			for(var i=0;i<30;i++){
+				setTimeout(function(){
+					var drop=new Drops()
+					drop.init();
+					drops.push(drop)
+				},i*200)
+			}
+		}
+		addDrop(drops)
+		
+		
+		//生成随机数
+		function random(max,min){//生成随机数
+			return Math.random()*(max-min)+min;//生成max-min之间的随机数
+		}
+		</script>
+	</body>
+</html>

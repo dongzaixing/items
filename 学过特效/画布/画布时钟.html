@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body{
+				background: #333;
+			}
+			#can{
+				background: #fff;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<canvas id="can">
+			<span id="" style="background: white;">
+				该浏览器不支持canvas标签
+			</span>
+		</canvas>
+		<script type="text/javascript">
+			var can=document.getElementById('can');
+			can.width=500;
+			can.height=400;
+			var ct=can.getContext('2d');
+			
+			//绘制时钟
+			function draw(){
+				var x=200;
+				var y=200;
+				var r=150;
+				//清除画布
+				ct.clearRect(0,0,can.width,can.height)
+				//获取时间
+				var odate=new Date();
+				var h=odate.getHours();
+				var m=odate.getMinutes();
+				var s=odate.getSeconds();
+				//时针走过的角度加上分针走过的角度
+				var hAngle=(-90+h*30+m*0.5)*Math.PI/180;
+				//分针走过的角度加上秒针走过的角度
+				var mAngle=(-90+m*6+s*0.1)*Math.PI/180;
+				var sAngle=(-90+s*6)*Math.PI/180;
+				
+//				ct.moveTo(x,y);
+//				ct.arc(x,y,r,0,6*Math.PI/180,false);
+//				ct.arc(x,y,r,6*Math.PI/180,12*Math.PI/180,false);
+				//画秒针线，从外层往里层画，一层覆盖一层的原理
+				//画完秒针就覆盖多余的，分针时针也是如此
+				ct.beginPath();
+				ct.lineWidth=1;
+				for(var i=0;i<60;i++){
+					ct.moveTo(x,y);//确定中心点
+					ct.arc(x,y,r,i*6*Math.PI/180,(i+1)*6*Math.PI/180,false);//秒针中间的弧度
+				}
+				ct.closePath();
+				ct.stroke();
+				
+				//盖住秒针线
+				ct.fillStyle='white';
+				ct.beginPath();
+				ct.moveTo(x,y);
+				ct.arc(x,y,r-8,0,360*Math.PI/180,false);
+				ct.closePath();
+				ct.fill()
+				
+				
+				//画小时线
+				ct.lineWidth=3;
+				ct.beginPath();
+				for(var i=0;i<12;i++){
+					ct.moveTo(x,y);
+					ct.arc(x,y,r,i*30*Math.PI/180,(i+1)*30*Math.PI/180,false);
+				}
+				ct.closePath();
+				ct.stroke();
+				
+				//盖住小时线
+				ct.fillStyle='white';
+				ct.beginPath();
+				ct.moveTo(x,y);
+				ct.arc(x,y,r-12,0,360*Math.PI/180,false);
+				ct.closePath();
+				ct.fill();
+				
+				//画时针;
+				ct.lineWidth=5;
+				ct.beginPath();
+				ct.moveTo(x,y);
+				ct.arc(x,y,r*0.4,hAngle,hAngle,false);
+				ct.closePath();
+				ct.stroke();
+				
+				
+				//画分针
+				ct.lineWidth=3;
+				ct.beginPath();
+				ct.moveTo(x,y);
+				ct.arc(x,y,r*0.7,mAngle,mAngle,false);
+				ct.closePath();
+				ct.stroke();
+				
+				//画秒针
+				ct.lineWidth=1;
+				ct.beginPath();
+				ct.moveTo(x,y);
+				ct.arc(x,y,r*0.85,sAngle,sAngle,false);
+				ct.closePath();
+				ct.stroke();
+				
+				//时钟中下黑点
+				ct.fillStyle='blue';
+				ct.beginPath();
+				ct.moveTo(x,y);
+				ct.arc(x,y,7,0,360*Math.PI/180,false);
+				ct.closePath();
+				ct.fill()
+			}
+			draw()
+			setInterval(draw,1000)
+		</script>
+	</body>
+</html>
+

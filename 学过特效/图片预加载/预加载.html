@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="box">
+			<img src="http://pic32.photophoto.cn/20140914/0008020205896415_b.jpg"/>
+		</div>
+		
+		<script type="text/javascript">
+			/*
+			 http://pic32.photophoto.cn/20140914/0008020205896415_b.jpg
+			 * 
+			 * http://pic31.nipic.com/20130713/6903649_124328800000_2.jpg
+			 * 
+			 * http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/03/86/597abb9da324d97020134c2763255700.jpg
+			 * 
+			 * http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/02/60/82521cf78c4b11fe26838a86c3a69945.jpg
+			 * 
+			 * http://pic2.ooopic.com/13/65/37/72b1OOOPIC2a.jpg
+			 */
+			
+			var arr = [
+					'http://pic.90sjimg.com/back_pic/qk/back_origin_pic/00/03/86/597abb9da324d97020134c2763255700.jpg',
+					'http://pic31.nipic.com/20130713/6903649_124328800000_2.jpg',
+					'http://pic32.photophoto.cn.jpg',
+					'http://pic2.ooopic.com/13/65/37/72b1OOOPIC2a.jpg'
+					
+					];
+			preloading(arr);		
+			function preloading(arr){
+				var num = 0;
+	//			var box = document.getElementById('box');
+				for(var i=0;i<arr.length;i++){
+					var img = new Image();	//创建image对象			
+					img.src = arr[i];        //创建image对象里面有src，加载资源	
+					img.onerror = function(){ //当资源出错，触发onerror事件
+						console.log('出错了',num);
+						num++;
+						if(num == arr.length){
+							console.log('加载完了',num);
+						}
+					}
+					
+					img.onload = function(){  //当资源加载完了，触发onload事件
+						num++;
+						console.log(img)
+						console.log(num);
+						if(num == arr.length){
+							console.log('加载完了',num);
+						}	
+					}
+				}
+			}
+			
+			
+			
+			
+			
+			/*preload(n,arr1)
+			function preload(n,arr){
+				var img = new Image();	//创建image对象			
+				img.src = arr[i];    
+				img.onerror = function(){ //当资源出错，触发onerror事件
+					console.log('出错了',n);
+					n++;
+					if(n == arr.length){
+						alert('加载完了',n);
+//							console.log('加载完了',num);
+					}
+				}
+				img.onload = function(){  //当资源加载完了，触发onload事件
+					n++;
+					if(n == json.length){
+						alert('加载完了',n);
+//							console.log('加载完了',num);
+					}	
+					console.log(n)
+				}
+				
+			}*/
+		</script>
+		
+		
+	</body>
+</html>
+
+
+
+
+
+
+

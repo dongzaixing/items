@@ -1,0 +1,32 @@
+14:28 2017/3/10
+sort()排序：改变原来的数组，
+①不传参的情况下按Unicode编码排序；
+②传参的情况下sort(function(){return a-b}),若函数的返回值是正数，数组从小到大排，若函数的返回值是负数，则从大到小排。
+如果后函数里面的返回值是正数和负数之间调换，则数组会随机排列。
+
+15:44 2017/3/1
+
+优化性能：用一下方法代替平时用的方法，
+document.quyerySelector("")和document.quyerySelectorAll("");
+var box=document.querySelector("#box");//找id为box的标签
+var box=document.querySelector("div");//默认只找第一个
+var box=document.querySelector(".box");//默认只找第一个class名为box的元素
+
+事件冒泡：
+1>第一个阶段就是从window流向目标对象，这一过程也叫作捕获阶段，在捕获阶段事件是不会做出响应的，除非是使用捕获模式（true）；
+2>第二个阶段就是在目标对象上面触发,该过程就是目标阶段，目标阶段也是冒泡的一部分。
+3>第三阶段是回溯到window，也就是冒泡阶段
+捕获阶段和冒泡阶段被称为冒泡机制，也叫事件流。
+
+
+事件绑定：
+函数名.call(调用函数的对象，函数需要的实参)
+函数名.apply(调用函数的对象，[函数需要的实参])
+//test.call(obj);//通过call修改，此时this指obj，也即给obj添加了property属性
+//test.apply(obj);//通过apply修改，此时this指obj，也即给obj添加了property属性
+
+事件对象：当一个元素绑定一个事件，window对象就会通过函数的参数自动的传递一个事件对象，这个事件对象里面有很多属性。这些属性就记载着这个事件的详细细节。
+
+target：事件源
+
+事件委托：性能高，动态生成的元素也具有改事件。

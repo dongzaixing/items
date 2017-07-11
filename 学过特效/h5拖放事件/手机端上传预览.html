@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,user-scalable=no" />
+		
+		<title></title>
+		<style type="text/css">
+			input{
+				display: none;
+			}
+			img{
+				width:100px;
+				height:100px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<p>测试body的获取</p>
+		<label for="img">预览</label>
+		<input type="file" name="img" id="img" value="" multiple="multiple"/>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript">
+//			console.log($.fn.jquery)//jq文件的版本
+			$('#img').change(function(){
+				var f=this.files;//input里面添加进来的文件，是一个对象，里面包含文件的个数
+				console.log(f)
+				for(var i=0;i<f.length;i++){
+					(function(i){
+						var r=new FileReader();//创建FileReader对象，该对象包含了四个方法和一系列处理事件
+						r.readAsDataURL(f[i]);//调用读取文件的方法
+						console.log(r)
+						r.onload=function(){//处理事件
+							console.log(r.result)
+							var Img=document.createElement('img');
+							Img.src=this.result;//获取对象里面的属性
+							var b=document.getElementsByTagName('body')[0];
+							b.appendChild(Img)
+						}
+					})(i)
+				}
+				return false
+			})
+
+		</script>
+	</body>
+</html>

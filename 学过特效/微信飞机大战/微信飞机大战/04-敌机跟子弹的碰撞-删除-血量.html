@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #startdiv{
+            width: 320px;
+            height: 568px;
+            background: url(image/开始背景.png) no-repeat;
+        }
+        #content{
+            width: 320px;
+            height: 568px;
+            position: absolute;
+            top: 5px;
+            left: 500px;
+        }
+        #btstart{
+            width: 150px;
+            height: 30px;
+            background: burlywood;
+            border-radius: 30px;
+            position: absolute;
+            top:450px;
+            left:80px;
+        }
+        #maindiv{
+            width: 320px;
+            height:568px;
+            background: url(image/background_1.png);
+            position:absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            overflow:hidden;
+        }
+        #enddiv{
+            width: 200px;
+            height:200px;
+            position: absolute;
+            top: 300px;
+            left: 60px;
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+<div id="content">
+    <div id="startdiv">
+        <input id="btstart" type="button" value="开始游戏"/>
+    </div>
+    <div id="maindiv"></div>
+    <div id="enddiv">
+        游戏结束;积分<span id="fenshu">9999</span>
+        <div>
+            <input id="btrestart" type="button" value="重新开始"/>
+        </div>
+    </div>
+</div>
+
+<script>
+    //开始按钮
+    var oBtStart=document.getElementById("btstart");
+    //游戏界面
+    var oMainDiv=document.getElementById("maindiv");
+    var oEndDiv=document.getElementById("enddiv");
+    //游戏总定时器
+    var timer;
+    //游戏界面的背景定位坐标。
+    var MainDivBKPositionY=0;
+
+    //记录我的飞机
+    var myPlan;
+
+    //存放子弹的数组。
+    var arrBullet=[];
+    //子弹的移动速度
+    var speedBullet=20;
+    //定时器的记录
+    var timerMark=0;
+    //游戏界面的宽度
+    var mainWidth=320;
+    var mainHeight=568;
+    //存放所有的敌机
+    var arrEnemy=[];
+    //敌机的速度
+    var speedEnemy=2;
+
+    //开始按钮的点击事件
+    oBtStart.onclick=function (){
+        //进入主界面。  隐藏开始界面，显示主界面。
+        var oStartDiv=document.getElementById("startdiv");
+        oStartDiv.style.display="none";
+        oMainDiv.style.display="block";
+
+        //创建我的飞机
+        myPlan=createMyPlan();
+        moveMyPlan();
+        startGame();
+    }
+
+    //开始游戏
+    function startGame(){
+        clearInterval(timer);
+        timer=setInterval(function(){
+            timerMark++;
+            //1.背景动起来
+            oMainDiv.style.backgroundPositionY=MainDivBKPositionY+"px";
+            MainDivBKPositionY+=0.5;
+            //2. 创建子弹。
+            //每个30毫秒就创建一个子弹。
+            createBullet();
+            moveBullet();
+            createEnemy();
+            moveEnemy();
+            check();
+        },20);
+    }
+
+    //创建我的飞机
+    function createMyPlan(){
+        var oMyPlan=document.createElement("div");
+        oMyPlan.style.width="66px";
+        oMyPlan.style.height="80px";
+        oMyPlan.style.position="absolute";
+        oMyPlan.style.background="url(image/我的飞机.gif) no-repeat";
+        oMyPlan.srcBoom="image/本方飞机爆炸.gif";
+        oMyPlan.style.top="480px";
+        oMyPlan.style.left="127px";
+        oMyPlan.style.zIndex=999;
+        oMainDiv.appendChild(oMyPlan);
+        return oMyPlan;
+    }
+    //移动我的飞机
+    function moveMyPlan(){
+        document.onmousemove=function(event){
+            //
+            event=event||window.event;
+
+            var mLeft=event.clientX-500-33;
+            var mTop=event.clientY-41;
+            //边界
+            if(mTop<=0){
+                mTop=0;
+            }
+            if(mTop>=568-82){
+                mTop=486;
+            }
+            if(mLeft<=-33){
+                mLeft=-33;
+            }
+            if(mLeft>=320-33){
+                mLeft=287;
+            }
+
+            myPlan.style.top=mTop+"px";
+            myPlan.style.left=mLeft+"px";
+        }
+    }
+
+    //创建子弹
+    function createBullet(){
+        var bullet=document.createElement("div");
+        bullet.style.width="6px";
+        bullet.style.height="14px";
+        bullet.style.background="url(image/bullet1.png) no-repeat";
+        bullet.style.position="absolute";
+        bullet.style.top=myPlan.offsetTop+"px";//我的飞机的top，
+        bullet.style.left=myPlan.offsetLeft+33-3+"px";
+        //我的飞机的left +我的飞机的宽度的一半，在减去子弹的宽度的一半
+
+        oMainDiv.appendChild(bullet);
+        arrBullet.push(bullet);
+    }
+    //移动子弹  所有的子弹 移动一步。
+    //然后再总定时器中 调用。
+    function moveBullet(){
+        //操作子弹的top ， 变小。向上跑。。
+        //子弹在哪里？arrBullet
+        //是否要在此处开启一个定时器
+        for(var i=0;i<arrBullet.length;i++){
+            arrBullet[i].style.top=arrBullet[i].offsetTop-speedBullet+"px";
+        }
+        //如果子弹已经出去了， 删除。
+        //top =-14；
+        for(var j=0;j<arrBullet.length;j++){
+            if(arrBullet[j].offsetTop<=-14){
+                //删除
+                oMainDiv.removeChild(arrBullet[j]);
+                arrBullet.splice(j,1);
+            }
+        }
+    }
+
+    //创建敌机
+    function createEnemy(){
+        if(timerMark%400==0){
+            //大飞机
+            createPlan(110,164,"image/enemy2_fly_1.png","image/大飞机爆炸.gif",50,"image/大飞机挨打.png");
+        }else if(timerMark%150==0){
+            createPlan(46,60,"image/enemy3_fly_1.png","image/中飞机爆炸.gif",2,"image/中飞机挨打.png");
+            //创建中飞机
+        }else if(timerMark%30==0){
+            //创建小飞机
+            createPlan(34,24,"image/enemy1_fly_1.png","image/小飞机爆炸.gif",1);
+        }
+    }
+    //创建敌机的方法。
+    function createPlan(width,height,url,urlBoom,hp,urlAD){
+        var enemy=document.createElement("img");
+        enemy.style.width=width+"px";
+        enemy.style.height=height+"px";
+        enemy.src=url;
+        enemy.srcBoom=urlBoom;
+        if(urlAD){
+            enemy.srcAD=urlAD;
+        }
+        enemy.HP=hp;
+        enemy.style.position="absolute";
+        enemy.style.top=-height+"px";
+        enemy.style.left=Math.floor(Math.random()*(mainWidth-width))+"px";
+        //left的范围 0-到-oMainDiv的宽度320减去打飞机的宽度110   (0,320-46)=》(0,274)  ;随机left
+        oMainDiv.appendChild(enemy);
+        arrEnemy.push(enemy);
+        console.log(arrEnemy.length);
+    }
+    //移动敌机
+    function moveEnemy(){
+        for(var i=0;i<arrEnemy.length;i++){
+            if(!arrEnemy[i].isDead){
+                //没有爆炸 才能移动
+                arrEnemy[i].style.top=arrEnemy[i].offsetTop+speedEnemy+"px";
+            }else{
+                //如果飞机是爆炸状态，添加删除倒计时。
+                arrEnemy[i].deadTime=arrEnemy[i].deadTime+1;
+                if(arrEnemy[i].deadTime==30){
+                    oMainDiv.removeChild(arrEnemy[i]);
+                    arrEnemy.splice(i,1);
+                    i--;
+                }
+            }
+        }
+        //console.log(arrEnemy[0].offsetTop);
+        if(arrEnemy.length>0){
+            console.log(arrEnemy[arrEnemy.length-1].style.top);
+        }
+        for(var j=0;j<arrEnemy.length;j++){
+            if(arrEnemy[j].offsetTop>=mainHeight){
+                oMainDiv.removeChild(arrEnemy[j]);
+                arrEnemy.splice(j,1);
+                j--;
+                //删除j位置的元素后，后面的元素都向前移动了一位。为了不漏掉元素的遍历，j--
+            }
+        }
+    }
+
+    //子弹与敌机的碰撞
+    //敌机和本机的碰撞
+    function check(){
+        //子弹 top  小于  飞机的 top+height ；   子弹的上边 小于 飞机的下边
+        //子弹的 top+ height  大于  飞机的 top ；   子弹的 下边  大于 飞机的上面
+        //子弹的left +width  大于 飞机的left
+        //子弹的left 小于  飞机的left +width
+        for(var k=0;k<arrBullet.length;k++){
+            for(var i=0;i<arrEnemy.length;i++){
+                 if(arrEnemy[i].isDead) {
+                     //如果飞机爆炸，不用再检测碰撞。
+                     continue;
+                 }
+                 if(arrBullet[k].offsetTop<arrEnemy[i].offsetTop+arrEnemy[i].offsetHeight){
+                     if(arrBullet[k].offsetTop+arrBullet[k].offsetHeight>arrEnemy[i].offsetTop){
+                         if(arrBullet[k].offsetLeft+arrBullet[k].offsetWidth>arrEnemy[i].offsetLeft){
+                             if(arrBullet[k].offsetLeft<arrEnemy[i].offsetLeft+arrEnemy[i].offsetWidth){
+                                 //子弹打中了敌机
+                                 //1.变更爆炸的效果图片
+                                
+                                 arrEnemy[i].HP=arrEnemy[i].HP-1;
+                                 if(arrEnemy[i].HP==0){
+                                     //爆炸
+                                     arrEnemy[i].src=arrEnemy[i].srcBoom;
+                                     arrEnemy[i].isDead=true;
+                                     arrEnemy[i].deadTime=0;
+                                 }else{
+                                     if(arrEnemy[i].srcAD){
+                                         arrEnemy[i].src=arrEnemy[i].srcAD;
+                                     }
+                                 }
+                                 oMainDiv.removeChild(arrBullet[k]);
+                                 arrBullet.splice(k,1);
+                                 k--;
+                                 //跳出小循环，
+                                 break;
+                             }
+                         }
+                     }
+                 }
+            }
+        }
+        //敌机跟本机的碰撞
+        //
+        for(var j=0;j<arrEnemy.length;j++){
+            if(arrEnemy[j].isDead) continue; //跳过已经爆炸的敌机；
+            if(myPlan.offsetTop+myPlan.offsetHeight>arrEnemy[j].offsetTop){
+                if(myPlan.offsetTop<arrEnemy[j].offsetTop+arrEnemy[j].offsetHeight){
+                    if(myPlan.offsetLeft+myPlan.offsetWidth>arrEnemy[j].offsetLeft){
+                        if(myPlan.offsetLeft<arrEnemy[j].offsetLeft+arrEnemy[j].offsetWidth){
+                            //本机与敌机碰撞了。
+                            myPlan.style.background="url('"+myPlan.srcBoom+"') no-repeat";
+                            gameOver();
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    //游戏失败
+    function gameOver(){
+        //清理定时器。
+        clearInterval(timer);
+        document.onmousemove=null;
+        oEndDiv.style.display="block";
+    }
+</script>
+</body>
+</html>

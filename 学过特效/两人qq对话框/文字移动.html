@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				width:200px;
+				height:40px;
+				margin: 0 auto;
+				border:1px solid blue;
+				line-height: 40px;
+				font-size: 25px;
+				color: orchid;
+				/*text-indent: -20px;*/
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">清风明月伴我行</div>
+	</body>
+	<script type="text/javascript">
+		//思路：字符串拼接，计时器
+		function show(){
+			var box=document.getElementById("box");
+			box.innerHTML=box.innerHTML.substring(1)+box.innerHTML[0];
+		}
+		setInterval(show,500)
+	</script>
+</html>

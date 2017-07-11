@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>无缝轮播</title>
+		<style type="text/css">
+			*{
+				box-sizing: border-box;
+			}
+			#box{
+				width:300px;
+				height:300px;
+				border:5px solid blue;
+				margin: 100px auto;
+				position:relative;
+				/*overflow: hidden;*/
+				
+			}
+			#oul{
+				margin: 0;
+				padding: 0;
+				/*width:2400px;*/
+				position:absolute;
+				top: 0;
+				left: 0;	
+
+			}
+			ul li{
+				list-style: none;
+			}
+			#oul li{
+				width:300px;
+				height:300px;
+				float:left;
+			}
+			#oul li img{
+				width:100%;
+				height:100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<ul id="oul">
+				<li><img src="img/2.jpg"/></li>
+				<li><img src="img/2345_image_file_copy_1.jpg"/></li>
+				<li><img src="img/2345_image_file_copy_2.jpg"/></li>
+				<li><img src="img/2345_image_file_copy_3.jpg"/></li>
+				<li><img src="img/2345_image_file_copy_4.jpg"/></li>
+				<li><img src="img/2345_image_file_copy_5.jpg"/></li>
+				<li><img src="img/2345_image_file_copy_6.jpg"/></li>
+				<li><img src="img/2345_image_file_copy_7.jpg"/></li>
+			</ul>
+		</div>
+		<!--<input type="button" name="" id="inp1" value="前进" />
+		<input type="button" name="" id="inp2" value="后退" />-->
+		
+	</body>
+	<script type="text/javascript">
+		var oli=document.getElementsByTagName("li");
+		var box=document.getElementById("box");
+		var oul=document.getElementById("oul");
+		var inp1=document.getElementById("inp1")
+		var inp2=document.getElementById("inp2");
+		oul.innerHTML=oul.innerHTML+oul.innerHTML;
+		oul.style.width=oli[0].offsetWidth*oli.length+"px";
+		var a=5;
+		var time=null;
+		var i=0;
+		function run(){
+			if(oul.offsetLeft<-oul.offsetWidth/2){
+				oul.style.left=0;
+			}
+			if(oul.offsetLeft>0){
+				oul.style.left=-oul.offsetWidth/2+"px";
+			}
+			oul.style.left=oul.offsetLeft-a+"px";
+			time=setTimeout(run,i);//递归的方法实现
+			if(oul.offsetLeft%300==0){
+				i=2000;
+			}else{
+				i=20
+			}
+		}
+		run();
+	</script>
+</html>

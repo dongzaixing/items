@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" name="tex1" id="txt1" value="" />
+		<input type="password" name="tex2" id="txt2" value="" />
+		<input type="button" name="btn" id="btn" value="提交" />
+		<ul id="oul"></ul>
+		
+		
+		<script type="text/javascript">
+			/*
+			 
+			 标准模式下：属性名必须用双引号引起来。如果json数据里面的属性不用双引号引起来，
+			 用JSON.parse()转换的话会报错。
+			 
+			 
+			 1.JSON.parse();把json格式的字符串转换成对象,只转换标准格式的json.
+			 2.eval('('+json+')');把json格式装换成字符串。优点：不管是不是标准的json格式。
+				 缺点：①eval要解1析两次,很消耗性能；②不安全，容易携带病毒
+			 3.Function:
+			 	new Function('','return'+json)
+			 	()();
+			 	
+			 
+			 
+			 * 
+			 * 
+			 * 
+			 * */
+			
+			
+//			var json="{'name':'lili','age':19}";
+//			var js=(new Function("","return"+json))();
+//			console.log(js)
+			
+			
+
+			
+			var txt1=document.getElementById('txt1');
+			var txt2=document.getElementById('txt2');
+			var btn=document.getElementById('btn');
+			var oul=document.getElementById('oul');
+
+			
+			btn.onclick=function(){
+				oul.innerHTML=""
+				var xhr=new XMLHttpRequest()
+				xhr.open('get','php/data.xml',true);
+				xhr.send();
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4){
+						if(xhr.status==200){
+							//xhr.getAllResponseHeaders();//响应头信息
+							var con=xhr.responseXML.getElementsByTagName('content')[0];
+							var per=con.children;
+							for(var i=0;i<per.length;i++){
+								var name=per[i].getElementsByTagName('name')[0];
+								var age=per[i].getElementsByTagName('age')[0];
+								var sex=per[i].getElementsByTagName('sex')[0];
+								var info=per[i].getElementsByTagName('info')[0];
+								oul.innerHTML+='<li>我的名字是'+name.innerHTML+",今年"+age.innerHTML+"岁；我是个"+sex.innerHTML+"人;个人信息："+info.innerHTML+'</li>'
+							}
+							console.log(per[0].innerHTML);
+						}
+					}
+				}
+			}
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

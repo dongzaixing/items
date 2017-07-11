@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas" width="500" height="500" style="border: 1px solid #ccc; background: url(img/22.jpg);"></canvas>
+		
+		
+	<script type="text/javascript">
+		var w=500;//获取浏览器窗口的宽高
+		var h=500;
+		var can=document.getElementById("canvas");
+		can.width=500;
+		can.height=500;
+		var cxt = can.getContext("2d");
+		var img=new Image();
+		img.src="img/22.jpg";
+		cxt.drawImage(img,100,100)
+	</script>	
+	</body>
+</html>

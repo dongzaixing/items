@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		
+		<script type="text/javascript">
+		
+			//获取最多的字符串
+			var str="sfdcfcfcffsdcfccfffsfss";
+			function change(str){
+				var obj={};
+				var num=0;
+				var a="";
+				for(var i=0;i<str.length;i++){//for循环遍历数组、字符串
+					if(!obj[str[i]]){//判断json对象里面是否有该数组
+						obj[str[i]]=[];//如果没有就建立一个数组
+					}
+					obj[str[i]].push(str[i]);//往相对应的数组里面添加内容
+				}
+				for(var x in obj){//for in循环去遍历对象
+					if(obj[x].length>num){
+						num=obj[x].length;
+						a=obj[x][0];
+					}
+				}
+				alert("最多的字符是："+a+"，个数是："+num)
+			}
+			change(str)
+			
+			
+		
+//		
+			
+			
+		</script>
+	</body>
+</html>

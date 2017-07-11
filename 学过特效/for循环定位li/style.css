@@ -1,0 +1,30 @@
+ul,li{
+	margin: 0;
+	padding: 0;
+}
+ul li{
+	list-style: none;
+}
+#oul{
+	width:600px;
+	height:400px;
+	border:1px solid paleturquoise;
+	margin: 50px auto;
+	position: relative;
+}
+
+li{
+	width:100px;
+	height:100px;
+	box-sizing: border-box;
+	/*float: left;*/
+	background: url(img/23.jpg) no-repeat ;
+	background-size: 600px 400px;
+	box-shadow: 1px 1px 1px #FFF2FB;
+	transition:all 1s;
+	position: absolute;
+}
+#oul li:hover{
+	transform: scale(0.6);
+	transition: 1s;
+}

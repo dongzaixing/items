@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>for循环定位</title>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				margin: 100px 100px;
+				width:500px;
+				height:500px;
+				/*border:1px solid blue;*/
+				position:relative;
+				
+			}
+			ul li{
+				list-style: none;
+				width:50px;
+				height:50px;
+				background:url(img/31.jpg);
+				background-size: 500px 500px;
+				text-align: center;
+				line-height: 50px;
+				position: absolute;
+					
+			}
+			#btn{
+				position: absolute;
+				top: 200px;
+				left: 700px;
+				
+			}
+			@keyframes animate{
+				0%{
+					transform: rotateZ(15deg);
+				}
+				50%{
+					transform: rotateZ(0deg);
+				}
+				100%{
+					transform: rotateZ(-15deg);
+				}
+			}
+			.con{
+				width:340px;
+				height:300px;
+				border: 1px solid blue;
+				background: #ccc;
+				padding: 0;
+				margin-left: 10px;
+			}
+			.con img{
+				width:200px;
+				height:200px;
+				display: inline-block;
+				float: left;
+				margin-right: 17px;
+			}
+			p{
+				font-size: 16px;
+				letter-spacing: 1px;
+				display: inline;
+				
+			}
+			
+			#video1{
+				display: none;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<button id="btn">点击一下</button>
+		<ul></ul>
+		<!--<div class="con">
+			<img src="img/28.jpg"/>
+			<p>这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测这测这是测这测这是测这是测这是测这是测这是测这是测这是测这是测这是测这是测</p>
+		</div>-->
+		<video src="6427.wav" id="video1" controls ></video>
+	<script type="text/javascript">
+		$(function(){
+			//两个for循环写法
+			/*var oul=document.getElementsByTagName("ul")[0];
+			for(var i=0;i<10;i++){
+				for(var j=0;j<10;j++){
+					var oli=document.createElement("li");
+					oli.style.top=i*50+"px";
+					oli.style.left=j*50+"px";
+					oul.appendChild(oli);
+					oli.onclick=function(){
+						alert(i)
+					}
+				}
+			}
+			var oli=document.getElementsByTagName("li");
+//			console.log(oli.length)
+			for(var i=0;i<100;i++){
+				oli[i].innerHTML=i+1
+			}*/
+			
+			var video=document.getElementById("video1");
+			var oli=document.getElementsByTagName("li");
+			
+			
+				//一个for循环写法
+				var time=null;
+				var num=1;
+				var y=-50;
+				//创建数组存放li
+				var arr=[]
+				var oul=document.getElementsByTagName("ul")[0];
+			function creatImg(){
+				for(var i=0;i<100;i++){
+					var oli=document.createElement("li");
+					var x=i%10;
+					if(i%10==0){
+						y+=50
+					}
+	//				对每个li定位
+					oli.style.left=x*50+'px';
+					oli.style.top=y+'px';
+					oul.appendChild(oli);
+					arr.push(oli)
+	//				每个li的背景图片定位
+					oli.style.backgroundPositionX=-x*50+'px';
+					oli.style.backgroundPositionY=-y+'px';
+	//				给每个li获取一个速度
+					oli.speedX=Math.random()*40-20;   //x轴 的移动速度
+					oli.speedY=Math.random()*40-20;
+				}
+			}
+			creatImg()
+			
+			
+			$('button').click(function(){
+				//点击后按钮消失
+				$(this).hide()
+				//晃动
+				$('ul').css({'animation': 'animate .1s alternate infinite'})
+				//200毫秒后停止
+				setTimeout(function(){
+					$('ul').css({'animation': ''})
+				},200)
+//				var video=$('<video width="100px" height="30px" src="6427.wav" id="video1" controls autoplay></video>')
+//				$('body').append(video)\
+				video.play()
+				//开始爆炸
+				time=setInterval(boom,50)
+			})
+			function boom(){
+				num+=0.05;
+				console.log(num)
+				$('li').css({'background':'url(img/31.jpg)','background-size':'100% 100%','border-radius':'50%','transform': 'scale('+num+')'})
+					for(var i=0;i<arr.length;i++){
+						arr[i].style.left=arr[i].offsetLeft+arr[i].speedX+'px'
+						arr[i].style.top=arr[i].offsetTop+arr[i].speedY+'px'
+						arr[i].speedY+=1;
+						if(arr[i].offsetLeft+100<0 || arr[i].offsetLeft>document.documentElement.clientWidth 
+            				|| arr[i].offsetTop+100<0 || arr[i].offsetTop>document.documentElement.clientHeight){
+							oul.removeChild(arr[i])
+							arr.splice(i,1)
+							i--;
+						}
+					}
+					if(arr.length==0){
+						clearInterval(time)
+						num=0;
+						$('button').show()
+					
+					}
+					console.log(arr.length)	
+				}
+			
+		})
+		
+	</script>
+	</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义滚动条</title>
+		<style type="text/css">
+			#odiv{
+				width:20px;
+				height:500px;
+				background: #ccc;
+				position: relative;
+				margin: 100px;
+			}
+			/*#odiv{
+				width:500px;
+				height:20px;
+				background: #ccc;
+				position: relative;
+				margin: 100px;
+			}*/
+			#omove{
+				width:20px;
+				height:20px;
+				position: absolute;
+				background: #F02C2D;
+				cursor: pointer;
+			}
+			#bb{
+				width:0px;
+				height:30px;
+				background: #F7B5DC;
+			}
+		</style>
+	</head>
+	<body>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<p>2</p>
+		<div id="odiv">
+			<div id="omove"></div>
+		</div>
+		<div id="bb"></div>
+		<script type="text/javascript">
+			var omove=document.getElementById("omove");
+			var odiv=document.getElementById("odiv");
+			var bb=document.getElementById("bb");
+			
+			omove.onmousedown=function(ev){
+				var ev=ev||event;
+//				var x=ev.clientX-omove.offsetLeft;
+				var y=ev.clientY-omove.offsetTop
+				console.log(ev.clientY)
+				document.onmousemove=function(ev){
+//					nx=ev.clientX-x;
+//					console.log(odiv.offsetTop-document.body.scrollTop)
+					ny=ev.clientY-y;
+					
+//					if(nx<0){
+//						nx=0;
+//					}
+//					if(nx>odiv.offsetWidth-omove.offsetWidth){
+//						nx=odiv.offsetWidth-omove.offsetWidth
+//					}
+					if(ny<0){
+						ny=0;
+					}
+					if(ny>odiv.offsetHeight-omove.offsetHeight){
+						ny=odiv.offsetHeight-omove.offsetHeight
+					}
+					console.log(ny)
+//					omove.style.left=nx+'px';
+					omove.style.top=ny+'px';
+				};
+				document.onmouseup=function(){
+					this.onmousemove=null;
+					this.onmouseup=null;
+				}
+			}
+			
+		</script>
+	</body>
+	
+	
+</html>
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var arr=[1,7,7,2,4,1,1,1,1,2,7,"1","2"];
+//			function dele(arr){
+//				var obj={};
+//				for(var i=0;i<arr.length;i++){
+//					if(obj[(typeof arr[i])+arr[i]]){
+//						arr.splice(i,1);
+//	//					alert('you')
+//						i--;
+//					}else{
+//						obj[(typeof arr[i])+arr[i]]=1;
+//					}
+//				}
+//				return arr
+//			}
+//			console.log(dele(arr))
+			
+			
+			
+			//嵌套for循环实现，不分数据类型
+			function dele(arr){
+				for(var i=0;i<arr.length;i++){
+					for(var j=i+1;j<arr.length;j++){
+						if(arr[i]==arr[j]){
+							arr.splice(j,1);
+							j--;
+						}
+					}
+				}
+				return arr
+			}	
+			console.log(dele(arr));
+			
+		</script>
+	</body>
+</html>

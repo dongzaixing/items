@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>滚轮事件</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+			#wrap{
+				transition: 1s;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.box1{
+				background: pink;
+			}
+			.box2{
+				background: red;
+			}
+			.box3{
+				background: blue;
+			}
+			.box4{
+				background: steelblue;
+			}
+			.box5{
+				background: orange;
+			}
+			#nav{
+				position: fixed;
+				right: 10px;
+				top: 35%;
+			}
+			span{
+				display: block;
+				width:20px;
+				height:20px;
+				border-radius: 50%;
+				margin: 10px 0;
+				background: white;
+				transition: all 1s;
+			}
+			.active{
+				background: black;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="box1"></div>
+			<div class="box2"></div>
+			<div class="box3"></div>
+			<div class="box4"></div>
+			<div class="box5"></div>
+			<nav id="nav"></nav>
+		</div>
+		<script type="text/javascript">
+			/*onmousewheel:ie chrome 支持
+			ev.WheelDelat:值为负的向下，为正就向上
+			*/
+			
+			/*DOMMousescroll:ff支持
+			 ev.detail:值为负的向上，为正就向下
+			 */
+//			var wrap=document.getElementById('wrap');
+//			var box=wrap.getElementsByTagName('div');
+//			var nav=document.getElementById('nav');
+//			var len=box.length;
+//			var H=document.documentElement.clientHeight;//可视区宽度
+//			var span=nav.getElementsByTagName('span');
+//			var num=0;
+//			var onoff=true;
+//			for(var i=0;i<box.length;i++){
+//				box[i].style.width=document.documentElement.clientWidth+'px';//设置每屏的宽高
+//				box[i].style.height=document.documentElement.clientHeight+'px';
+//				var sp=document.createElement('span');//动态生成小点
+//				sp.dataset.index=i;//给span自定义属性
+//				nav.appendChild(sp);	
+//			}
+//			//默认第一屏小点的颜色
+//			span[0].className='active';
+			//调用滚轮事件
+//			wheelCase(document,up,down);
+//			//向下滚动
+//			function down(){
+//				alert('向下')
+//				if(onoff){
+//					num--;
+//					if(num<1-len){
+//						num=1-len;
+//					}
+//					wrap.style.top=num*H+'px';
+//					delay();//每次滑动只滚一屏
+//					var n=-num;
+//					resetColor();//颜色清洗
+//					span[n].className='active';
+//					
+//				}
+//			}
+			//向上滚动
+//			function up(){
+//				alert('向上')
+//				if(onoff){
+//					num++;
+//					if(num>0){
+//						num=0;
+//					}
+//					wrap.style.top=num*H+'px';
+//					delay();//每次滑动只滚一屏
+//					var n=-num;
+//					resetColor();//颜色清洗
+//					span[n].className='active';
+//				}
+				
+//			}
+			//颜色大清洗
+//			function resetColor(){
+//				for(var i=0;i<len;i++){
+//					span[i].className="";
+//				}
+//			}
+//			//开关取反，让每次滑动滚轮只跳一屏
+//			function delay(){
+//				onoff=!onoff;
+//				setTimeout(function(){
+//					onoff=!onoff;
+//				},1000)
+//			}
+//			nav.onclick=function(ev){
+//				var ev=ev||event;
+//				if(ev.target.nodeName=="SPAN"){
+//					var tar=ev.target;
+//					resetColor()
+//					tar.className="active";
+//					console.log(tar.dataset.index)
+//					wrap.style.top=-tar.dataset.index*H+'px';
+//					num=-tar.dataset.index;//把当前的值付给滚轮的num
+//				}
+//			}
+		
+			
+			function wheelCase(obj,upFn,downFn){
+				var user=window.navigator.userAgent.toLowerCase();
+				
+				if(user.indexOf("firefox")==-1){//ie chrome 谷歌 ie
+					obj.addEventListener('mousewheel',fn);
+				}else{//firefox  火狐
+					obj.addEventListener('DOMMouseScroll',fn);
+				}
+				function fn(ev){
+					var dis=true;
+					if(ev.wheelDelta){//ie chrome  谷歌 ie 
+						dis=ev.wheelDelta>0?true:false;
+					}else{//firefox  火狐
+						dis=ev.detail<0?true:false;
+					}
+					if(dis){
+						upFn&&upFn()
+					}else{
+						downFn&&downFn()
+					}
+				}
+				return false;
+			}
+			
+			
+			
+			wheelCase(document,upFn,downFn);
+			function downFn(){
+				alert('wo滚动的是下')
+				
+			}
+			
+			function upFn(){
+				alert('wo滚动的是上')
+				
+			}
+//			function wheelCase(obj,down,up){
+//				var user = window.navigator.userAgent.toLowerCase();
+//				
+//				if(user.indexOf('firefox') == -1){//ie chrome 谷歌 ie
+//					
+//					obj.addEventListener('mousewheel',fn);
+//				}else{//firefox  火狐
+//					obj.addEventListener('DOMMouseScroll',fn);
+//				}
+//				
+//				function fn(ev){
+//					var dis = true;
+//					if(ev.wheelDelta){//ie chrome  谷歌 ie 
+//						dis = ev.wheelDelta>0?true:false;
+//					}else{//firefox  火狐
+//						dis = ev.detail<0?true:false;
+//					}
+//					if(dis){
+//						up&&up();
+//					}else{
+//						down&&down();
+//					}
+//				}
+//				return false;
+//			}
+		</script>
+	</body>
+</html>

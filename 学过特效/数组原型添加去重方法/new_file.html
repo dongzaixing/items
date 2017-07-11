@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<script type="text/javascript">
+			Array.prototype.se=function(){
+				var obj={};
+				var Arr=[];
+				var obj1={
+					newarr:[],
+					index:[]
+				};
+	//			var ;
+	//			var ;
+				for(var i=0;i<this.length;i++){
+					if(!obj[this[i]]){
+						obj1.newarr.push(this[i]);
+						obj[this[i]]=1;
+					}else{
+						obj1.index.push(i);
+					}
+				}
+	//			Arr.push(newarr);
+	//			Arr.push(index);
+				return obj1;
+			}
+			var arr=[3,3,2,4,8,5,14,2,3,8];
+			console.log(arr.se());
+			/*考察要点：数组去重并且要得到删除元素的下标
+			1.js中的继承是怎么实现的：通过原型链实现继承。
+			2.数组去重
+			3.数组与对象的灵活运用
+			*/
+		</script>
+	</body>
+</html>

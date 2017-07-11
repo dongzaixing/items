@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>浮动式</title>
+		<style type="text/css">
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width:960px;
+				margin: 0 auto;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				float: left;
+				width:300px;
+				margin: 0 10px;
+				background: #ccc;
+			}
+			li{
+				list-style: none;
+			}
+			li img{
+				width:300px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul>
+				<li></li>
+			</ul>
+			<ul>
+				<li></li>
+			</ul>
+			<ul>
+				<li></li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var box=document.getElementsByClassName("box")[0];
+			var oul=document.getElementsByTagName("ul");
+			var vH=document.documentElement.clientHeight;//浏览器可视高度
+			
+			
+			function star(){
+				for(var i=1;i<15;i++){//定义打开网页时候加载图片的个数
+					var oImg=document.createElement("img");
+					oImg.src="img/"+(i+20)+".jpg";
+					var oli=document.createElement("li");
+					oli.appendChild(oImg);
+					
+					//获取ul的索引
+					var minIndex=checkHeight(oul);//每循环一次都要判断ul的索引
+					oul[minIndex].appendChild(oli);//每次循环给高度最小的ul添加图片
+				}
+			}
+			star()//初始化页面
+			
+			//判断最小ul的索引
+			function checkHeight(oul){
+				//初始化
+				var height=100000;
+				var index=0;
+				for(var i=0;i<oul.length;i++){
+					var nowHeight=oul[i].offsetHeight;
+					if(nowHeight<height){
+						height=nowHeight;
+						index=i
+					}
+				}
+				return index;//返回最小的索引
+			}
+			//滚动事件
+			window.onscroll=function(){//滚动条滚动事件
+				var st=document.documentElement.scrollTop||document.body.scrollTop;//兼容
+				//滚动条的高度+浏览器的高度>内容的高度
+				if(st+vH>document.body.scrollHeight*0.8){//到底了加载新内容
+					star()
+				}
+				
+				
+			}
+			
+			function Fn(){
+				this.name='li';
+				this.fun=function(){
+					alert('88')
+				}
+			}
+
+		
+		</script>
+	</body>
+</html>

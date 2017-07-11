@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/newtools.js"></script>
+		<style>
+			.box{
+				width:600px;
+				height:200px;
+				border:1px solid red;
+				position: relative;
+			}
+			img{
+				transition: all 1s;
+			}
+			.img1{
+				position: absolute;
+				top:20px;
+				left:40px;
+				width:100px;
+				z-index: 1;
+			}
+			.img2{
+				position: absolute;
+				top:50px;
+				left:100px;
+				width:150px;
+				z-index: 2;
+			}
+			.img3{
+				position: absolute;
+				top:50px;
+				left:340px;
+				width:150px;
+				z-index: 2;
+			}
+			.img4{
+				position: absolute;
+				top:20px;
+				left:450px;
+				width:100px;
+				z-index: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<img src="img/1.jpg" class="img1"/>
+			<img src="img/2.jpg" class="img2"/>
+			<img src="img/3.jpg" class="img3"/>	
+			<img src="img/4.jpg" class="img4"/>	
+		</div>
+		
+		<input type="button" name="" id="prev" value="上一个" />
+		<input type="button" name="" id="next" value="下一个" />
+		
+		
+		
+		<!--简单方法-->
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript">
+			/*$(function(){
+				function run(a){
+//					思路:点击按钮后对图片进行两次循环,第一次循环将所有图片的属性放到数组里面,第二次循环的时候让图片的属性等于下一张或上一张图片的属性
+					var arr=[];//创建数组存放每张图片的属性
+					$('.box img').each(function(i){//用each去循环所有的图片
+						arr.push({
+							'left':$(this).css('left'),
+							'top':$(this).css('top'),
+							'width':$(this).css('width'),
+							'height':$(this).css('height'),
+							'zIndex':$(this).css('zIndex')
+						})
+					})
+					
+					$('.box img').each(function(i){//用each在次循环所有的图片，让每张图片的属性等于前一张或后一张的属性
+						var n;
+						var check=a;//根据参数来判断向左还是向右
+						if(check=='next'){
+							n=i+1;
+							n>$('.box img').length-1?n=0:n=i+1;
+						}else{
+							n=i-1;
+							n<0?n=$('.box img').length-1:n=i-1;
+						}
+						$(this).css({'left':arr[n].left,'top':arr[n].top,'width':arr[n].width,'height':arr[n].height,'zIndex':arr[n].zIndex})
+					})
+				}
+				
+				$('#next').click(function(){//点击的时候首先获取所有图片的属性
+					run('next')
+				})
+				$('#prev').click(function(){//点击的时候首先获取所有图片的属性
+					run('prev')
+				})	*/			
+				
+				
+				
+				
+				
+				/*var Imgs=document.getElementsByTagName('img');
+				function run(){
+					var arr=[];
+					var n=0;
+					for(var i=0;i<Imgs.length;i++){
+						
+						arr.push({
+							'left':Imgs[i].offsetLeft,
+							'top':Imgs[i].offsetTop,
+							'width':Imgs[i].offsetWidth,
+							'height':Imgs[i].offsetHeight,
+							'zIndex':$(Imgs[i]).css('z-index')
+						})
+					}
+					for(var i=0;i<Imgs.length;i++){
+							n=i+1;
+							if(n>Imgs.length-1){
+								n=0;
+							}
+							Imgs[i].style.left=arr[n].left+'px';
+							Imgs[i].style.top=arr[n].top+'px';
+							Imgs[i].style.width=arr[n].width+'px';
+							Imgs[i].style.height=arr[n].height+'px';
+							Imgs[i].style.zIndex=arr[n].zIndex;
+					}
+				}
+				$('#next').click(function(){//点击的时候首先获取所有图片的属性
+					run()
+				})*/
+				
+				
+//			})	
+		</script>
+		
+		<!--用运动函数来写-->
+		<script type="text/javascript">
+			var btn = document.getElementsByTagName('input')[0];
+			var img = document.getElementsByTagName('img');
+			var arr = [];
+			for(var i=0;i<img.length;i++){
+				arr[i] = {
+					"left":img[i].offsetLeft,
+					"top":img[i].offsetTop,
+					"width":css(img[i],"width")
+				}
+			}
+			btn.onclick =function(){;
+				arr.unshift(arr.pop());
+				for(var i=0;i<arr.length;i++){
+					if(img[i].style.left=='40px'){
+						img[i].style.zIndex=0;
+					}else{
+						img[i].style.zIndex=1;
+					}
+//					img[i].style.top = arr[i].top;
+//					img[i].style.left = arr[i].left;
+//					img[i].style.width = arr[i].width;
+					var obj = {
+						"element":img[i],
+						"time":300,
+						"type":"bounceBoth",
+						"target":{"top":arr[i].top,"left":arr[i].left,"width":arr[i].width}
+					}
+					mTween(obj);
+				}
+			}
+			
+		</script>
+	</body>
+</html>

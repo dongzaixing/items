@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="shortcut icon" type="image/x-icon" href="img/baidu.png"/>
+		<script type="text/javascript" src="jquery-3.1.1.min.js">
+			
+		</script>
+		<style type="text/css">
+		
+			body{
+				background: url(img/36.jpg) no-repeat 500px 300px;
+				height:2000px;
+				background-attachment: fixed;
+			}
+			#box{
+				width:300px;
+				height:300px;
+				margin:100px 0 0 100px;
+				border:1px solid blue;
+				position:relative;
+			}
+			#box img{
+				width:100%;
+				height:100%;
+			}
+			#box1{
+				width:200px;
+				height:200px;
+				border:1px solid olivedrab;
+				
+				position:absolute;
+				top: -100px;
+				left:0;
+				z-index: 0;
+			}
+			#box2{
+				width:200px;
+				height:200px;
+				border:1px solid olivedrab;
+				position:absolute;
+				top: -100px;
+				left:50px;
+				z-index: -1;
+			}
+			#box3{
+				width:200px;
+				height:200px;
+				border:1px solid olivedrab;
+				position:absolute;
+				top: 300px;
+				left:150px;
+				z-index: -1;
+			}
+			img{
+				width:100%;
+				height:100%;
+				
+			}
+			#box4{
+				width:200px;
+				height:200px;
+				border:1px solid blue;
+				/*名称  执行时间  执行函数  执行次数 往返执行 延迟时间*/
+				animation: myaction 5s linear 3 alternate 1s;
+				animation-name: myaction;
+				/*执行一次使用事件*/
+				animation-duration: 5s;
+				
+				animation-timing-function: ease;
+				/*animation-delay: 3s;*/
+				/*同方向循环执行*/			
+				animation-iteration-count: infinite;
+				/*原路往返执行*/
+				animation-direction: alternate;
+				/*动画结束后停留在结束位置不返回*/
+				animation-fill-mode: forwards;
+				/*返回到开始的位置*/
+				animation-fill-mode: backwards;	
+			}
+			@keyframes myaction{
+				0%{
+					width:50px;
+					background: #ccc;
+				}
+				50%{
+					width:500px;
+					background: pink;
+					margin-left: 300px;
+					text-align: center;
+				}
+				100%{
+					width:100px;
+					height:100px;
+					border-radius: 20%;
+					margin-top: 500px;
+				}
+				/*from{}
+				to{}*/
+			}
+			#box5{
+				width:300px;
+				height:500px;
+				border:1px solid blue;
+				position:relative;
+			}
+			#zuo{
+				width:100px;
+				height:100px;
+				border:1px solid red;
+				/*position:absolute;
+				top: 0;
+				left: 0;*/
+				float:left;
+			}
+			#you{
+				width:100px;
+				height:100px;
+				border:1px solid orange;
+				/*position:absolute;
+				top: 0px;
+				left: 100px;*/
+				float:left;
+			}
+			#xia{
+				width:280px;
+				height:250px;
+				border:1px solid paleturquoise;
+				/*float:left;*/
+				overflow: hidden;
+				
+			}
+			#zuihou{
+				width:200px;
+				height:200px;
+				border:1px solid red;
+				/*margin-top: 60px;*/
+			}
+			#bb{
+				width:200px;
+				height:200px;
+				background:palevioletred;
+				border:1px soid blue;
+				position: absolute;
+				top: 200px;
+			}
+			#bag{
+				width:200px;
+				height:200px;
+				border:1px solid blue;
+				overflow: hidden;
+				
+			}
+			#bag img{
+				width:100%;
+				height:100%;
+				transition:all 3s;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<!--<div id="box">
+			<img src="img/34.jpg"/>
+			<div id="box1">
+				<img src="img/31.jpg"/>
+			</div>
+			<div id="box2">
+				<img src="img/28.jpg"/>
+			</div>
+		</div>
+		<div id="box3">
+			<img src="img/36.jpg"/>
+		</div>-->
+		<!--<div id="box4">
+			<span>animation动画效果</span>
+		</div>-->
+		<div id="box5">
+			<div id="zuo">我是左边的div我是左</div>
+			<div id="you">我是右边我是右边的div我是右边的div</div>
+			<div id="xia">我是下面的div,如果浮动的话，框会跑到下面，而内容是在浮动元素的右边或后面开始排列。如果是定位的话</div>
+			<div id="zuihou">如果没有清除浮动，内容在这里，但是实际的盒子会嵌入上面</div>
+		</div>
+		<div id="bb"></div>
+		
+		<div id="bag"><img src="img/31.jpg"/></div>
+		
+	<script type="text/javascript">
+		$('#bb')
+		.animate({'width':'300px','left':'400px','border-radius':'50%'},1000).queue(function(next){
+			$(this).css({"background":'#ccc','transition':'4s'});
+			next();	
+		}).animate({'width':'50px','height':'50px','left':'1000px'})
+		$('#bag').hover(function(){
+			$('#bag img').css({'transform':'scale(1.2)'})
+		},function(){
+			$('#bag img').css({'transform':'scale(1)'})
+		})
+	</script>	
+	</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				
+			}
+			li{
+				list-style: none;
+				width:100px;
+				height:30px;
+				background: #ccc;
+				margin: 10px 0;
+			}
+			#box{
+				width:200px;
+				height:200px;
+				background: #F4A460;
+				margin: 200px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="box">将文件拖放到此区域</div>
+		<img id="img" src="img/QQ.png" style="display: none;"/>
+		<script type="text/javascript">
+			var box=document.getElementById('box');
+			
+			//目标元素
+			box.ondragenter=function(){
+				this.innerHTML='可以放置文件';
+			}
+			//enter和leave之间触发，要想触发释放事件，就必须要阻止ondragover的默认事件
+			box.ondragover=function(ev){
+				ev.preventDefault()
+			}
+			box.ondragleave=function(){
+				this.innerHTML='将文件拖放到此区域';
+			}
+			box.ondrop=function(ev){
+				ev.preventDefault();//阻止默认行为，拖进来的文件就不会默认被打开
+				var fs=ev.dataTransfer.files;
+				//fs.length:文件的长度
+				//fs[i].type:文件的类型
+				//读取文件信息,可以读出文件的路径，
+				var fd=new FileReader();
+				fd.readAsDataURL(fs[0]);
+				fd.onload=function(){
+					console.log(this.result)
+				}
+			}
+		</script>
+	</body>
+</html>

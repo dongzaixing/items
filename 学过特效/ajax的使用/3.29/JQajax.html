@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript">
+			
+			var json='{"name":"lili","age":222}';
+			var xml='<奶奶的>哈哈啊</奶奶的>';
+			var html='<div>哈哈啊啊哈哈哈哈</div>'
+			var a=$.parseJSON(json);
+			var b=$.parseXML(xml);
+			var c=$.parseHTML(html)
+			$('body').append(c)
+			console.log(a)
+			console.log(b)
+			console.log(c)
+			alert($('div').html())
+			
+		</script>
+		
+	</body>
+</html>

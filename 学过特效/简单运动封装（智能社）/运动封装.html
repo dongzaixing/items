@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>运动函数封装</title>
+		<style type="text/css">
+		
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width:300px;
+				height:300px;
+				background:#6699CC;
+				display: inline-block;
+				left: -300px;
+				position: absolute;
+			}
+			.s{
+				display: inline-block;
+				width:30px;
+				height:80px;
+				background: blue;
+				position: absolute;
+				right: -30px;
+				top: 110px;
+			}
+			.box2{
+				width:300px;
+				height:300px;
+				background:#6699CC;
+				display: inline-block;
+				left: 300px;
+				top: -300px;
+				position: absolute;
+			}
+			.d{
+				display: inline-block;
+				width:80px;
+				height:30px;
+				background: blue;
+				position: absolute;
+				right: 110px;
+				bottom: -30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"><span class="s">分享到</span></div>
+		<div class="box2"><span class="d">上下拉动</span></div>
+		
+		
+		<script type="text/javascript">
+			var box=document.getElementsByClassName("box")[0];
+			var box2=document.getElementsByClassName("box2")[0];
+			var s=document.getElementsByClassName("s")[0];
+			var time=null;
+		
+			box2.onmouseover=function(){
+				star(box2,0)
+				
+			}
+			box2.onmouseout=function(){
+				star(box2,-300)
+				
+			}
+//			Hover(box2,down,0,-300)
+//			
+//			
+//			function Hover(obj,fn,target1,target2){
+//				obj.onmouseover=function(){
+//					fn(obj,target1)
+//					
+//				}
+//				obj.onmouseout=function(){
+//					fn(obj,target2)
+//					
+//				}
+//				
+//			}
+				//上下拉动
+				function star(obj,target){//对象，目标值
+//					var box=document.getElementsByClassName("box")[0];
+					clearInterval(time);
+					time=setInterval(function(){
+						var speed=(target-obj.offsetTop)/12;
+						if(speed>0){
+							speed=Math.ceil(speed)
+						}else{
+							speed=Math.floor(speed)
+						}
+						if(obj.offsetTop==target){
+							clearInterval(time);
+						}else{
+							obj.style.top=obj.offsetTop+speed+"px";
+						}
+					},30)
+				}
+				
+				
+				
+				
+				
+				
+				
+			
+			//左右滑动
+//			function starmove(obj,target){//对象，目标值
+////				var box=document.getElementsByClassName("box")[0];
+//				clearInterval(time);
+//				time=setInterval(function(){
+//					var speed=0;//当前位置和目标值相比，判断速度是正的还是负的
+//					obj.offsetLeft>target?speed=-10:speed=10;//如果原始值大于目标值，速度则是负的
+//					obj.offsetLeft==target?clearInterval(time):obj.style.left=obj.offsetLeft+speed+"px";
+//					
+////					if(obj.offsetLeft>target){
+////						speed=-10;
+////					}else{
+////						speed=10;
+////					};
+////					if(obj.offsetLeft==target){
+////						clearInterval(time);
+////					}else{
+////						obj.style.left=obj.offsetLeft+speed+"px";
+////					}
+//				},30)
+//			}
+			
+			
+			//上下滑动
+//			function down(obj,target){//对象，目标值
+//				clearInterval(time);
+//				time=setInterval(function(){
+//					var speed=0;
+//					obj.offsetTop>target?speed=-10:speed=10;
+//					obj.offsetTop==target?clearInterval(time):obj.style.top=obj.offsetTop+speed+"px";
+//					
+////					if(obj.offsetTop>target){
+////						speed=-10;
+////					}else{
+////						speed=10;
+////					}
+////					if(obj.offsetTop==target){
+////						clearInterval(time);
+////					}else{
+////						obj.style.top=obj.offsetTop+speed+"px";
+////					}
+//				},30)
+//			}
+		</script>
+	</body>
+</html>

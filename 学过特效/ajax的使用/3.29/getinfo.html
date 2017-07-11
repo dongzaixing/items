@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="button" name="btn" id="btn" value="提交2" />
+		
+		<input type="text" name="txt" id="txt" value="" />
+		<script type="text/javascript">
+			var btn = document.getElementById('btn');
+			var txt = document.getElementById('txt');
+			btn.onclick = function(){
+				var val=txt.value;
+				var ajax = new XMLHttpRequest();  //创建一个ajax实例
+			    ajax.open('post','php/post.php',true); 
+			    ajax.onload = function(){  //4,5
+			    	console.log(ajax.getAllResponseHeaders())
+			    	if(ajax.readyState == 4){
+			    		if(200<=ajax.status&&ajax.status<=207){
+			    			alert(ajax.responseText)
+			    		}		    		
+			    	}    	
+			    }
+			    ajax.setRequestHeader( 'Content-Type','application/x-www-form-urlencoded');
+			    ajax.send('user='+val);          
+			}
+		</script>
+	</body>
+</html>

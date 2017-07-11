@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#con{
+				width:360px;
+				height:400px;
+				position:relative;
+				margin: 250px auto;
+			}
+			#box{
+				width:360px;
+				height:400px;
+				/*给子元素创建3d效果*/
+				transform-style: preserve-3d;
+				/*设置动作延迟时间*/
+				transition: all 1.5s;
+				transform: rotateX(-30deg);
+			}
+			.box{
+				width:100%;
+				height:100%;	
+				position: absolute;
+				
+			}
+			.box img{
+				width:100%;
+				height:100%;
+			}
+			.one{
+				background: url(images/1.png) no-repeat;
+				transform:rotateY(0deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			.two{
+				background: url(images/2.png) no-repeat;
+				transform:rotateY(-45deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			.thr{
+				background: url(images/3.png) no-repeat;
+				transform:rotateY(-90deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			.four{
+				background: url(images/4.png) no-repeat;
+				transform:rotateY(-135deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			.five{
+				background: url(images/31.jpg) no-repeat;
+				transform:rotateY(-180deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			.six{
+				background: url(images/32.jpg) no-repeat;
+				transform:rotateY(-225deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			.seven{
+				background: url(images/33.jpg) no-repeat;
+				transform:rotateY(-270deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			.eight{
+				background: url(images/34.jpg) no-repeat;
+				transform:rotateY(-315deg) translateZ(435px);
+				background-size: 360px 400px;
+			}
+			span{
+				display:inline-block;
+				width:80px;
+				height:30px;
+				text-align: center;
+				line-height: 30px;
+				font-size: 20px;
+				background:slateblue;
+			}
+			#shang{
+				position:absolute;
+				top:185px;
+				left: 0px;
+			}
+			#xia{
+				position:absolute;
+				top:185PX;
+				right: 0px;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+	</head>
+	<body>
+		<div id="con">
+			<div id="box">
+				<div class="box one"></div>
+				<div class="box two"></div>
+				<div class="box thr"></div>
+				<div class="box four"></div>
+				<div class="box five"></div>
+				<div class="box six"></div>
+				<div class="box seven"></div>
+				<div class="box eight"></div>
+			</div>
+			<span id="shang">向上</span>
+			<span id="xia">向下</span>
+		</div>
+	<script type="text/javascript">
+		$(function(){
+			var num=0;
+			$('#shang').on('click',function(){
+				
+				$('#box').css({'transform':'rotateY('+(++num*45)+'deg)'});
+			});
+			
+			$('#xia').on('click',function(){
+				$('#box').css({'transform':'rotateY('+(--num*45)+'deg)'});
+			});
+		});
+	</script>
+	</body>
+
+</html>

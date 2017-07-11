@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>无缝式轮播</title>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<style type="text/css">
+			body{
+				margin-left: 500px;
+			}
+			.con{
+				width:500px;
+				height:400px;
+				border: 1px solid blue;
+				position: relative;
+				overflow: hidden;
+			}
+			img{
+				width:500px;
+				height:400px;
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			button{
+				width:100px;
+				height:30px;
+				border: none;
+				outline: 0 none;
+				text-align: center;
+				line-height: 30px;
+				font-size: 20px;
+				color: #FF0000;
+				margin-right:294px ;
+			}
+		</style>
+	</head>
+	<body>
+		<button id="prev">prev</button>
+		<button id="next">next</button>
+		<div class="con">
+			<img src="img/21.jpg"/>
+			<img src="img/22.jpg"/>
+			<img src="img/23.jpg"/>
+			<img src="img/24.jpg"/>
+			<img src="img/25.jpg"/>
+			<img src="img/26.jpg"/>
+			<img src="img/27.jpg"/>
+		</div>
+	<script type="text/javascript">
+		$(function(){
+			var time1=null;
+			var time2=null;
+			var dianji=false;
+			$('#prev').click(function(){
+				dianji=true;
+				clearInterval(time1)
+				clearInterval(time2)
+				$('img').last().stop(false,true).animate({'left':'-500px'},900,function(){
+					$(this).prependTo('.con').css({'left':'0'})
+				})
+				$('#prev').mouseout(function(){
+					if(dianji==true){
+						time1=setInterval(run1,2000)
+						dianji=false;
+					}
+				})
+			})
+			$('#next').click(function(){
+				dianji=true;
+				clearInterval(time1)
+				clearInterval(time2)
+				$('img').last().stop(false,true).animate({'left':'500px'},900,function(){
+					$(this).prependTo('.con').css({'left':'0'})
+				})
+				$('#next').mouseout(function(){
+					if(dianji==true){
+						time2=setInterval(run2,2000)
+						dianji=false;
+					}
+				})
+			})
+			time1=setInterval(run1,2000)
+			function run1(){
+				$('img').last().stop(false,true).animate({'left':'-500px'},900,function(){
+					$(this).prependTo('.con').css({'left':'0'})
+				})
+			}
+			function run2(){
+				$('img').last().stop(false,true).animate({'left':'500px'},900,function(){
+					$(this).prependTo('.con').css({'left':'0'})
+				})
+			}
+			
+			
+			//淡出
+//			setInterval(fun,2000)
+//			function fun(){
+//				$('img').last().stop(false,true).fadeOut(900,function(){
+//					$(this).prependTo('.con').show()
+//				})
+//			}
+			
+		})
+	</script>
+	</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<!--<form action="php/get.php" method="get" enctype="application/x-www-form-urlencoded">
+			
+			<input type="text" name="user" id="" value="" />
+			
+			<input type="submit" value="提交"/>
+		</form>-->
+		
+		<input type="text" name="txt" id="txt" value="" />
+		<input type="password" name="txt" id="txt1" value="" />
+		<input type="button" name="btn" id="btn" value="提交2" />
+		<span id="sp"></span>
+		
+		<script type="text/javascript">
+			/*
+			 ajax :
+			 		Asynchronous  Javascript And XML
+			 		异步                         js        和    xml
+			 	
+			 	作用：
+			 	
+			 		前台和后台进行数据交换的一种技术，数据都是以字符串的形式进行传递的
+			 		
+			 	特点：
+			 		无刷新页面，不用跳转页面，就可以进行数据的交互
+			 		提升了用户体验
+			 		
+			 		
+				打电话流程：
+					1. 找一个手机        
+					2. 输入号码
+					3. 拨号
+					4. 等待接通
+					5. 通话
+			 	
+			 	get传送的特点：
+			 		1 . 把传送的数据放在地址栏url里面
+			 		2 . 传输的数据会被浏览器获得，传输不安全
+			 		3 . 传输的数据是有长度限制的
+			 		4 . 在ie浏览器里面中文字符要经过encodeURI转码，否则会出现乱码
+			 	
+			 	
+			 	同步 ：
+			 		阻塞模式，必须等到前面的是有程序都执行完这才执行
+			 		典型的是输出方式alert();
+			 		
+			 	异步：
+			 		非阻塞模式，不用等前面的代码执行完，它就可以执行
+			 		典型的输出方式
+			*/
+			
+				var btn = document.getElementById('btn');
+				var txt = document.getElementById('txt');
+				var txt1 = document.getElementById('txt1');
+				var sp = document.getElementById('sp');
+				
+//				console.log(encodeURI('样'))
+//				
+				//console.log(decodeURI('%25E4'))
+				
+				btn.onclick = function(){
+					var val = txt.value;
+					var val1 = txt1.value;
+					var ajax = new XMLHttpRequest();  //创建一个ajax实例
+				
+				    //new ActiveXObject()  ie5
+				    
+				    ajax.open('get','php/get.php?use='+encodeURI(val)+'&user='+val1,true); //输入号码
+				    
+				    ajax.send();           //安拨号键
+				    
+				    //%E6%88%91%E4%B8%BA%E7%8E%8
+				    
+				    ajax.onreadystatechange = function(){  //4,5
+				    	
+				    	var str = ajax.responseText;
+				    	sp.innerHTML = str;
+				    	console.log(str);
+				    }
+				}
+				
+				
+//				alert(1);
+//				console.log(1);
+
+//				setInterval(function(){
+//					console.log(1);
+//				},1000)
+//				
+//				setTimeout(function(){
+//					console.log(2);
+//				},2000)
+				
+				
+				
+				
+				
+				
+		</script>
+		
+	</body>
+</html>

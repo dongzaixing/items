@@ -1,0 +1,39 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+ul li{
+	list-style: none;
+}
+body{
+	background: #333;
+}
+.con{
+	width:100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: black;
+}
+#box{
+	width:360px;
+	height:360px;
+	border:1px solid slateblue;	
+	position: relative;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+li{
+	width:60px;
+	height:60px;
+	position: absolute;
+	background: url(../img/31.jpg) no-repeat;
+	background-size: 360px 360px;
+	box-shadow: 0 0 3px #333;
+}
+
+

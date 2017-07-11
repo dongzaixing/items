@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #startdiv{
+            width: 320px;
+            height: 568px;
+            background: url(image/开始背景.png) no-repeat;
+        }
+        #content{
+            width: 320px;
+            height: 568px;
+            position: absolute;
+            top: 5px;
+            left: 500px;
+        }
+        #btstart{
+            width: 150px;
+            height: 30px;
+            background: burlywood;
+            border-radius: 30px;
+            position: absolute;
+            top:450px;
+            left:80px;
+        }
+        #maindiv{
+            width: 320px;
+            height:568px;
+            background: url(image/background_1.png);
+            position:absolute;
+            display: none;
+            overflow:hidden;
+        }
+    </style>
+
+</head>
+<body>
+	
+<div id="content">
+    <div id="startdiv">
+        <input id="btstart" type="button" value="开始游戏"/>
+    </div>
+    <div id="maindiv"></div>
+</div>
+
+<script>
+    //开始按钮
+    var oBtStart=document.getElementById("btstart");
+    //游戏界面
+    var oMainDiv=document.getElementById("maindiv");
+    //游戏总定时器
+    var timer;
+    //游戏界面的背景定位坐标。
+    var MainDivBKPositionY=0;
+
+    //记录我的飞机
+    var myPlan;
+
+    //存放子弹的数组。
+    var arrBullet=[];
+    //子弹的移动速度
+    var speedBullet=20;
+    //定时器的记录
+    var timerMark=0;
+    //游戏界面的宽度
+    var mainWidth=320;
+    var mainHeight=568;
+    //存放所有的敌机
+    var arrEnemy=[];
+    //敌机的速度
+    var speedEnemy=2;
+
+    //开始按钮的点击事件
+    oBtStart.onclick=function (){
+        //进入主界面。  隐藏开始界面，显示主界面。
+        var oStartDiv=document.getElementById("startdiv");
+        oStartDiv.style.display="none";
+        oMainDiv.style.display="block";
+
+        //创建我的飞机
+        myPlan=createMyPlan();
+        moveMyPlan();
+        startGame();
+    }
+
+    //开始游戏
+    function startGame(){
+        clearInterval(timer);
+        timer=setInterval(function(){
+            timerMark++;
+            //1.背景动起来
+            oMainDiv.style.backgroundPositionY=MainDivBKPositionY+"px";
+            MainDivBKPositionY+=0.5;
+           //2. 创建子弹。
+            //每个30毫秒就创建一个子弹。
+            createBullet();
+            moveBullet();
+            createEnemy();
+            moveEnemy();
+        },20);
+    }
+
+    //创建敌机
+    function createEnemy(){
+        if(timerMark%400==0){
+            //大飞机
+            createPlan(110,164,"image/enemy2_fly_1.png");
+        }else if(timerMark%150==0){
+            createPlan(46,60,"image/enemy3_fly_1.png");
+            //创建中飞机
+        }else if(timerMark%30==0){
+            //创建小飞机
+            createPlan(34,24,"image/enemy1_fly_1.png");
+        }
+    }
+
+    //创建敌机的方法。
+    function createPlan(width,height,url){
+        var enemy=document.createElement("img");
+        enemy.style.width=width+"px";
+        enemy.style.height=height+"px";
+        enemy.src=url;
+        enemy.style.position="absolute";
+        enemy.style.top=-height+"px";
+        enemy.style.left=Math.floor(Math.random()*(mainWidth-width))+"px";
+        //left的范围 0-到-oMainDiv的宽度320减去打飞机的宽度110   (0,320-46)=》(0,274)  ;随机left
+        oMainDiv.appendChild(enemy);
+        arrEnemy.push(enemy);
+        console.log(arrEnemy.length);
+    }
+
+    //移动敌机
+    function moveEnemy(){
+        for(var i=0;i<arrEnemy.length;i++){
+            arrEnemy[i].style.top=arrEnemy[i].offsetTop+speedEnemy+"px";
+        }
+        //console.log(arrEnemy[0].offsetTop);
+        if(arrEnemy.length>0){
+            console.log(arrEnemy[0].style.top);
+        }
+        for(var j=0;j<arrEnemy.length;j++){
+            if(arrEnemy[j].offsetTop>=mainHeight){
+                oMainDiv.removeChild(arrEnemy[j]);
+                arrEnemy.splice(j,1);
+                j--;
+                //删除j位置的元素后，后面的元素都向前移动了一位。为了不漏掉元素的遍历，j--
+            }
+        }
+    }
+
+
+    //创建我的飞机
+    function createMyPlan(){
+        var oMyPlan=document.createElement("div");
+        oMyPlan.style.width="66px";
+        oMyPlan.style.height="80px";
+        oMyPlan.style.position="absolute";
+        oMyPlan.style.background="url(image/我的飞机.gif) no-repeat";
+        oMyPlan.style.top="480px";
+        oMyPlan.style.left="127px";
+        oMyPlan.style.zIndex=999;
+        oMainDiv.appendChild(oMyPlan);
+        return oMyPlan;
+    }
+    //移动我的飞机
+    function moveMyPlan(){
+        document.onmousemove=function(event){
+            //
+            event=event||window.event;
+
+            var mLeft=event.clientX-500-33;
+            var mTop=event.clientY-41;
+            //边界
+            if(mTop<=0){
+                mTop=0;
+            }
+            if(mTop>=568-82){
+                mTop=486;
+            }
+            if(mLeft<=-33){
+                mLeft=-33;
+            }
+            if(mLeft>=320-33){
+                mLeft=287;
+            }
+
+            myPlan.style.top=mTop+"px";
+            myPlan.style.left=mLeft+"px";
+        }
+    }
+
+    //创建子弹
+    function createBullet(){
+        var bullet=document.createElement("div");
+        bullet.style.width="6px";
+        bullet.style.height="14px";
+        bullet.style.background="url(image/bullet1.png) no-repeat";
+        bullet.style.position="absolute";
+        bullet.style.top=myPlan.offsetTop+"px";//我的飞机的top，
+        bullet.style.left=myPlan.offsetLeft+33-3+"px";
+        //我的飞机的left +我的飞机的宽度的一半，在减去子弹的宽度的一半
+        
+        oMainDiv.appendChild(bullet);
+        arrBullet.push(bullet);
+    }
+    //移动子弹  所有的子弹 移动一步。
+    //然后再总定时器中 调用。
+    function moveBullet(){
+        //操作子弹的top ， 变小。向上跑。。
+        //子弹在哪里？arrBullet
+        //是否要在此处开启一个定时器
+        for(var i=0;i<arrBullet.length;i++){
+            arrBullet[i].style.top=arrBullet[i].offsetTop-speedBullet+"px";
+        }
+        //如果子弹已经出去了， 删除。
+        //top =-14；
+        for(var j=0;j<arrBullet.length;j++){
+            if(arrBullet[j].offsetTop<=-14){
+                //删除
+                oMainDiv.removeChild(arrBullet[j]);
+                arrBullet.splice(j,1);
+            }
+        }
+    }
+</script>
+</body>
+</html>

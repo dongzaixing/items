@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>秒表</title>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<style type="text/css">
+			body{
+				margin: 200px;
+			}
+			span{
+				font-size: 30px;
+			}
+			button{
+				width:100px;
+				height:30px;
+				line-height: 30px;
+				text-align: center;
+				border: none;
+				outline: 0 none;
+			}
+		</style>
+	</head>
+	<body>
+		<span class="four">0</span>
+		<span class="thr">0</span>
+		<span>:</span>
+		<span class="two">0</span>
+		<span class="one">0</span>
+		<button id="star">开始</button>
+		
+		
+		
+	<script type="text/javascript">
+		var one=document.getElementsByClassName("one")[0];
+		var two=document.getElementsByClassName("two")[0];
+		var thr=document.getElementsByClassName("thr")[0];
+		var four=document.getElementsByClassName("four")[0];
+		var star=document.getElementById("star");
+		var miao1=0;
+		var miao2=0;
+		var fen1=0;
+		var fen2=0;
+		var time=null;
+		function run(){
+			miao1++
+			if(miao1==10){
+				miao1=0
+				miao2++
+			}
+			if(miao2==6){
+				miao2=0
+				fen1++
+			}
+			if(fen1==10){
+				fen1=0
+				fen2++
+			}
+			one.innerText=miao1;
+			two.innerText=miao2;
+			thr.innerText=fen1;
+			four.innerText=fen2;
+		}
+		star.onclick=function(){
+			time=setInterval(run,1000)
+		}
+		
+		
+		
+	
+	
+	
+	
+//		$(function(){
+//			var num=0;
+////			$('.one')=0;
+////			$('.two')=0;
+////			$('.thr')=0;
+////			$('.four')=0;
+//			$('#star').click(function(){
+//				
+//			})
+//			
+//		})
+		
+	</script>	
+	</body>
+</html>

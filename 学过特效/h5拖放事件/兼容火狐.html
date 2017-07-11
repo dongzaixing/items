@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				
+			}
+			li{
+				list-style: none;
+				width:100px;
+				height:30px;
+				background: #ccc;
+				margin: 10px 0;
+			}
+			#box{
+				width:200px;
+				height:200px;
+				background: #F4A460;
+				margin: 200px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li draggable="true">1</li>
+			<li draggable="true">2</li>
+			<li draggable="true">3</li>
+		</ul>
+		<div id="box"></div>
+		<span id="span">ssd</span>
+		<img id="img" src="img/QQ.png" style="display: none;"/>
+		
+		
+		
+		
+		<script type="text/javascript">
+		
+			/*将draggable属性设置为true
+			 
+			 
+			 拖放事件：
+			 1.对被拖的元素设置事件
+			 ondragstart:拖拽的一瞬间触发
+			 ondrag：跟mousemove有区别，从拖拽开始，知道鼠标抬起一直触发，不管中间鼠标是否停止
+			 ondragend：拖拽结束抬起鼠标瞬间触发
+			 
+			 
+			 2.对目标元素设置事件
+			 ondragenter:被拖拽元素进入目标元素时触发
+			 ondragover：被拖拽元素进入了目标元素就一直触发,
+			 ondragleave：被拖拽元素离开目标元素时触发
+			 ondrop：被拖拽元素在目标元素里投放时触发，注意：要触发投放事件就必须阻止ondragover的默认事件。
+			 
+			 
+			 
+			 
+			 
+			 * 
+			 * 
+			 * */
+			
+			var oul=document.getElementsByTagName('ul')[0];
+			var oli=document.getElementsByTagName('li');
+			var box=document.getElementById('box');
+			var s=document.getElementById('span');
+			var img=document.getElementById('img');
+			
+			var a=0;
+			var b=0;
+			
+			//被拖拽元素
+			for(var i=0;i<oli.length;i++){
+				oli[i].index=i;
+				oli[i].ondragstart=function(ev){
+					ev=ev||event;
+					ev.dataTransfer.setData('user',this.index);
+					ev.dataTransfer.effectAllowed='link';//拖到目标元素后箭头的样式
+					ev.dataTransfer.setDragImage(img,0,0)
+					this.style.background='pink';
+					
+				}
+				oli[i].ondrag=function(){
+					document.title=a++;
+				}
+				oli[i].ondragend=function(){
+					this.style.background='#ccc';
+				}
+			}
+			
+			//目标元素
+			box.ondragenter=function(){
+				this.style.background="blue";
+			}
+			//enter和leave之间触发，要想触发释放事件，就必须要阻止ondragover的默认事件
+			box.ondragover=function(ev){
+				s.innerHTML=a++;
+				ev.preventDefault()
+			}
+			box.ondragleave=function(){
+				this.style.background="#f60";
+			}
+			box.ondrop=function(ev){
+				var index=ev.dataTransfer.getData('user')
+				oul.removeChild(oli[index])
+				for(var i=0;i<oli.length;i++){//删了之后重新对应索引
+					oli[i].index=i;
+				}
+			}
+		</script>
+	</body>
+</html>

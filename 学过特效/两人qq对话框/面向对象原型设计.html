@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>面向对象原型设计</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+	//prototype对象是实现面向对象的一个重要机制。每个函数也是一个对象，
+	//它们对应的类就是  function，每个函数对象都具有一个子对象prototype。
+	//Prototype 表示了该函数的原型， prototype表示了一个类的属性的集合。
+	//当通过new来生成一个类的对象时，prototype对象的属  性就会成为实例化对象的属性。
+	//prototype的作用：1.对类的prototype对象进行修改,增加属性或方法；2.实现继承
+		function Students(name,age){
+			this.name=name;
+			this.age=age;
+		}
+		Students.prototype.home="guagnxi";//直接添加属性名和属性的内容
+		Students.prototype.xueli="大学本科";
+		Students.prototype.sayname=function(){
+			alert(this.name)
+		}
+		var a=new Students("haohua",200);//实例化是需要new一个新的对象出来。
+		var b=new Students("li",300)
+		alert(a.xueli);//大学本科
+		b.sayname();//li
+		
+		
+		
+	</script>
+</html>

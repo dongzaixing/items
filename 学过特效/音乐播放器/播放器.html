@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#conMusic{
+				max-width:500px;
+				height:700px;
+				background: url(img/background.jpg);
+				background-size: 500px 700px;
+				margin: 0 auto;
+				border: 1px solid blue;
+				
+				overflow: hidden;
+				position: relative;
+				color: #E0E0E0;
+				
+			}
+			#conMusic #search{
+				display: block;
+				background:url(img/search1.png) no-repeat 280px 50%;
+				color: #CCCEF8;
+				border: 1px solid #ccc;
+				text-indent: 10px;
+				outline: 0 none;
+				border-radius: 10px;
+				width:300px;
+				height:30px;
+				margin: 20px auto 0;
+				font-size: 18px;
+				
+				
+				
+			}
+			#conMusic .pic{
+				width:200px;
+				height:200px;
+				border-radius: 50%;
+				background: pink;
+				position: absolute;
+				top: 60px;
+				left: 50%;
+				margin-left: -100px;
+				
+			}
+			#conMusic .pic img{
+				width:100%;
+				height:100%;
+				border-radius:50%;
+			}
+			#musicTxt{
+				display: none;
+			}
+			#conMusic p{
+				text-align: center;
+				line-height: 1.8;
+				position: relative;
+			}
+			#conMusic #container{
+				margin: 220px auto 0;
+				font-size: 16px;
+				letter-spacing: 1px;
+				width:70%;
+				height:310px;
+				background: rgba(0,0,0,0.6);
+				overflow: hidden;
+			}
+			#conMusic #content{
+				width:100%;
+				position: relative;
+				transition: all 1s;
+			}
+			#music{
+				display: none;
+			}
+			#onOff{
+				width:100%;
+				text-align: center;
+				padding: 20px 0 20px 0;
+				box-sizing: border-box;
+			}
+			#conMusic button{
+				width:70px;
+				height:30px;
+				border: none;
+				outline: 0 none;
+				border-radius: 5px;
+				color: #F05437;
+				background: #eee;
+				font-size: 16px;
+			}
+			#progress{
+				padding:0 15%;
+				box-sizing: border-box;
+				height:30px;
+				
+			}
+			#bofang{
+				display: inline-block;
+				width:32px;
+				height:32px;
+				float: left;
+			}
+			#progressBar{
+				display: inline-block;
+				width:300px;
+				height:10px;
+				background: orange;
+				float: right;
+				position:relative;
+				margin-top: 10px;
+				border-radius: 5px;
+			}
+			#conMusic .point{
+				width:10px;
+				height:10px;
+				border-radius: 50%;
+				background: blue;
+				position: absolute;
+				top: 0;
+				transform: scale(1.5);
+			}
+			.stretchBar{
+				width:0;
+				height:10px;
+				position: absolute;
+				top: 0;
+				border-radius: 5px;
+				background: #fff;
+			}
+			
+			@keyframes rotate{
+				from{
+					transform: rotateZ(0deg);
+				}
+				to{
+					transform: rotateZ(360deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<audio src="img/吴若希 - 眼泪的秘密.mp3" id="music" controls="controls"></audio>
+		<br />
+		<textarea rows="30" cols="50" id="musicTxt">
+		[00:01.35]作词：祁隆
+		
+		[00:02.15]作曲：祁隆
+		
+		[00:14.48]寻寻觅觅
+		
+		[00:15.93]蝴蝶花上流离
+		
+		[00:21.00]年年月月
+		
+		[00:22.55]若要走总要飞
+		
+		[00:25.96]苍生是几秒游戏
+		
+		[00:29.28]相爱是不挠的隐秘
+		
+		[00:33.51]白费的好一场演绎
+		
+		[00:41.06]层层叠叠
+		
+		[00:42.61]遗落几段传奇
+		
+		[00:47.66]离离合合
+		
+		[00:49.21]没你怎知我悲
+		
+		[00:52.57]当朝夕可以忘记
+		
+		[00:55.92]偏有时贪欢想起你
+		
+		[01:00.25]没结果
+		
+		[01:01.63]仍回味至死
+		
+		[01:06.84]谁能及我惊天动地
+		
+		[01:10.49]连流泪都觉妩媚
+		
+		[01:13.76]上辈子一早约你
+		
+		[01:16.88]今生重逢之地
+		
+		[01:20.14]谁人为我精彩预备
+		
+		[01:23.90]最痛的相爱别离
+		
+		[01:27.32]下辈子找得到你
+		
+		[01:30.25]思忆如棉絮飞
+		
+		[01:33.51]直到你问天与地
+		
+		[01:37.76]平平淡淡
+		
+		[01:39.31]无字写下传奇
+		
+		[01:44.36]游游荡荡
+		
+		[01:46.18]没你怎飞跃起
+		
+		[01:49.28]当今夕可以忘记
+		
+		[01:52.57]天再亮偏舍不得你
+		
+		[01:56.85]任世间流尽是与非
+		
+		[02:03.52]谁能及我惊天动地
+		
+		[02:07.12]连流泪都觉妩媚
+		
+		[02:10.56]上辈子一早约你
+		
+		[02:13.47]今生重逢之地
+		
+		[02:16.73]谁人为我精彩预备
+		
+		[02:20.54]最痛的相爱别离
+		
+		[02:23.91]下辈子找得到你
+		
+		[02:26.89]思忆如棉絮飞
+		
+		[02:30.12]门墙亦紧闭起
+		
+		[02:33.52]扎实拳头去爱起
+		
+		[02:36.92]仍在指间
+		
+		[02:37.86]走失不见你
+		
+		[02:40.03]没余地
+		
+		[02:43.43]谁能及我惊天动地
+		
+		[02:47.27]任背影开到荼蘼
+		
+		[02:50.50]这辈子感激有你
+		
+		[02:53.55]刺骨销魂滋味
+		
+		[02:56.65]谁人是我一生梦寐
+		
+		[03:00.60]最美的相爱别离
+		
+		[03:03.97]下辈子找得到你
+		
+		[03:06.62]该可从头爱起
+		
+		[03:10.38]让我承受所有
+		
+		[03:14.82]妒忌
+		
+		</textarea>	
+	
+		<div id="conMusic">
+			<input type="text" name="" id="search" value="" />
+			<div class="pic"><img src="img/31.jpg"/></div>
+			<div id="container">
+				<div id="content"></div>
+			</div>	
+			<div id="onOff">
+				<button id="star">上一曲</button>
+				<button id="stop">下一曲</button>
+			</div>
+			<div id="progress">
+				<span id="bofang"><img src="img/play.png"/></span>
+				<div id="progressBar">
+					<div class="stretchBar"></div>
+					<div class="point"></div>
+				</div>
+			</div>
+		</div>
+		<br />
+		
+		<script type="text/javascript">
+			var music=document.getElementById('music');
+			var musicTxt=document.getElementById('musicTxt');
+			var con=document.getElementById('con');
+			var content=document.getElementById('content');
+			var op=document.getElementsByTagName('p');
+			var progressBar=document.getElementById('progressBar');
+			var point=document.getElementsByClassName('point')[0];
+			var stretchBar=document.getElementsByClassName('stretchBar')[0];
+			var bofang=document.getElementById('bofang');	
+			var pic=document.getElementsByClassName('pic')[0];
+			var turn=true;
+			//将歌词分割
+			var html="";//创建变量放歌词
+			var lrc=musicTxt.value.split('[');//分割歌词
+			for(var i=0;i<lrc.length;i++){
+				var lrcArr=lrc[i].split(']');//再将歌词分为事件部分和歌词文字部分
+				/*lrcArr[0]为时间部分
+				lrcArr[0]为文字部分*/
+				//切割时间
+				var t=lrcArr[0].split('.');
+				var time=t[0].split(":");
+				var seconds=time[0]*60+time[1]*1;
+				console.log(seconds);
+				//将文字放到变量中
+				if(lrcArr[1]){
+					html+="<p id="+seconds+">"+lrcArr[1]+"</p>";
+				}
+				
+			}
+			content.innerHTML=html;//把歌词添加到div中
+			//监听时间的更新，获取音乐播放的当前时间
+			var num=0;
+			music.addEventListener("timeupdate",function(){
+				var alltime=music.duration;//歌曲的总播放时间
+				var curTime=parseInt(music.currentTime);//将播放器的当前时间进行取整
+				//歌曲播放的进度
+				var timeScale=curTime/alltime;
+				var p=document.getElementById(curTime);//通过id取获取p标签
+				//播放到的当前歌词改变样式
+				if(p){
+					for(var i=0;i<op.length;i++){
+						op[i].style.color="#E0E0E0";
+						op[i].style.fontSize="16px";
+						op[i].style.fontWeight="normal";
+					}
+					p.style.color="red";
+					p.style.fontSize='18px';
+					p.style.fontWeight="bold";
+				}
+				//让歌词上移
+				if(op[6+num].id==curTime){
+					content.style.top=-28*num+'px';
+					num++;
+					if(num>=op.length-6){
+						num=op.length-6;
+					}
+				}
+				//歌曲播放进度条移动
+				console.log(music.duration);
+				console.log(music.currentTime/music.duration)
+				console.log(timeScale)
+				console.log((music.currentTime/music.duration)*progressBar.offsetWidth)
+				stretchBar.style.width=timeScale*progressBar.offsetWidth+'px';
+				point.style.left=timeScale*progressBar.offsetWidth+'px';
+			})
+			point.onmousedown=function(ev){
+				var ev=ev||event;
+				var x=ev.clientX-this.offsetLeft;
+				var y=ev.clientY-this.offsetTop;
+				
+				document.onmousemove=function(ev){
+					var nx=ev.clientX-x;
+					var ny=ev.clientY-y;
+					if(nx<0){
+						nx=0;
+					}
+					if(nx>progressBar.offsetWidth){
+						nx=progressBar.offsetWidth;
+					}
+					point.style.left=nx+'px';
+					var scale=nx/progressBar.offsetWidth;
+					console.log(progressBar.offsetWidth);
+					stretchBar.style.width=scale*progressBar.offsetWidth+'px';
+				}
+				document.onmouseup=function(){
+					this.onmousemove=null;
+					this.onmouseup=null;
+				}
+				
+			}
+			bofang.onclick=function(){
+				turn=!turn;
+				if(turn==false){
+					this.children[0].src="img/stop.png";
+					music.play();
+					pic.style.animation="rotate 10s linear infinite";
+				}else{
+					this.children[0].src="img/play.png";
+					music.pause();
+					pic.style.animation="";
+				}
+//				console.log(turn)
+//				alert(this.children[0].src)
+			}
+			
+		</script>
+	</body>
+</html>

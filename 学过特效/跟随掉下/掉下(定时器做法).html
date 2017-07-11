@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			*{
+				padding:0;
+				margin:0;
+			}
+			li{
+				width:50px;
+				height:50px;
+				background:red;
+				position:relative;
+				top:0;
+				transition:.2s;
+				border:1px solid #666;
+				display:inline-block;
+			}
+		</style>
+	</head>
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>	
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<body>
+		<script>
+		var lis=document.getElementsByTagName("li");
+		for(var i=0;i<lis.length;i++){
+			lis[i].onclick=function(){
+				this.style.top=100+'px';
+				var b=this,a=this;
+				var timer=null;
+				timer=setInterval(function(){
+					if(!b.previousElementSibling&&!a.nextElementSibling)return;
+					if(a.nextElementSibling){
+						a.nextElementSibling.style.top=100+'px';
+						a=a.nextElementSibling;
+					}
+					if(b.previousElementSibling){
+						b.previousElementSibling.style.top=100+'px';
+						b=b.previousElementSibling;
+					}
+				},100);
+			}
+		}
+		</script>
+	</body>
+</html>

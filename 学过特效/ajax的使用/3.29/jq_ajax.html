@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	</head>
+	<body>
+		<input type="text" name="" id="txt" value="" />
+		<input type="button" name="btn" id="btn" value="点击" />
+		<script type="text/javascript">
+			/*
+			 	$.get() :  ajax的get传输方法
+			 * 
+			 * 		$.get('php/get.php?user='+$('#txt').val(),function(data){
+						console.log(data);
+					});
+			 * 
+			 * $.post():
+			 * 	btn.on('click',function(){
+					$.post('php/post.php','user='+$('#txt').val(),function(data){
+						console.log(data);
+					});
+				})
+			 * 
+			 * $.ajax({
+			 * 		type    :  传输方式
+			 * 		url     ：  文件地址
+			 * 		async   ：   同步异步
+			 * 		success :   传输成功后执行的函数
+			 * 		error   :   失败函数
+			 * 		data    :   传输的数据
+			 * 		dataType:   数据类型
+			 * })
+			 * 
+			 * 
+			 * jq的数据类型转换：
+			 * 		$.parseJSON() : 把json转换成对象，只能转化标准格式的json
+			 * 		$.parseXML()  : 把字符串转换成xml格式
+			 * 		$.parseHTML   : 把字符串转换成标签
+			 * 
+			 * 
+			 **/
+			var btn = $('#btn');
+			
+			var json = '{"name":"pl","age":18}';
+			var json1 = "{'name':'pl','age':20}";
+			var obj = '<div>sdfsf</div>'
+			
+			var box = $.parseHTML(obj);
+			
+			$('body').append(box)
+//			console.log(box);
+//			btn.on('click',function(){
+//				$.get('php/get.php?user='+$('#txt').val(),function(data){
+//					console.log(data);
+//				});
+//				
+//			})
+
+//			btn.on('click',function(){
+//				$.post('php/post.php','user='+$('#txt').val(),function(data){
+//					console.log(data);
+//				});
+//			})
+
+			$.ajax({
+				type:"get",    //  
+				url:"php/get.php?user=lolo",
+				async:true,
+				success:function(data){
+					console.log(data);
+				},
+				error  : function(data){
+					alert('shibai')
+				},
+				data   : '',
+				dataType : 'json'
+			});
+			
+			
+			
+			var day=new Date(1312321)
+			day.setDate(123130)
+			alert(day)
+		</script>
+		
+	</body>
+</html>

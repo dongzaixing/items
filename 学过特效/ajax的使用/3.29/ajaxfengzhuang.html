@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" name="txt" id="txt" value="" />
+		<input type="button" name="btn" id="btn" value="点击" />
+		<!--<span id="sp"></span>-->
+		<ul id="list">
+			
+		</ul>
+		<script type="text/javascript">
+			
+			var txt = document.getElementById('txt');
+			var btn = document.getElementById('btn');
+			//var sp = document.getElementById('sp');
+			var list = document.getElementById('list');
+			btn.onclick = function(){
+				var val = txt.value;
+			
+//				ajax('get','php/data.xml',null,true,'xml',function(data){
+//					//console.log(data)
+//					var cont = data.getElementsByTagName('content')[0];
+//					var children = cont.children;
+//					for(var i=0;i<children.length;i++){
+//						var name = children[i].getElementsByTagName('name')[0];
+//						var age = children[i].getElementsByTagName('age')[0];
+//						var sex = children[i].getElementsByTagName('sex')[0];
+//						var info = children[i].getElementsByTagName('info')[0];
+//						
+//						list.innerHTML +='<li>它叫'+name.innerHTML+',年龄'+age.innerHTML+'它是一个'+sex.innerHTML+'人;个人介绍;'+info.innerHTML+'</li>';
+//					}
+//					
+//					//console.log(data)
+//					//sp.innerHTML  =data;
+//				});
+				
+				
+				
+				
+				ajax({
+					url:'php/data.xml',
+					success:function(data){
+						var cont = data.getElementsByTagName('content')[0];
+						var children = cont.children;
+						console.log(data)
+						for(var i=0;i<children.length;i++){
+							var name = children[i].getElementsByTagName('name')[0];
+							var age = children[i].getElementsByTagName('age')[0];
+							var sex = children[i].getElementsByTagName('sex')[0];
+							var info = children[i].getElementsByTagName('info')[0];
+							
+							list.innerHTML +='<li>它叫'+name.innerHTML+',年龄'+age.innerHTML+'它是一个'+sex.innerHTML+'人;个人介绍;'+info.innerHTML+'</li>';
+						}
+					},
+					type:'xml'
+				})
+			}
+			
+			
+			
+			
+			//method,url,name,bool,type,success,fail
+			function ajax(obj){
+				var opation = {
+					url:obj.url,
+					success:obj.success,
+					method:obj.method || 'get',
+					name:obj.name || null,
+					bool:obj.bool || true,
+					type:obj.type || null,
+					fail:obj.fail || null
+				}
+				var ajax = new XMLHttpRequest();
+				if(opation.method == 'get'){
+					ajax.open('get',opation.url+'?'+opation.name,opation.bool);
+					ajax.send();
+				}	
+				if(opation.method == 'post'){
+					ajax.open('post',opation.url,opation.bool);
+					ajax.setRequestHeader( 'Content-Type','application/x-www-form-urlencoded');
+					ajax.send(opation.name);
+				}
+				if(ajax.onreadystatechange){  //做事件德 兼容
+					ajax.onreadystatechange = fn;
+				}else{
+					ajax.onload = fn;
+				}
+				function fn(){
+					if(ajax.readyState == 4){
+						if(ajax.status>=200&&ajax.status<=207){
+							var str = null;
+							if(opation.type == 'xml'){
+								str = ajax.responseXML;
+							}else if(opation.type == 'json'){
+								str = (new Function('','return'+ajax.responseText))();
+							}else{
+								str = ajax.responseText;
+							}
+							opation.success&&opation.success(str);
+							
+						}else{//出错了
+							opation.fail&&opation.fail(ajax.status);
+						}
+					}
+				}
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="button" name="" id="btn" value="加载" />
+		<script type="text/javascript">
+		
+			//全局函数
+			function fn(data){
+				console.log(data);
+			}
+			var btn = document.getElementById('btn');
+			btn.onclick = function(){
+				//创建script标签并且放到文档中；
+				var oS = document.createElement('script');
+				oS.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=nba&cb=fn';
+				document.getElementsByTagName('head')[0].appendChild(oS);
+				document.getElementsByTagName('head')[0].removeChild(oS);//数据加载完成后马上删除script标签
+			}
+			
+		</script>
+		
+		<!--<script type="text/javascript" src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=nba&cb=fn"></script>-->
+	</body>
+</html>

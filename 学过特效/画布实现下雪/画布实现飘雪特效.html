@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>画布实现飘雪特效</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#canvas{
+				background: #111;
+				/*display: inline-block;*/
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	</head>
+	<body>
+		<canvas id="canvas" style="background: url(img/shiji.jpg) no-repeat ;"></canvas>
+	
+	<script type="text/javascript">
+		(function(){
+			//获取当前浏览器窗口的宽度
+			var w=1025;
+			//获取当前浏览器的高度
+			var h=650;
+			//获取当前canvas对象
+		
+			var can=document.getElementById("canvas");
+			//设置当前的绘图环境
+			var cxt=can.getContext("2d");
+			//画布的宽度
+			can.width=w;
+			//画布的高度
+			can.height=h;
+			var snow=300;//雪花的数量
+			var x,y,r
+			var arr=[]//存放雪花的相关信息
+			for(var i=0;i<snow;i++){
+				arr.push({
+					x:Math.random()*w,//x轴左边
+					y:Math.random()*h,//y轴坐标
+					r:Math.random()*10,//雪花半径
+					speX:Math.random()*6,//每个雪花的x轴速度
+					speY:Math.random()*6//每个雪花的y轴速度
+					
+				});
+			}
+			
+			//绘制雪花
+			function drawSnow(){
+				//清除画布
+				cxt.clearRect(0,0,w,h)
+				//画笔的填充颜色
+				cxt.fillStyle="#fff";
+				//开始路径
+				cxt.beginPath()
+				for(var i=0;i<snow;i++){
+					var p=arr[i];
+					cxt.moveTo(p.x,p.y);
+					cxt.arc(p.x,p.y,p.r,0,Math.PI*2);
+				}
+				//结束路径
+				cxt.closePath()
+				cxt.fill()
+				drow()
+			}
+			drawSnow()
+			//雪花飘舞
+			function drow(){
+				for(var i=0;i<snow;i++){
+					var p=arr[i];
+					p.x+=Math.random()+p.speX;
+					p.y+=Math.random()+p.speY;
+					if(p.x>w){
+						p.x=0
+					}
+					if(p.y>h){
+						p.y=0
+					}
+				}
+			}
+			//采用计时器不断进行雪花的绘制
+			setInterval(drawSnow,20)			
+		})();
+
+	</script>
+	</body>
+</html>

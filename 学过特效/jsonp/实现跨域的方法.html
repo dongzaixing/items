@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>跨域</title>
+	</head>
+	<body>
+		
+		
+		
+		<iframe src="https://baidu.com" style="width:400px;height:300px;"></iframe>
+		<iframe src="https://taobao.com" style="width:400px;height:300px;"></iframe>
+		
+		<script type="text/javascript">
+//			var ajax=new XMLHttpRequest();
+//			ajax.open('get','https://api.douban.com/v2/music/:id/tags',true);
+//			ajax.send()
+//			ajax.onload=function(){
+//				console.log(ajax.responseText)
+//			}
+			
+			/*解决方法:
+			1.在'Access-Control-Allow-Origin'里面添加域名,要访问权限
+			2.flash
+			3.iframe标签
+			4.服务代理：后台取其他地方那个请求数据，我们再向后台要数据，后台相当于一个中间人。 缺点：数据改变，浏览器的内容就改变
+			*/
+		</script>
+	</body>
+</html>

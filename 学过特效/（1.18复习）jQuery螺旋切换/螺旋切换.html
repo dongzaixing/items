@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>螺旋切换</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			#box{
+				width:600px;
+				height:400px;
+				/*border: 1px solid blue;*/
+				margin:100px auto;
+				position:relative;
+			}
+			ul{
+				width:120px;
+				height:400px;
+				/*设置子元素在3D空间中呈现*/
+				transform-style: preserve-3d;
+				position: absolute;
+				transition: all 1.5s; 	
+				/*这里的过度实践比较重要,对效果的影响比较大*/
+			}
+			/*让图片可以构成一个有四个面的长方体 start*/
+			li{
+				width:100%;
+				height:100%;
+				list-style: none;
+				position:absolute;
+				background-size: cover;
+			}
+			li img{
+				width:100%;
+				height:100%;
+			}
+			li:nth-child(1){
+				background: url(images/31.jpg) no-repeat;
+				background-size: 600px 400px;
+				transform: rotateX(0deg) translateZ(200px);/*200像素是图片高度的一般*/
+			}
+			li:nth-child(2){
+				background: url(images/32.jpg) no-repeat;
+				background-size: 600px 400px;
+				transform: rotateX(-90deg) translateZ(200px);
+			}
+			li:nth-child(3){
+				background: url(images/33.jpg) no-repeat;
+				background-size: 600px 400px;
+				transform: rotateX(-180deg) translateZ(200px);
+			}
+			li:nth-child(4){
+				background: url(images/34.jpg) no-repeat;
+				background-size: 600px 400px;
+				transform: rotateX(-270deg) translateZ(200px);
+			}
+			#box div{
+				width:100px;
+				height:30px;
+				position:absolute;
+				top: 185px;
+				font-size: 20px;
+				text-align: center;
+				line-height: 30px;
+				color:blueviolet ;
+				background: plum;
+				opacity: 0.5;
+				display: none;
+			}
+			.prev{
+				left: 0;
+			}
+			.next{
+				right: 0;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+	</head>
+	<body>
+		<div id="box">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			
+			<div class="next">next</div>
+			<div class="prev">prev</div>
+		</div>	
+	<script type="text/javascript">
+		$(function(){
+			var num=0;
+			$('#box').hover(function(){
+				$('#box div').slideDown(300)
+			},function(){
+				$('#box div').slideUp(300)
+			})
+			$('ul').each(function(index,element){
+				//给五个部分定位
+				$(this).css({'left':($(this).width()*index)+'px'});
+				//给组合里面的每张图片定位
+				$(this).find('li').css({'backgroundPosition':-($(this).width()*index)+'px'});
+				//给每个组合设置延时
+				$(this).css({'transition-delay': +(index*0.3)+'s'});
+			})
+			//往下翻
+			$('.next').on('click',function(){
+				$('ul').css({'transform': 'rotateX('+ (--num*90) +'deg)'});
+			})
+			//往上翻
+			$('.prev').on('click',function(){
+				$('ul').css({'transform':'rotateX('+ (++num*90)+'deg)'})
+			})
+			
+		})
+	</script>	
+	</body>
+</html>

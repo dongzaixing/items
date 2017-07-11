@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>点名器</title>
+	</head>
+	<body>
+		<button id="but1" onclick="fun()">开始点名</button>
+		<button id="but2" onclick="js()">结束点名</button>
+		<div id="box" style="width：200px; height:100px;font-size: 30px; color: blue;"></div>
+		
+	</body>
+	<script type="text/javascript">
+		var arr=["li","huang","song","guan","zhang","liang","cheng"];
+		var but1=document.getElementById("but1");
+		var but2=document.getElementById("but2");
+		var box=document.getElementById("box");
+		var time=null;
+		function fun(){
+			clearInterval(time);
+			var sjs=Math.floor(Math.random()*7) //获取0-6的随机数
+			box.innerHTML=arr[sjs];
+				time=setInterval(fun,100);//使用递归方法实现：在函数里面调用本身
+		};
+		function js(){
+			clearInterval(time);
+			time=null;
+		};
+		
+	</script>
+</html>

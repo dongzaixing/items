@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>构造函数</title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//构造函数，this表示当前运行时的对象，
+		//将构造函数this的作用域指向新对象，将当前运行对象
+		//的属性和方法都赋给新对象，这样对象模式称为构造函数模式
+		function Students(name,age){
+			this.name=name;
+			this.age=age;
+			this.fn=function(){
+				return this.name+this.age
+			}
+		}
+		//构造函数必须使用new去实例化出来一个新的对象
+		var a=new Students("haohua",200);
+		var b=new Students("lili",100);
+		alert(a.name);
+		alert(b.age);
+		alert(a.fn());
+	</script>
+</html>

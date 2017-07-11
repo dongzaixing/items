@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" name="" id="tet" value="" />
+		<input type="button" name="" id="btn" value="提交" />
+		<script type="text/javascript">
+			
+			//jsonp(url,obj,name,fnName,success)
+			
+			var tet = document.getElementById('tet');
+			var btn = document.getElementById('btn');
+			
+			btn.onclick = function(){
+				var val = tet.value;
+//				jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{wd:val},'cb','fn',function(data){
+//					console.log(data)
+//				})
+			
+				jsonp({
+					url:'https://api.douban.com/v2/music/search',
+					item:{
+						q:val
+					},
+					callback:'callback',
+					success:function(data){
+						console.log(data);
+					},
+					fnName:'fm'
+					
+				})
+			}
+				
+
+		function jsonp(obj){ //obj = {}
+			obj.callback = obj.callback||'cb';
+			obj.fnName = obj.fnName;
+			
+			obj.item[obj.callback] = obj.fnName;
+			var arr=[];
+			for(var attr in obj.item){
+				arr.push(attr+'='+obj.item[attr]);
+			}
+			var oS = document.createElement('script');
+			oS.src = obj.url+'?'+arr.join('&');
+			document.body.appendChild(oS);
+			
+			window[obj.fnName]=function(data){
+				obj.success&&obj.success(data);
+			}
+
+		}
+
+
+//			function jsonp(url,obj,name,fnName,success){			
+//				obj[name] = fnName;			
+//				var oS = document.createElement('script');				
+//				var arr = [];
+//				for(var attr in obj){
+//					arr.push(attr+'='+obj[attr]);
+//				}			
+//				oS.src = url+'?'+arr.join('&');				
+//				document.body.appendChild(oS);				
+//				window[fnName] = function(data){
+//					success&&success(data);
+//				}	
+//				document.body.removeChild(oS);
+//			}
+//			
+			
+		</script>
+	</body>
+</html>

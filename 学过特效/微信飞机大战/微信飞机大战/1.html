@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#box{
+				width: 320px;
+				height: 568px;
+				margin: 50px auto;
+				position:relative;
+				border:1px solid #999;
+			}
+			.star{
+				width: 320px;
+				height: 568px;
+				position:absolute;
+				background-image: url(image/开始背景.png);
+				z-index:1;
+			}
+			.star input{
+				background: burlywood;
+				width: 150px;
+				height: 30px;
+				position: absolute;
+				top:450px;
+				left:80px;
+				border-radius: 30px;
+				z-index:2;
+			}
+			.main,.jf,.b{
+				width: 320px;
+				height: 568px;
+				background-image:url(image/background_1.png);
+				position:absolute;
+				overflow: hidden;
+			}
+			.jf,.b{
+				background: none;
+			}
+			.jf div{
+				display:none;
+				position:absolute;
+				width:150px;
+				height:100px;
+				left:0;
+				right:0;
+				margin:auto;
+				top:300px;
+				z-index:2;
+			}
+			.jf input{
+				background: burlywood;
+				border-radius: 30px;
+				width: 150px;
+				height: 30px;
+			}
+			.zd{
+				width: 6px;
+				height: 14px;
+				background-image: url(image/bullet1.png);
+				position:absolute;
+				z-index:2;
+			}
+	        .xb{
+	        	background-image: url(image/enemy1_fly_1.png);
+	        	width: 34px;
+	        	height: 24px;
+	        	position: absolute;
+	        }
+	        .zb{
+	        	background-image: url(image/enemy3_fly_1.png);
+	        	width: 46px;
+	        	height: 60px;
+	        	position: absolute;
+	        }
+	        .db{
+	        	background-image: url(image/enemy2_fly_1.png);
+	        	width: 110px;
+	        	height: 164px;
+	        	position: absolute;
+	        }
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div class="star">
+				<input type="button" value="开始游戏"/>
+			</div>
+			<div class="main"></div>
+			<div class="b"></div>
+			<div class="jf">
+			分数：<span class="fs">0</span>
+				<div>
+					<input type="button" value="重新开始"/></br>
+					<input type="button" value="退出游戏"/>
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery-1.11.1.js"></script>
+		<script>
+			$(function(){
+				$(".star input").on("click",function(){//开始游戏
+					var timer=[],num=0,fs_num=0,pageY=null,x=163,y=440;
+					////////////////重置//////////////////
+					$(".fs").html(fs_num);
+					$(".star").css("display","none");
+					$(".main").css("display","block");
+					$(".jf").css("display","block");
+					$(".jf div").css("display","none");
+					$(".b").html('');
+					/////////////////////////////////////
+					$(".main").append($("<div class='fj'>"));
+					$(".fj").css({
+						width:66,
+						height:80,
+						backgroundImage:"url(image/我的飞机.gif)",
+						position:"absolute",
+						top:400,
+						left:130,
+						zIndex:2
+					})
+					////////////////////移动端////////////////
+					$(".fj").on("touchmove",function(ev){
+						y=ev.originalEvent.touches[0].pageY-$(".main").offset().top;
+						x=ev.originalEvent.touches[0].pageX-$(".main").offset().left
+						pageY=ev.originalEvent.touches[0].pageY;
+						if(y<=$(".fj").height()/2)y=$(".fj").height()/2;
+						if(x<=0)x=0;
+						if(x>=$(".main").width())x=$(".main").width();
+						if(y>=$(".main").height()-$(".fj").height()/2)y=$(".main").height()-$(".fj").height()/2;
+						$(".fj").css({
+							top:y-$(".fj").height()/2,
+							left:x-$(".fj").width()/2,
+							cursor:"none"
+						})
+					})
+					//////////////////////////////////////////
+					$(document).on("mousemove",function(ev){//我方飞机移动
+						y=ev.pageY-$(".main").offset().top;
+						x=ev.pageX-$(".main").offset().left
+						pageY=ev.pageY;
+						if(y<=$(".fj").height()/2)y=$(".fj").height()/2;
+						if(x<=0)x=0;
+						if(x>=$(".main").width())x=$(".main").width();
+						if(y>=$(".main").height()-$(".fj").height()/2)y=$(".main").height()-$(".fj").height()/2;
+						$(".fj").css({
+							top:y-$(".fj").height()/2,
+							left:x-$(".fj").width()/2,
+							cursor:"none"
+						})
+					})
+					timer[4]=setInterval(function(){//背景图片移动
+						num++;
+						$(".main").css("background-position-y",num);
+					},20)
+					timer[3]=setInterval(function(){//创建子弹
+						var zd=$("<div class='zd'>");
+						$(".main").append(zd);
+						zd.css({
+							top:y-$(".fj").height()/2-$(".zd").height(),
+							left:x-2
+						})
+						zd.animate({
+							top:pageY-$(".main").height()-$(".fj").height()	
+						},
+						{
+							easing:"linear",
+							duration:300,
+							step:function(now,fx){
+								if(fx.pos==1){//运动加载完毕时
+									$(this).remove();
+								}
+								$(".b").children().each(function(i,ele){
+									if(coll($(".fj")[0],ele)&&this.onoff==false){
+										$(".fj").css("background-image","url(image/本方飞机爆炸.gif)");
+										$(".jf div").css("display","block");
+										$.each(timer,function(i,ele){
+											clearInterval(ele)
+										})
+										$(".b").children().stop();
+										$(document).off("mousemove");
+									}
+									if(coll(zd[0],ele)){//体积碰撞
+										this.index++;
+										$(".fs").html(fs_num);
+										if(this.className=="xb"&&this.index==5){
+											$(this).css("background-image","url(image/小飞机爆炸.gif)");
+											var that=this;
+											fs_num++;
+											this.onoff=!this.onoff;
+											that.onoff=true;
+											setTimeout(function(){
+												$(that).remove();
+											},500)
+										}else if(this.className=="zb"&&this.index==4){
+											$(this).css("background-image","url(image/中飞机挨打.png)");
+										}else if(this.className=="zb"&&this.index==15){
+											$(this).css("background-image","url(image/中飞机爆炸.gif)");
+											var that=this;
+											this.onoff=!this.onoff;
+											fs_num+=3;
+											setTimeout(function(){
+												$(that).remove();
+												that.onoff=true;
+											},500)
+										}else if(this.className=="db"&&this.index==8){
+											$(this).css("background-image","url(image/大飞机挨打.png)");
+										}else if(this.className=="db"&&this.index==35){
+											$(this).css("background-image","url(image/大飞机爆炸.gif)");
+											fs_num+=5;
+											var that=this;
+											this.onoff=!this.onoff;
+											setTimeout(function(){
+												$(that).remove();
+												that.onoff=true;
+											},500)
+										}
+										if(this.onoff==true){
+											return;
+										}
+										zd.remove();
+									}
+								})
+							}
+						})
+					},40)
+					timer[0]=setInterval(function(){//创建小兵
+						var xb=$("<div class='xb'>");
+						xb[0].index=0;
+						xb[0].onoff=false;
+						$(".b").append(xb);
+						xb.css({
+							top:-xb.height(),
+							left:Math.random()*$(".b").width()-xb.width()/2
+						}).animate({
+							top:$(".b").height()
+						},
+						{
+							easing:"linear",
+							duration:6000,
+							step:function(now,fx){
+								if(fx.pos==1){//运动加载完毕时
+									$(this).remove();
+								}
+							}
+						})
+					},600)
+					timer[1]=setInterval(function(){//创建中兵
+						var zb=$("<div class='zb'>");
+						zb[0].index=0;
+						zb[0].onoff=false;
+						$(".b").append(zb);
+						zb.css({
+							top:-zb.height(),
+							left:Math.random()*$(".b").width()-zb.width()/2
+						}).animate({
+							top:$(".b").height()
+						},
+						{
+							easing:"linear",
+							duration:7000,
+							step:function(now,fx){
+								if(fx.pos==1){//运动加载完毕时
+									$(this).remove();
+								}
+							}
+						})
+					},3200)
+					timer[2]=setInterval(function(){//创建大兵
+						var db=$("<div class='db'>");
+						db[0].index=0;
+						db[0].onoff=false;
+						$(".b").append(db);
+						db.css({
+							top:-db.height(),
+							left:Math.random()*$(".b").width()-db.width()/2
+						}).animate({
+							top:$(".b").height()
+						},
+						{
+							easing:"linear",
+							duration:9000,
+							step:function(now,fx){
+								if(fx.pos==1){
+									$(this).remove();
+								}
+							}
+						})
+					},9200)
+				})
+				function coll(obj1,obj2){//体积碰撞函数
+					var div1All = obj1.getBoundingClientRect();
+					var top1 = div1All.top;
+					var bottom1 = div1All.bottom;
+					var left1 = div1All.left;
+					var right1 = div1All.right;
+					
+					var div2All = obj2.getBoundingClientRect();
+					var top2 = div2All.top;
+					var bottom2 = div2All.bottom;
+					var left2 = div2All.left;
+					var right2 = div2All.right;
+					if(right1>=left2&&bottom1>top2&&left1<right2&&top1<bottom2){
+						return true;
+					}else{
+						return false;
+					}
+				}
+				$(".jf input").eq(0).on("click",function(){//重新开始按扭
+					$(".star input").trigger("click");
+				})
+				$(".jf input").eq(1).on("click",function(){//退出按钮
+					$(".star").css("display","block");
+					$(".main").css("display","none");
+					$(".jf").css("display","none");
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,35 @@
+ul,p{
+	margin:0;
+	padding:0;
+	
+}
+ul li{
+	list-style: none;
+	width:300px;
+	text-align: center;
+	text-indent: -20px;
+	
+}
+#nav>li>p{
+	width:300px;
+	height:30px;
+	line-height: 30px;
+	background: orchid;
+}
+.firstNav{
+	border:1px solid blue;
+}
+.secNav{
+	display: none;
+}
+.secNav>li{
+	background: paleturquoise;
+	height:30px;
+	line-height: 30px;
+	border: 1px solid slateblue;
+	transition: all .5s;
+}
+.secNav>li:hover{
+	background: silver;
+	text-indent: 20px;
+}

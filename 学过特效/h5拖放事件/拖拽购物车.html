@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				overflow: hidden;
+			}
+			li{
+				list-style: none;
+				float: left;
+				width:300px;
+				border: 1px solid blue;
+				margin: 20px 20px;
+			}
+			p{
+				border: 1px dashed #ccc;
+			}
+			#box{
+				width:600px;
+				height:200px;
+				background: #F4A460;
+				margin: 50px;
+				position: relative;
+			}
+			img{
+				width:200px;
+				height:120px;
+				
+			}
+			span{
+				padding: 0 20px;
+			}
+			.box2{
+				padding: 0 50px;
+			}
+			.price{
+				width:100px;
+				height:50px;
+				text-align: center;
+				line-height: 50px;
+				position: absolute;
+				bottom: 50px;
+				right: 10px;
+				background: #eee;
+			}
+			#btn{
+				position: absolute;
+				bottom: 0;
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<ul id="oul">
+			<li draggable="true">
+				<img src="../for循环定位li/img/23.jpg"/>
+				<p>倚天屠龙记</p>
+				<p>100￥</p>
+			</li>
+			<li draggable="true">
+				<img src="../for循环定位li/img/24.jpg"/>
+				<p>天龙八部</p>
+				<p>150￥</p>
+			</li>
+			<li draggable="true">
+				<img src="../for循环定位li/img/25.jpg"/>
+				<p>西游记</p>
+				<p>500￥</p>
+			</li>
+			<li draggable="true">
+				<img src="../for循环定位li/img/26.jpg"/>
+				<p>葫芦娃</p>
+				<p>200￥</p>
+			</li>
+		</ul>
+		<div id="box">将文件拖放到此区域
+			<div class="price"></div>
+			<button id="btn">提交</button>
+		</div>
+		<img id="img" src="img/QQ.png" style="display: none;"/>
+		
+		
+		
+		
+		<script type="text/javascript">
+		
+			var box=document.getElementById('box');
+			var oul=document.getElementById('oul');
+			var oli=document.getElementsByTagName('li');
+			var price=document.getElementsByClassName('price')[0];
+			var json={};
+			var num=0;
+			//拖拽li
+			for(var i=0;i<oli.length;i++){
+				oli[i].ondragstart=function(ev){
+//					var ev=ev||event;
+					var op=this.children;
+					//获取被拖拽元素的书名和价格并设置位储存起来
+					ev.dataTransfer.setData('title',op[1].innerHTML);
+					ev.dataTransfer.setData('money',op[2].innerHTML);
+					ev.dataTransfer.setDragImage(this,0,0);
+				}
+			}
+			
+			
+			//目标元素
+//			box.ondragenter=function(){
+//				this.innerHTML='可以放置文件';
+//			}
+			//enter和leave之间触发，要想触发释放事件，就必须要阻止ondragover的默认事件
+			box.ondragover=function(ev){
+				ev.preventDefault();//在这里阻止默认事件后，拖拽过来的东西才能释放
+			}
+//			box.ondragleave=function(){
+//				this.innerHTML='将文件拖放到此区域';
+//			}
+			box.ondrop=function(ev){
+				ev.preventDefault();//阻止默认行为，拖进来的文件就不会默认被打开
+				var stitle=ev.dataTransfer.getData('title');
+				var smoney=ev.dataTransfer.getData('money');
+				if(!json[stitle]){
+					var op=document.createElement('p');
+					var ospan=document.createElement('span');
+					ospan.className='box1';
+					ospan.innerHTML=1;
+					op.appendChild(ospan);
+					var ospan=document.createElement('span');
+					ospan.className='box2';
+					ospan.innerHTML=stitle;
+					op.appendChild(ospan);
+					var ospan=document.createElement('span');
+					ospan.className='box3';
+					ospan.innerHTML=smoney;
+					op.appendChild(ospan);
+					
+					box.appendChild(op);
+					json[stitle]=1;
+				}else{
+					var box1=document.getElementsByClassName('box1');
+					var box2=document.getElementsByClassName('box2');
+					for(var i=0;i<box2.length;i++){
+						if(box2[i].innerHTML==stitle){
+							box1[i].innerHTML=parseInt(box1[i].innerHTML)+1
+						}
+					}
+				}
+				num+=parseInt(smoney);
+				price.innerHTML=num+'￥';
+				
+			}
+		</script>
+	</body>
+</html>
+

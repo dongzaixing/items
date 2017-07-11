@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				
+				overflow: hidden;
+			}
+			li{
+				list-style: none;
+				float: left;
+			}
+			#box{
+				width:200px;
+				height:200px;
+				background: #F4A460;
+				margin: 200px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<ul id="oul">
+			
+		</ul>
+		<div id="box">将文件拖放到此区域</div>
+		<img id="img" src="img/QQ.png" style="display: none;"/>
+		
+		<script type="text/javascript">
+		
+			var box=document.getElementById('box');
+			var oul=document.getElementById('oul');
+			
+			//目标元素
+			box.ondragenter=function(){
+				this.innerHTML='可以放置文件';
+			}
+			//enter和leave之间触发，要想触发释放事件，就必须要阻止ondragover的默认事件
+			box.ondragover=function(ev){
+				ev.preventDefault()
+			}
+			box.ondragleave=function(){
+				this.innerHTML='将文件拖放到此区域';
+			}
+			box.ondrop=function(ev){
+				ev.preventDefault();//阻止默认行为，拖进来的文件就不会默认被打开
+				var fs=ev.dataTransfer.files;//拖进来的文件对象
+				//fs.length:文件的长度
+				//fs[i].type:文件的类型
+				
+				//读取文件信息
+//				fd.readAsDataURL(fs[0]);
+//				fd.onload=function(){
+//					console.log(this.result)
+//				}
+				for(var i=0;i<fs.length;i++){
+					if(fs[i].type.indexOf('image')!=-1){//判断每个文件的类型
+						var fd=new FileReader();//读取文件信息
+						console.log(fd)
+						fd.readAsDataURL(fs[i]);//读取文件的路径
+						fd.onload=function(){
+							//console.log(this.result);//文件读取的结果
+							var oli=document.createElement('li');
+							var img=document.createElement('img');
+							img.src=this.result;
+							oli.appendChild(img);
+							oul.appendChild(oli);
+							this.innerHTML='将文件拖放到此区域';
+						}
+					}else{
+						alert('请上传图片')
+					}
+				}
+				this.innerHTML='将文件拖放到此区域';
+				
+			}
+		</script>
+	</body>
+</html>
+

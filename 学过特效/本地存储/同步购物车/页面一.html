@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.box{
+				width:300px;
+				height:300px;
+				border: 10px solid blue;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<input type="text" placeholder="更改后请提交">  
+<button>确认更改</button>  
+<div class="box"></div>
+<script type="text/javascript" src="js/同步.js"></script>
+
+
+		<!--<script>
+		function tongbu(){
+			
+			  (function(D){
+    var val = D.getElementsByTagName("input")[0],  
+      btn = D.getElementsByTagName("button")[0];  
+      var box=document.getElementsByClassName('box')[0];
+    btn.onclick = function(){  
+      var value = val.value;  
+      box.innerHTML=" newValue:" + value;
+      
+      if(!value) return;  
+      localStorage.setItem("key", val.value);
+      val.value="";
+    };  
+    window.addEventListener("storage", function(e){  
+      console.log(e);  
+			  box.innerHTML=" newValue:" + e.newValue;
+			  //e.newValue和e.oldValue是storage事件触发是最新值和上一次的值。
+			  
+    });  
+  })(document);  
+  }
+
+		</script>-->
+	</body>
+
+</html>

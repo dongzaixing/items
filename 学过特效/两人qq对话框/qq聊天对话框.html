@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#con{
+				float: left;
+				margin-left:50px ;
+			}
+			#box1{
+				width:400px;
+				height:300px;
+				border: 1px solid blue;
+				overflow: auto;
+				white-space: normal;
+			}
+			#box2{
+				width:400px;
+				height:300px;
+				border: 1px solid blue;
+				overflow: hidden;
+				overflow: auto;
+				white-space: normal;
+			}
+			#inp1{
+				width:250px;
+				height:30px;	
+			}
+			#inp2{
+				width:100px;
+				height:30px;	
+			}
+			#inp3{
+				width:250px;
+				height:30px;	
+				
+			}
+			#inp4{
+				width:100px;
+				height:30px;	
+			}
+		</style>
+	</head>
+	<body>
+		<div id="con">
+			<div id="box1"></div>
+			<input type="text" name="" id="inp1" value="" placeholder="请输入内容"/>
+			<input type="button" name="" id="inp2" value="提交" />
+		</div>
+		<div id="con">
+			<div id="box2"></div>
+			<input type="text" name="" id="inp3" value="" placeholder="请输入内容"/>
+			<input type="button" name="" id="inp4" value="提交" />
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var box1=document.getElementById("box1");
+		var inp1=document.getElementById("inp1");
+		var inp2=document.getElementById("inp2");
+		inp2.onclick=function(){
+			if(!inp1.value){
+				
+			}else{
+				fun(box1,inp1.value,"left","blue","我")
+				fun(box2,inp1.value,"right","orange")
+				inp1.value="";
+			}	
+		}
+		inp4.onclick=function(){
+			if(!inp3.value){
+				
+			}else{
+				fun(box1,inp3.value,"right","orange")
+				fun(box2,inp3.value,"Left","blue","我")
+				inp3.value="";
+			}
+				
+			
+		}
+		function fun(a,b,c,d,e){
+				var day=new Date().toLocaleString();
+//				console.log(day)
+				var p1=document.createElement("p");
+				var p2=document.createElement("p");
+				p1.innerHTML=e+day;
+				p2.innerHTML=b;
+				a.appendChild(p1);
+				a.appendChild(p2);
+				p1.style.textAlign=c;
+				p2.style.textAlign=c;
+				p1.style.color=d;
+				p2.style.color=d;
+				if(a.scrollHeight>300){
+					a.scrollTop=a.scrollHeight;
+				}
+		}
+		
+	</script>
+</html>

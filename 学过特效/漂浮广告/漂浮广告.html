@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				height:2000px;
+			}
+			#box{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				left: 50px;
+				top: 50px;
+			}
+			input{
+				margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" id="start" value="开始" />
+		<input type="button" id="stop" value="结束" />
+		<div id="box">
+			
+		</div>
+	</body>
+	<script type="text/javascript">
+		var oStart = document.getElementById("start");
+		var oStop = document.getElementById("stop");
+		var oBox = document.getElementById("box");
+		/*window.innerHeight//包含滚动条
+		window.innerWidth
+		document.documentElement.clientWidth//不包含滚动条
+		document.documentElement.clientHeight*/
+		
+		var timer = null;//这个变量要放到全局
+		oStart.onclick = function  () {
+			flootBanner(oBox,100,100)
+		};
+		oStop.onclick = function  () {
+			clearInterval(timer)
+		};
+		//漂浮广告封装
+		function flootBanner(obj,width,height){//节点，宽，高
+			var distance = 2;
+			var distance2 = 2;
+			clearInterval(timer)
+			timer  = setInterval(function  () {
+				if (obj.offsetLeft > document.documentElement.clientWidth-width){//左右位置
+					distance = -2;
+					obj.style.backgroundColor=getRandomColor();
+				} else if(obj.offsetLeft < 0 ){
+					distance = 2;
+					obj.style.backgroundColor=getRandomColor();
+					
+				}
+				if(obj.offsetTop>=document.documentElement.clientHeight-width){//上下位置
+					distance2=-2;
+					obj.style.backgroundColor=getRandomColor();
+					
+				}else if(obj.offsetTop<=0){
+					distance2 = 2;
+					obj.style.backgroundColor=getRandomColor();
+					
+				}
+				obj.style.left = obj.offsetLeft + distance + "px";
+				obj.style.top = obj.offsetTop + distance2 + "px";
+			},10);
+		}
+	
+		//取随机颜色
+		function getRandomColor(){
+			var color="#";
+			for(var i=0;i<6;i++){
+				color+='0123456789abcdef'[Math.floor(Math.random()*16)]
+			}
+			return color;
+		}
+		
+	</script>
+</html>

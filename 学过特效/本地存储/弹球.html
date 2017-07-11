@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width:150px;
+				height:20px;
+				background:#333;
+				position: absolute;
+				top: 500px;
+				left: 500px;
+				cursor: pointer;
+			}
+			.box1{
+				width:30px;
+				height:30px;
+				border-radius: 50%;
+				background: orchid;
+				position: absolute;
+				top: 400px;
+				left: 300px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box1"></div>
+		<div class="box"></div>
+		
+		
+		
+		<script type="text/javascript">
+		var box=document.getElementsByClassName('box')[0];
+		var box1=document.getElementsByClassName('box1')[0];
+		var timer=null;
+		pull(box)
+		
+			function pull(obj){//被拖动元素
+				obj.onmousedown = function(ev) {
+					var ev = ev || window.event;
+					var disX = ev.clientX - obj.offsetLeft;//移动前，鼠标在div中的水平位置
+					document.onmousemove = function(ev) {//鼠标按下执行鼠标移动事件
+						var max=document.documentElement.clientWidth||document.body.clientWidth;
+						var l=ev.clientX - disX
+						if(l<=0){
+							l=0;
+						}
+						if(l>=max-obj.offsetWidth){
+							l=max-obj.offsetWidth;
+						}
+						obj.style.left = l+ 'px';//移动时，div的left值
+					};
+					document.onmouseup = function() {
+						document.onmousemove = null;//鼠标抬起时清空鼠标移动函数
+						document.onmouseup=null;
+					};
+					return false;
+				}
+			}
+			
+			flootBanner(box1,30,30,box)
+			function flootBanner(obj,width,height,obj1){//节点，宽，高
+				var distance = 10;
+				var distance2 = -10;
+	//			clearInterval(timer)
+				timer  = setInterval(function  () {
+					if (obj.offsetLeft > document.documentElement.clientWidth-width){//左右位置
+						distance = -10;
+						obj.style.backgroundColor=getRandomColor();
+					} else if(obj.offsetLeft < 0 ){
+						distance = 10;
+						obj.style.backgroundColor=getRandomColor();
+					}
+					if(obj.offsetTop<=0){
+						distance2 = 10;
+						obj.style.backgroundColor=getRandomColor();
+					}else if(obj.offsetTop>=document.documentElement.clientHeight-width){//上下位置
+						distance2=-10;
+						obj.style.backgroundColor=getRandomColor();
+					}
+					
+					if(test(obj, obj1)){
+						console.log('碰撞')
+						distance2*=-1;
+						obj.style.backgroundColor=getRandomColor();
+					}
+					obj.style.left = obj.offsetLeft + distance + "px";
+					obj.style.top = obj.offsetTop + distance2 + "px";
+				},30);
+			}
+			
+			
+			
+			//碰撞判断
+			
+			function test(r, b) {
+		        if (r.offsetLeft + r.offsetWidth < b.offsetLeft || r.offsetTop + r.offsetHeight < b.offsetTop || r.offsetLeft > b.offsetLeft + b.offsetWidth || r.offsetTop > b.offsetTop + b.offsetHeight) {
+		            return false;//以上没有相撞
+		        } else {
+		            return true;
+		        }
+		    }
+			
+			//取随机颜色
+			function getRandomColor(){
+				var color="#";
+				for(var i=0;i<6;i++){
+					color+='0123456789abcdef'[Math.floor(Math.random()*16)]
+				}
+				return color;
+			}
+			
+		</script>
+	</body>
+</html>

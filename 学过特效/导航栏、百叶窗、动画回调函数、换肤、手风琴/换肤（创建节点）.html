@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>换肤</title>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding: 0;
+			}
+			button{
+				width:200px;
+				height:40px;
+				border:none;
+				background:pink;
+				font-size:20px;
+				text-align: center;
+				line-height:40px;
+				color: blueviolet;
+				outline: 0 none;
+				position: absolute;
+				top: 10px;
+				left: 20px;
+				
+			}
+			#container{
+				width:1600px;
+				height:1000px;
+				margin:0 auto;
+				position:relative;
+				/*background: url(img/21.jpg);*/
+				background-size: 100% 100%;
+			}
+			.box{
+				
+				width:500px;
+				height:350px;
+				position:absolute;
+				top: 10px;
+				left: 250px;
+				display:none;
+			}
+			.box li{
+				list-style: none;
+				width:100px;
+				height:100px;
+				margin-top: 5px;
+				margin-right: 10px;
+				border:2px solid orangered;
+				float:left;
+				
+			}
+			.box img{
+				width:100%;
+				height:100%;
+			}
+			#cover{
+				width:100%;
+				height:100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			#cover img{
+				width:100%;
+				height:100%;
+			}
+			.content{
+				width:600px;
+				height:400px;
+				background:pink;
+				position: absolute;
+				top: 400px;
+				left: 200px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="cover">
+				<img src="img/21.jpg"/>
+			</div>
+			<button id="btn">换肤</button>
+			<ul class="box">
+				<li><img src="img/21.jpg"/></li>
+				<li><img src="img/22.jpg"/></li>
+				<li><img src="img/23.jpg"/></li>
+				<li><img src="img/24.jpg"/></li>
+				<li><img src="img/25.jpg"/></li>
+				<li><img src="img/26.jpg"/></li>
+				<li><img src="img/27.jpg"/></li>
+				<li><img src="img/28.jpg"/></li>
+				<li><img src="img/29.jpg"/></li>
+				<li><img src="img/31.jpg"/></li>
+			</ul>
+			
+			<div class="content">
+				床前明月光，疑是地上霜；举头望明月，低头思故乡。
+			</div>
+			
+				
+		<script type="text/javascript">
+			var oli=document.getElementsByTagName("li");
+			var con=document.getElementById("container");
+			var cover=document.getElementById("cover");
+			var btn=document.getElementById("btn");
+			var box=document.getElementsByClassName("box")[0];
+			var hide=true;
+//			点击显示或隐藏小图
+			btn.onclick=function(){
+				if(hide){
+					box.style.display="block";
+					hide=false;
+				}else{
+					box.style.display="none";
+					hide=true;
+				}
+			}
+//			设置cookie的封装函数
+			function setcookie(key, value, day) {
+				var oDate = new Date();
+				oDate.setDate(oDate.getDate() + day);
+				document.cookie = key + "=" + value + ";expires=" + oDate;
+			}
+//			获取cookie的封装函数
+			function getcookie(key) {
+				var arr = document.cookie.split("; ") //将获取到的转换成数组，cookie注意有空格
+				for(var i = 0; i < arr.length; i++) {
+					var arr1 = arr[i].split("=");//将数组按等号再分割数组
+					if(arr1[0] == key) {
+						return arr1[1];//返回结果
+					}
+				}
+				return ""
+			}
+			(function(){//命名空间
+				var coo="";
+				var b=document.createElement("img")//创建img节点
+				for(var i=0;i<oli.length;i++){
+					oli[i].onclick=function(){
+						var a=this.innerHTML;
+						var index=a.substring(a.indexOf("=")+2,a.indexOf(">")-1);
+						setcookie('user', index, 10)//设置cookie
+						coo=getcookie('user')//在点击事件里面获取cookie
+						b.setAttribute("src",coo)//添加src属性
+						cover.removeChild(cover.children[0])//首先删除原来的子节点
+						cover.appendChild(b)//在添加新的子节点
+					}
+				}
+				//在点击事件外面获取cookie,这里的变量在页面刷新后不会清除
+				coo=getcookie('user')//在外面获取cookie
+				b.setAttribute("src",coo)//添加src属性
+				cover.removeChild(cover.children[0])//首先删除原来的子节点
+				cover.appendChild(b)//再添加新的子节点
+			})()	
+		</script>	
+		</div>
+	</body>
+</html>

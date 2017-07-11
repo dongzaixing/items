@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>键盘码</title>
+		<style type="text/css">
+			#box{
+				position: absolute;
+				top: 20px;
+				left: 20px;
+				width:20px; 
+				height:20px;
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+	</body>
+	<script type="text/javascript">
+			var Top=0;
+			var Left=0;
+		document.onkeydown=function(ev){
+			var ev=ev||event;
+			console.log(ev.keyCode)
+			if(ev.keyCode==39){
+				Left+=10;
+				box.style.left=Left+'px';
+				console.log(Left)
+			}else if(ev.keyCode==40){
+				Top+=10;
+				box.style.top=Top+'px';
+				console.log(Top)
+			}else if(ev.keyCode==37){
+				Left-=10;
+				box.style.left=Left+'px';
+				console.log(Left)
+			}else if(ev.keyCode==38){
+				Top-=10;
+				console.log(Top)
+				box.style.top=Top+'px';
+			}
+//		console.log(ev)
+		}
+	</script>
+</html>

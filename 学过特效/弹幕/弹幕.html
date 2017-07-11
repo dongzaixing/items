@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>弹幕</title>
+		<style type="text/css">
+			#box{
+				width:600px;
+				height:500px;
+				border:1px solid blue;
+				margin: 20px auto;
+				position: relative;
+				overflow: hidden;
+				/*text-align: right;*/
+			}
+			#box2{
+				width:600px;
+				margin: 0 auto;
+			}
+			input{
+				height:30px;
+			}
+			#inp1{
+				width:300px;
+			}
+			#inp2{
+				width:100px;
+				border: none;
+				background:green;
+				font-size: 20px;
+			}
+			span{
+				width:100%;
+				height:20px;
+				line-height: 20px;
+				position: absolute;
+				top: 0;
+				left: 600px;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<div id="box2">
+			<input type="text" name="" id="inp1" value="" />
+			<input type="button" name="" id="inp2" value="提交"/>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		var box=document.getElementById("box");
+		var inp1=document.getElementById("inp1");
+		var inp2=document.getElementById("inp2");
+		var time=null;
+		inp2.onclick=function(){
+			if(inp1.value){
+				var arr=["blue","pink","yellow","orange","red","green","purple"]
+				var c=Math.floor(Math.random()*7)
+				var sp=document.createElement("span");//创建标签节点
+				var b=Math.floor(Math.random()*450);//获取随机数
+				sp.innerHTML=inp1.value;
+				
+				sp.style.top=b+"px";
+				sp.style.color=arr[c];
+				inp1.value="";
+				time=setInterval(run,10);
+				function run(){
+					box.appendChild(sp);
+					if(sp.offsetLeft<-600){
+						box.removeChild(sp);
+//						clearInterval(time)
+					}else{
+						sp.style.left=(sp.offsetLeft-1)+"px";
+						console.log(sp.offsetLeft);
+					}
+				}
+			}else{
+				alert("请输入内容")
+			}
+			
+
+			
+		}
+	</script>
+</html>

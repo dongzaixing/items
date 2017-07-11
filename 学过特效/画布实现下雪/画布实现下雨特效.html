@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>面向对象</title>
+		<style type="text/css">
+			body{
+				
+			}
+			.con{
+				width:100%;
+				height:3000px;
+				/*background: pink;*/
+				color: skyblue;
+			}
+			.container{
+				width:100%;
+				height:1200px;
+				/*background: #111111;*/
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: -999;
+				transform-style: preserve-3d;
+				perspective: 800px;
+				
+			}
+			#box{
+				position: absolute;
+				top: 0;
+				left: 0;
+				/*animation: ke 3s linear infinite;*/
+			}
+			.box1{
+				margin: 30px 0;
+				width:100%;
+				height:500px;
+				border: 1px solid orchid;
+				/*background: rgba(255,192,203,0.3);*/
+			}
+			@keyframes ke{
+				0%{
+					transform: translateZ(0);
+					
+				}
+				100%{
+					transform: translateZ(500px);
+					
+				}
+			}
+		
+		</style>
+	</head>
+	<body>
+		<!--面向过程：
+		面向对象：人：   电脑： 互联网： 对象具有的属性和方法，把个个对象的属性和方法结合起来又是一个对象。
+		改变坐标：-->
+		
+		<div class="container">
+			<canvas id="box"></canvas>
+		</div>
+		<div class="con">
+			<div class="box1">
+				<h2>滴水能把石穿透</h2>
+				<h2>滴水能把石穿透</h2>
+				<h2>滴水能把石穿透</h2>
+				
+				<h2>滴水能把石穿透</h2>
+			</div>
+			<div class="box1"></div>
+			<div class="box1"></div>
+			<div class="box1"></div>
+		</div>
+		<!--arc(x, y, radius, startAngle, endAngle, counterclockwise)-->
+	<script type="text/javascript">
+		var w=window.innerWidth;//获取浏览器窗口的宽高
+		var h=window.innerHeight;
+		var box=document.getElementById("box");
+		//设置画布的宽高
+		box.width=w;
+		box.height=h;
+		var cxt = box.getContext("2d");
+//		var img=new Image();
+//		img.src="img/22.jpg";
+//		cxt.drawImage(img,100,100);
+		
+		
+		var yudiNum=500;//雨滴的个数
+		var x,y,r,spex,spey;//雨滴的位置、半径、速度
+		var arr=[];//装载雨滴的数组
+		for(var i=0;i<yudiNum;i++){
+			
+		}
+		for(var i=0;i<yudiNum;i++){
+			arr.push({//给每个雨滴的数据
+				x:Math.random()*w,
+				y:Math.random()*h,
+				r:Math.random()*2+1,
+				spex:(Math.random()-0.5)*0.2,
+				spey:(Math.random()*0.1)*0.2
+			});
+			arr[i].color=getRandomColor();
+		};
+		//绘制雨滴
+		function draw(){
+			//清除画布
+			cxt.clearRect(0,0,w,h);
+			//绘制径向渐变背景
+			var grd=cxt.createRadialGradient(0,0,50,0,0,1500,0,0,w);
+			grd.addColorStop(0,"plum");
+			grd.addColorStop(0.2,"blue");
+			grd.addColorStop(0.5,"#333");
+			grd.addColorStop(1,"black");
+			cxt.fillStyle=grd;
+			cxt.fillRect(10,10,w,h);
+			
+			
+			
+			for(var i=0;i<yudiNum;i++){//通过for循环绘制500个
+				cxt.beginPath();//开始路径
+				var p=arr[i];
+				cxt.fillStyle=p.color;//画笔的颜色填充
+				cxt.moveTo(p.x,p.y);
+				cxt.arc(p.x,p.y,p.r,0,Math.PI*2);
+				cxt.closePath();//结束路径
+				cxt.fill();
+			}
+			down();
+			
+		}
+		draw();//绘制雪花
+		function down(){//雪花落下
+			for(var i=0;i<yudiNum;i++){
+				var p=arr[i];
+				p.x+=p.spex;
+				p.y+=p.spey;
+				if(p.x>w){
+					p.x=0;
+				}
+				if(p.y>h){
+					p.y=0;
+				}
+			}
+			
+		}
+		setInterval(draw,30)
+
+		function getRandomColor(){
+			var color="#";
+			for(var i=0;i<6;i++){
+				color+='0123456789abcdef'[Math.floor(Math.random()*16)]
+			}
+			return color;
+		}
+	</script>	
+	</body>
+</html>

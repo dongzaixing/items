@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>转码和解码</title>
+		<style type="text/css">
+			#box{
+				width:300px;
+				height:100px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+	<script type="text/javascript">
+		var HtmlUtil={
+//			转码
+			htmlEncode:function(html){
+				var temp=document.createElement("div");
+				(temp.textContent!=undefined)?(temp.textContent=html):(temp.innerText=html);
+				var output=temp.innerHTML;
+				temp=null;
+				return output;
+			},
+//			解码
+			htmlDecode:function(text){
+				var temp=document.createElement("div");
+				temp.innerHTML=text;
+				var output=temp.innerText||temp.textContent;
+				temp=null;
+				return output;
+			}
+		}
+		
+		var box=document.getElementById("box")
+//		转码
+		var html="<div>李浩华</div>";
+		var encodehtml=HtmlUtil.htmlEncode(html);
+		box.innerHTML+=encodehtml+"<br/>";//<div>李浩华</div>
+
+//		解码
+		var text="&lt李浩华&gt;"
+		var decodehtml=HtmlUtil.htmlDecode(text);
+		box.innerHTML+=decodehtml;//<李浩华>
+		
+		
+	</script>
+	</body>
+	
+</html>

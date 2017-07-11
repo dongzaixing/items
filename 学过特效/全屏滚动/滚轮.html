@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				width:200px;
+				height:200px;
+				border: 2px solid red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			
+		</div>
+		
+		<script type="text/javascript">
+			/*
+			   onmousewheel :  鼠标的滚轮事件
+			   		ie chrome  支持
+			   		ev.WheelDelta
+			   			值为负 ： 方向往下
+			 * 			值为正 ： 方向往上
+			 * 
+			 * DOMMouseScroll  : ff
+			 * 	    这能用绑定函数来绑定
+			 * 		ev.detail  ： ff用来判断滚动方向的，不兼容ie chrome
+			 * 			值为正 ： 方向往下
+			 * 			值为负 ： 方向往上
+			 * 		
+			 */
+			var box =document.getElementById('box');
+//			box.onmousewheel = function(){
+//				alert()
+//			}
+//			document.DOMMouseScroll = function(){
+//				alert();
+//			}
+//			box.addEventListener('DOMMouseScroll',function(){
+//				alert('这就对了');
+//				
+//			})
+			
+			addWheel(document,downFn,upFn);
+			function downFn(){
+				alert('wo滚动的是下')
+				
+			}
+			
+			function upFn(){
+				alert('wo滚动的是上')
+				
+			}
+			function addWheel(obj,down,up){
+				var user = window.navigator.userAgent.toLowerCase();
+				
+				if(user.indexOf('firefox') == -1){
+					
+					obj.addEventListener('mousewheel',fn);
+				}else{
+					obj.addEventListener('DOMMouseScroll',fn);
+				}
+				
+				function fn(ev){
+					var dis = true;
+					if(ev.wheelDelta){
+						dis = ev.wheelDelta>0?true:false;
+					}else{
+						dis = ev.detail<0?true:false;
+					}
+					if(dis){
+						up&&up();
+					}else{
+						down&&down();
+					}
+				}
+				return false;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.11.0.min.js">
+			
+		</script>
+		<style type="text/css">
+			#box{
+				width:200px;
+				
+			}
+			p{
+				margin: 0;
+				padding: 0;
+				width:200px;
+				height:30px;
+				line-height: 30px;
+				background: #ccc;
+				text-align: center;
+				
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				
+				perspective: 800px;
+				transform-style: preserve-3d;
+				
+				
+			}
+			li{
+				list-style: none;
+				height:30px;
+				line-height: 30px;
+				text-align: center;
+				margin: 10px 0;
+				background: pink;
+				display: none;
+				transform: rotateY(30deg);
+			}
+		</style>
+		
+	</head>
+	<body>
+		
+		
+		<div id="box">
+			<p>一级导航</p>
+			<ul>
+				<li>二级导航</li>
+				<li>二级导航</li>
+				<li>二级导航</li>
+				<li>二级导航</li>
+				<li>二级导航</li>
+				<li>二级导航</li>
+				<li>二级导航</li>
+				
+			</ul>
+		</div>
+		
+		
+		<script type="text/javascript">
+			$(function(){
+				$('p').hover(function(){
+					
+					
+					$('ul li').slideDown(1000,function(){
+						$(this).css({'transition':+$(this).index()+0.8+'s','transform': 'rotateY(0deg)'})
+//						alert($(this).index()+0.8)
+					})
+				})
+			})
+		</script>
+	</body>
+</html>

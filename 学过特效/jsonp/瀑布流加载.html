@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>瀑布流加载</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#oul{
+				width:1100px;
+				margin: 50px auto;
+				background: #eee;
+				overflow: hidden;
+				
+			}
+			
+			ul li{
+				list-style: none;
+				width:250px;
+				margin: 0 12.5px;
+				float: left;
+				background: #FFC0CB;
+			}
+			div{
+				box-sizing: border-box;
+				padding: 0 10px;
+				width:100%;
+				margin-bottom: 20px;
+				border: 1px solid skyblue;
+			}
+			p{
+				text-align: center;
+				word-break: break-word;
+			}
+			img{
+				border: none;
+				width:100%;
+				display: block;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+	</head>
+	<body>
+		<ul id="oul">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<script type="text/javascript">
+			var oli=document.getElementsByTagName('li');
+			var len=oli.length;
+			var page=1;
+			var onoff=true;
+			star();//初始化页面
+			window.onscroll=function(){
+				var vh=document.documentElement.clientHeight;//可视区高度
+				var liH=minLi().getBoundingClientRect().bottom;//最小高度的li的高度
+				if(liH<vh&&onoff==true){
+					onoff=false;
+					page++;
+					star();
+					console.log(page)
+				}
+			}
+			function star(){
+				var ajax=new XMLHttpRequest();
+				ajax.open('get','getPics.php?cpage='+page,true);
+				ajax.send()
+				ajax.onload=function(){
+					console.log(ajax.responseText);//服务代理返回的数据
+					var json=JSON.parse(ajax.responseText);
+					if(json.length==0){//图片加载完了就不再执行
+						console.log('图片加载完了')
+						return;
+					}
+					for(var i=0;i<json.length;i++){
+						var lis=minLi();
+						var box=document.createElement('div');
+						var img=document.createElement('img');
+						var p=document.createElement('p');
+						img.src=json[i].image;
+						img.style.border="none";
+						img.style.height=json[i].height*(230/json[i].width)+'px';
+						p.innerHTML=json[i].title;
+						box.appendChild(img);
+						box.appendChild(p);
+						lis.appendChild(box);
+					}
+					onoff=true;
+				}
+			}
+			
+			//获取最小的li
+			function minLi(){
+				var num=0;
+				var minHight=oli[num].offsetHeight;
+				for(var i=0;i<len;i++){
+					if(minHight>oli[i].offsetHeight){
+						minHight=oli[i].offsetHeight;
+						num=i;
+					}
+				}
+				return oli[num];//返回高度最小的元素
+			}
+		</script>
+		
+	</body>
+</html>

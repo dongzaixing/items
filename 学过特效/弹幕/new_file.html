@@ -1,0 +1,103 @@
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				
+			}	
+		</style>
+		
+	</head>
+	<body>
+		<div id="con">
+			<div id="sbox">
+				<div id="box">1</div>
+				<div id="box">2</div>
+				<div id="box">3</div>
+				<div id="box">4</div>
+				<div id="box">5</div>
+				<div id="box">6</div>
+			</div>
+		</div>
+	</body>
+</html>-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		div,input{
+			margin: 0px;
+			padding: 0px;
+		}
+		#xianshi{
+			width: 800px;
+			height: 500px;
+			border: 1px solid black;
+			margin: 0 auto;
+			position: relative;
+		}
+		#aa{
+			text-align: center;
+		}
+		#btn{
+			width: 150px;
+			height: 30px;
+			font-size: 20px;
+			border: none;
+		}
+		#shuru{
+			width: 640px;
+			height: 30px;
+			font-size: 20px;
+		}
+		p{
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			font-size: 20px;
+		}
+	</style>
+	<body>
+		<div id="xianshi"></div>
+		<div id="aa">
+			<input type="text" id="shuru" value="" />
+			<input type="button" id="btn" value="发送" onclick="fun()"/>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var message=document.getElementById("xianshi");
+		var oBtn=document.getElementById("btn");
+		var oTxt=document.getElementById("shuru");
+		var time=null;
+		function fun(){
+			var color=["blue","red","green","yellow","black","pink","aqua"]
+			var oCol=Math.floor(Math.random()*7);
+			var oTAll=Math.floor(Math.random()*460);
+			var p=document.createElement("p");
+			p.innerHTML=oTxt.value;
+			
+			p.style.top=oTAll+"px";
+			p.style.color=color[oCol];
+//			oTxt.value="";
+			time=setInterval(show,10);
+			function show(){
+				message.appendChild(p);
+				if(p.offsetLeft==0){
+//				clearInterval(time)
+//				p.style.display="none";
+				message.removeChild(p);
+			}else{
+				p.style.left=(p.offsetLeft-1)+"px";
+				console.log(p.offsetLeft)
+			}
+				
+			}
+			
+		}
+	</script>
+</html>

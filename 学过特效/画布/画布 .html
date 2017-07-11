@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>画布</title>
+	</head>
+	<body>
+		<input type="text" name="txt" id="txt" value="" />
+		<label>请选择背景</label>
+		<select name="">
+			<option value="1.png">1.png</option>
+			<option value="2.png">2.png</option>
+			<option value="3.png">3.png</option>
+			<option value="4.png">4.png</option>
+			<option value="5.png">5.png</option>
+			<option value="6.png">6.png</option>
+			<option value="7.png">7.png</option>
+		</select>
+		
+		
+	<script type="text/javascript">
+		var can=document.getElementById("canvas")
+		var txt=document.getElementById("tex")
+		var cxt=can.getContext("2d")
+		function draw(){
+			cxt.drawImage(oImg,0,0,100,100)
+		}
+//		新建新的图片对象
+		var oImg=new Image();
+//		监听图片是否加载完
+		oImg.onload=function(){
+			draw()
+		}
+		function draw(){
+			cxt.drawImage(oImg,0,0)
+//			设置颜色
+			cxt.fillStyle="red";
+			cxt.font="30px hychf";
+			cxt.fillText("开学季",100,100)
+		}
+		
+	</script>	
+	</body>
+</html>

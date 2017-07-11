@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html onselectstart="return false">
+	<head>
+		<meta charset="UTF-8">
+		<title>自写万花筒</title>
+		<style type="text/css">
+			body{
+				background-color: #66677c;
+				overflow:hidden;
+			}
+			.container{
+				width:600px;
+				height:600px;
+				margin: 0 auto;
+			}
+			#box{
+				width:120px;
+				height:180px;
+				border-radius: 10px;
+				position: relative;
+				margin: 300px auto;
+				transform-style: preserve-3d;
+				transform: perspective(800px) rotateX(-20deg) rotateY(0deg);
+				/*transform:perspective(800px) rotateX(-10deg) rotateY(0deg);*/
+			}
+			#box img{
+				width:100%;
+				height:100%;
+				position: absolute;
+				border-radius: 10px;
+				/*倒影*/
+				-webkit-box-reflect: below 30px linear-gradient(transparent 50%, blue 100%);
+			}
+			#p{
+				width: 1200px;
+				height: 1200px;
+				background: -webkit-radial-gradient(center center,600px 600px,rgba(255,255,255,.5),rgba(0,0,0,0));
+				position: absolute;
+				top:100%;left:50%;
+				margin-top: -600px;
+				margin-left: -600px;
+				border-radius:600px;
+				transform:rotateX(90deg);
+			}
+		</style>
+	</head>
+	<body>
+		
+			<div id="box">
+				<img src="img/1.jpg"/>
+				<img src="img/2.jpg"/>
+				<img src="img/3.jpg"/>
+				<img src="img/4.jpg"/>
+				<img src="img/5.jpg"/>
+				<img src="img/6.jpg"/>
+				<img src="img/a.jpg"/>
+				<img src="img/b.jpg"/>
+				<img src="img/c.jpg"/>
+				<img src="img/bc.jpg"/>
+				<p id="p"></p>
+			</div>
+	
+		<script type="text/javascript">
+		
+			var minX=0;
+			var minY=0;
+			var roX=-20;
+			var roY=0;
+			var time=null;
+		
+			var box=document.getElementById("box");
+			var Imgs=document.getElementsByTagName("img");
+			for(var i=0;i<Imgs.length;i++){
+				Imgs[i].style.transform="rotateY("+i*36+"deg) translateZ(350px)";
+				Imgs[i].style.ondragstart="return false";
+			}
+			
+			document.onmousedown=function(ev){
+				var ev=ev||event;
+				var x=ev.clientX;
+				var y=ev.clientY;
+				this.onmousemove=function(ev){
+					var ev=ev||event;
+					var nowX=ev.clientX;
+					var nowY=ev.clientY;
+					minX=nowX-x;
+					minY=nowY-y;
+					roX-=minY*0.1;//沿y轴旋转的角度
+					roY+=minX*0.2;//沿x轴转的角度
+					box.style.transform="perspective(800px) rotateX("+roX+"deg) rotateY("+roY+"deg)"
+					
+					//新的值用了之后就是就的值了
+					//最重点的就是这里
+					x=ev.clientX;
+					y=ev.clientY;
+				}
+				this.onmouseup=function(){
+					this.onmousemove=null;
+					this.onmouseup=null;
+					time=setInterval(function(){
+						minX*=0.95;
+						minY*=0.95;
+						roX-=minY*0.1;
+						roY+=minX*0.2;
+						box.style.transform="perspective(800px) rotateX("+roX+"deg) rotateY("+roY+"deg)"
+						if(Math.abs(minX)<0.1||Math.abs(minY)<0.1){
+							clearInterval(time);
+						}
+					},30)
+				}
+				return false;//阻止图片的点击默认事件
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>

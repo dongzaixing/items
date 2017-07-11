@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>克隆添加</title>
+		<script type="text/javascript" src="jquery-3.1.1.min.js">
+			
+		</script>
+		<style type="text/css">
+			select{
+				width:100px;
+				height:150px;
+				float: left;
+			}
+			button{
+				float: left;
+			}
+			#btn2{
+				position: absolute;
+				top: 135px;
+				left: 108px;
+			}
+		</style>
+	</head>
+	<body>
+		<select name="" id="selone" size="2">
+			<option value="">香蕉</option>
+			<option value="">苹果</option>
+			<option value="">雪梨</option>
+			<option value="">桃子</option>
+			<option value="">鲍鱼</option>
+		</select>
+		<button id="btn1">>></button>
+		<button id="btn2"><<</button>
+		<select name="" id="seltwo" size="2">
+			<option value=""></option>
+		</select>
+		
+		
+		<script type="text/javascript">
+			$('#btn1').click(function(){
+				$('#selone option:selected').remove().clone().appendTo($('#seltwo'))
+			})
+			$('#btn2').click(function(){
+				$('#seltwo option:selected').remove().clone().appendTo($('#selone'))
+			})
+		</script>
+	</body>
+</html>

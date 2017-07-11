@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body{
+				background: #333;
+			}
+			#can{
+				background: #fff;
+				cursor: pointer;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<canvas id="can">
+			<span id="" style="background: white;">
+				该浏览器不支持canvas标签
+			</span>
+		</canvas>
+		<button id="btn">清空写字板</button>
+	
+		<script type="text/javascript">
+			var btn=document.getElementById('btn');
+			var can=document.getElementById('can');
+			can.width=500;
+			can.height=400;
+			var ct=can.getContext('2d');
+			can.onmousedown=function(ev){
+				ct.clearRect(0,0,500,400)
+				var ev=ev||event;
+				var x=ev.clientX-can.offsetLeft;
+				var y=ev.clientY-can.offsetTop;
+				ct.beginPath();//少了这一步会导致画布不能清除
+				ct.moveTo(x,y);
+				
+				document.onmousemove=function(ev){
+					var ev=ev||event;
+					var x=ev.clientX-can.offsetLeft;
+					var y=ev.clientY-can.offsetTop;
+					ct.lineTo(x,y);
+					ct.lineWidth='5';
+					ct.stroke();
+				}
+				document.onmouseup=function(){
+					this.onmousemove=null;
+					this.onmouseup=null;
+					
+				}
+			}
+			
+			btn.addEventListener('click',function(){
+				ct.clearRect(0,0,500,400)
+			})
+		</script>
+	</body>
+</html>

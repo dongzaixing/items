@@ -1,0 +1,93 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+  <meta charset="utf-8">  
+  <title></title>  
+  <style type="text/css">
+  	
+  	.con{
+  		max-width:1000px;
+  		height:600px;
+  		background: #ccc;
+  		margin: 0 auto;
+  		display: -webkit-box;
+  		/*-webkit-box-orient: vertical;*/
+  		
+  	}
+  	.bar{
+  		width:200px;
+  		/*height:600px;*/
+  		background: green;
+  		/*-webkit-box-flex: 1;*/
+  		
+  	}
+  	.content{
+  		/*width:100px;*/
+  		/*height:600px;*/
+  		background: blue;
+  		-webkit-box-flex: 1;
+  	}
+  	.head{
+  		/*width:100px;*/
+  		/*height:600px;*/
+  		background: red;
+  		-webkit-box-flex: 1;
+  		
+  	}
+  </style>
+</head>  
+<body>  
+	<div class="con">
+		<div class="bar">1</div>
+		<div class="head">2</div>
+		<div class="content">3</div>
+	</div>
+	
+	
+<input type="text" placeholder="请选择需要预定的电影">  
+<button>提交</button>  
+<div class="box"></div>
+<script type="text/javascript" src="js/同步.js"></script>
+
+
+<script type="text/javascript">
+	var con=document.getElementsByClassName('con')[0];
+	var bar=document.getElementsByClassName('bar')[0];
+	var head=document.getElementsByClassName('head')[0];
+	var content=document.getElementsByClassName('content')[0];
+
+//alert()
+window.onresize=function(){
+	
+	if(getComputedStyle(con).width<='600px'){
+		con.style.webkitBoxOrient="vertical";
+		bar.style.width='100%';
+		bar.style.webkitBoxFlex='1';
+		console.log(getComputedStyle(con).width)
+	}
+}
+	
+		
+
+
+	//两个页面都要调用这个函数，实现不了同步
+//(function(D){  
+//  var val = D.getElementsByTagName("input")[0],  
+//    btn = D.getElementsByTagName("button")[0];  
+//    var box=document.getElementsByClassName('box')[0];
+//    
+//  btn.onclick = function(){  
+//    var value = val.value;  
+//    box.innerHTML=" newValue:" + value;
+//    if(!value) return;  
+//    localStorage.setItem("key", val.value);  
+//    val.value="";
+//  };  
+//  window.addEventListener("storage", function(e){  
+//    console.log(e);  
+//			  box.innerHTML=" newValue:" + e.newValue;  
+//  });  
+//})(document);  
+</script>
+</body>  
+</html>

@@ -1,0 +1,25 @@
+*{
+	margin:0;
+	padding:0;
+}
+#btn{
+	width:200px;
+	height:30px;
+	line-height: 30px;
+	text-align: center;
+	/*margin: 50px 0 0 100px;*/
+	border:none;
+	background: #CCCEF8;
+}
+span{
+	display:inline-block;
+	border:1px solid orange;
+	width:30px;
+	height:30px;
+	text-align: center;
+	line-height: 30px;
+	display: none;
+	float: left;
+	position: relative;
+	
+}

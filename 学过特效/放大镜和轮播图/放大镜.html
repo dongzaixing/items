@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>放大镜</title>
+		<style type="text/css">
+		body,html,div{
+			margin: 0;
+			padding: 0;
+		}
+			#con{
+				width:800px;
+				height: 420px;
+				/*border: 1px solid red;*/
+				/*background: palegoldenrod;*/
+				margin: 50px;
+			}
+			#sbox{
+				width:360px;
+				height:360px;
+				border: 1px solid blue;
+				position: relative;
+				float: left; 
+			}
+			#sbox img{
+				width:100%;
+				height:100%;
+			}
+			#move{
+				width:180px;
+				height:180px;
+				background: #CCCBBA;
+				position: absolute;
+				display: none;
+				top: 0px;
+				left: 0px;
+				opacity:.4;
+			}
+			#bbox{
+				width:420px;
+				height:420px;
+				border: 1px solid olive;
+				float: right;
+				overflow: hidden;
+				display: none;
+				position: relative;
+			}
+			#pic{
+				width:840px;
+				height:840px;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="con">
+			<div id="sbox">
+				<img src="img/3.jpg"/>
+				<div id="move"></div>
+			</div>
+			
+			<div id="bbox">
+				<img src="img/3.jpg" id="pic"/>	
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var con=document.getElementById("con");
+		var sbox=document.getElementById("sbox");//原图的div
+		var bbox=document.getElementById("bbox");//放大图的div
+		var pic=document.getElementById("pic");//放大图的图片
+		var move=document.getElementById("move");//小滑块
+		sbox.onmouseover=function(){//鼠标移入显示滑块和大图片
+			bbox.style.display="block";
+			move.style.display="block";
+		}
+		sbox.onmouseout=function(){//鼠标移出隐藏大图片和小滑块
+			bbox.style.display="none";
+			move.style.display="none";
+		}
+		sbox.onmousemove=function(ev){
+			var ev=ev||event;
+			var x=ev.clientX-con.offsetLeft;//获取鼠标当前位置减去最大的div距左边的，定位小滑块
+			var y=ev.clientY-con.offsetTop;//如果不减的话滑块的为止会向右偏移。
+			//小滑块自身宽度/2
+			var movew=move.offsetWidth/2;
+			//小滑块自身高度/2
+			var moveh=move.offsetHeight/2;
+			var xx=x-movew;//让鼠标位置在小滑块的中间
+			var yy=y-moveh;
+			var maxmovew=sbox.offsetWidth-move.offsetWidth;//小滑块最大移动距离
+			var maxmoveh=sbox.offsetHeight-move.offsetHeight;
+			
+	
+			if(xx<0){//如果当前距离小于0，强制让它等于0，不让小滑块跑到外面
+				xx=0;
+			}else if(xx>maxmovew){//如果小滑块当前距离大于最大移动距离，强制让它等于滑块的最大移动距离。
+				xx=maxmovew;//最大移动宽度
+			};
+			if(yy<0){
+				yy=0;
+			}else if(yy>maxmoveh){
+				yy=maxmoveh;//最大移动高度
+			};	
+			move.style.left=xx+"px";//对小滑块的定位
+			move.style.top=yy+"px";
+			
+			//放大图对应小图的比例，大图跟小图移动的比例是一样的，求出比例在用比例去放大图片。
+			//小滑块在原图内的移动的比例
+			var picx=xx/maxmovew;
+			var picy=yy/maxmoveh;
+			
+			var maxpicw=pic.offsetWidth-bbox.offsetWidth;//放大图片移动的最大距离
+			var maxpich=pic.offsetHeight-bbox.offsetHeight;
+			pic.style.left=-picx*maxpicw+"px";//给放大图定位
+			pic.style.top=-picy*maxpich+"px";
+		}
+		
+	</script>
+</html>

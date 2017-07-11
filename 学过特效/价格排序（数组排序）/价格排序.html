@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>价格排序</title>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js">
+			
+		</script>
+		<style type="text/css">
+			.con{
+				margin: 0 auto;
+			}
+			ul li{
+				list-style: none;	
+				width:80px;
+				height:40px;
+				float:left;
+				background:#ccc;
+				margin: 20px;
+			}
+			span{
+				width:30px;
+				height:30px;
+				border: 1px solid blue;
+				color: red;
+				font-size: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="con">
+			<button id="dianji">点击排列价格</button>
+			<ul>
+				<li><span>23</span></li>
+				<li><span>9</span></li>
+				<li><span>43</span></li>
+				<li><span>4</span></li>
+				<li><span>52</span></li>
+				<li><span>15</span></li>
+				<li><span>63</span></li>
+				<li><span>183</span></li>
+				<li><span>42</span></li>
+				<li><span>80</span></li>
+				<li><span>27</span></li>
+				<li><span>74</span></li>
+				<li><span>443</span></li>
+			</ul>
+		</div>
+		
+	<script type="text/javascript">
+		var oli=document.getElementsByTagName("li");
+		var dianji=document.getElementById('dianji');
+//		function paixu(){
+//			var arr1=[]
+//			//获取数组
+//			for(var i=0;i<oli.length;i++){
+//				arr1.push(oli[i].children[0].innerText)
+//			}
+//			//数组sort排序
+//			function ab(a,b){
+//				return b-a;
+//			}
+//			arr1.sort(ab)
+//			//将排序后的数组放回去
+//			for(var i=0;i<arr1.length;i++){
+//				oli[i].children[0].innerText=arr1[i]
+//			}
+//		}
+//		dianji.onclick=function(){
+//			paixu()//调用函数
+//		}
+		
+		function paixu2(){
+			//获取数组
+			var arr1=[]
+			for(var i=0;i<oli.length;i++){
+				arr1.push(oli[i].children[0].innerText)
+			}
+			//数组冒泡排序
+			for(var i = 0; i < arr1.length - 1; i++) {
+				for(var j = 0; j < arr1.length - 1 - i; j++) {
+					if(arr1[j] > arr1[j + 1]) {
+						var small = arr1[j];
+						arr1[j] = arr1[j + 1];
+						arr1[j + 1] = small;
+					}
+				}
+			}
+			//排序后把价格放回去
+			for(var i=0;i<arr1.length;i++){
+				oli[i].children[0].innerText=arr1[i]
+			}
+		}
+		dianji.onclick=function(){
+			paixu2()//调用函数
+		}
+
+		
+		
+		
+		
+//		求最值
+//		alert(arr1)
+//		var lar=arr1[0]
+//		for(var i=0;i<arr1.length;i++){
+//			if(lar<arr1[i]){
+//				lar=arr1[i];
+//			}
+//		}
+//		alert(lar)
+//		console.log(arr1)
+//		var arr2=[2,3,4,5,2,6,8]
+//		arr2.push(3)
+//		alert(arr2)
+//		console.log(arr1)
+	
+		
+	</script>	
+	</body>
+</html>

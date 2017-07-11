@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="box">123</div>
+		
+		<input type="button" name="btn" id="btn" value="下载" />
+		<a href="post_file.php">下载</a>
+		<script type="text/javascript">
+			var btn = document.getElementById('btn');
+			var box = document.getElementById('box');
+			btn.onclick = function(){				
+				var ajax = new XMLHttpRequest();
+				ajax.open('get','uploads/1.txt',true);
+				ajax.send();
+				ajax.onprogress = function(ev){  // 相当于开了一个定时器，每隔一段时间检测一次 
+					console.log(ev)
+					// ev.total  要下载的数据大小
+					//ev.loaded  已结下载的多少
+				}
+				ajax.onload = function(){
+					console.log(ajax.responseText);//下载到的资源
+				}
+				
+			}
+			
+			
+		</script>
+	</body>
+</html>

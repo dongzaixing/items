@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			ul li{
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<button>点击</button>
+		<ul id="oul">
+			
+		</ul>
+		
+		
+		
+		
+		<script type="text/javascript">
+		
+			function newAjax(method,path,fn){
+				//创建ajax对象
+				if(window.XMLHttpRequest){
+					var xhr=new XMLHttpRequest();
+				}else{
+					var xhr=new ActiveXObject("microsoft.XMLHTTP");
+				}
+				//连接服务器
+				xhr.open(method,path,true);
+				//发送请求
+				xhr.send();
+				//接受响应
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4){
+						if(xhr.status==200){
+							fn&&fn(xhr.responseText);
+						}else{
+							alert("错误代号："+xhr.status);
+						}
+					}
+				}
+			}
+			newAjax("get","php.php",function(a){
+					alert(a);//参数的返回调
+				})
+		
+		
+			btn=document.getElementsByTagName("button")[0];
+			
+//			btn.onclick=function(){
+//				//1创建ajax对象
+//				if(window.XMLHttpRequest){
+//					var xhr=new XMLHttpRequest();
+//				}else{
+//					new ActiveXObject("microsoft.XMLHTTP");
+//				}
+//				//2连接服务器open(方法，文件名，是否异步)；其中方法分为get和post,问号后面的内容主要是阻止缓存。
+//				xhr.open("get","php.php?t="+new Date().getTime(),true);
+//				//3发送请求
+//				xhr.send()
+//				//4接受返回
+//				xhr.onreadystatechange=function(){
+//					//xhr.readyState//浏览器进行到哪一步了
+//					/*0:未初始化,还没调用open方法
+//					1:载入,已调用send方法,正在发送请求
+//					2:载入完成,send方法完成,已接受到全部内容
+//					3:解析,正在解析响应内容
+//					4:完成,响应内容完成,可以在客户端调用了*/
+//					if(xhr.readyState==4){//状态值，表示读取完成
+//						if(xhr.status==200){//状态码，表示成功
+//							alert(xhr.responseText)
+//						}else{
+//							alert(xhr.status)
+//						}
+//					}
+//				}
+//			}
+		
+		
+		
+			var oul=document.getElementById("oul");
+			//创建xml对象
+			var xhr=new XMLHttpRequest();
+			xhr.open('get','php.php',true);//准备发送请求
+			xhr.send(null);//get不需要提交数据
+//			alert(xhr.responseText);
+//			xhr.status//响应状态
+//			xhr.statusText//响应状态信息
+			xhr.onreadystatechange=function(){
+//				alert(xhr.readyState);//2,3,4
+				if(xhr.readyState==4){
+					if(xhr.status==200){
+						var arr=eval(xhr.responseText)
+						for(var i=0;i<arr.length;i++){
+							var oli=document.createElement("li");
+							oli.innerHTML="用户名：<trong>"+arr[i].user+"</strong>密码：<span>"+arr[i].pass+"</span>"
+							oul.appendChild(oli)
+						}
+//						alert(eval(xhr.responseText).length)
+					}else{
+						alert("获取数据错误！错误代号："+xhr.status+"; 错误信息："+xhr.statusText)
+					}
+				}
+			}
+			
+			
+			
+			
+			
+//			
+//			document.addEventListener('click',function(){
+//				alert(xhr.responseText);
+//			})
+		</script>
+	</body>
+</html>

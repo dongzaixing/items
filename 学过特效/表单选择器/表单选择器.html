@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>表单选择器</title>
+		<style type="text/css">
+			
+		</style>
+		<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+	</head>
+	<body>
+		<form action="" method="post">
+			
+			<input type="text" name="user" value="提交"/>
+			<input type="password" name="pass" value="123"/>
+			<textarea name="" rows="" cols=""></textarea>
+			<select name="">
+				<option value="">籍贯</option>
+				<option value="">籍贯1</option>
+				<option value="">籍贯2</option>
+				<option value="">籍贯3</option>
+			</select>
+			<button>提交按钮</button>
+			<input type="radio" name="zg" id="" value="中国" />中国
+			<input type="radio" name="jnd" id="" value="加拿大" />加拿大
+			<input type="radio" name="mlxy" id="" value="马来西亚" />马来西亚
+			<input type="checkbox" name="" id="" value="" />
+		</form>
+	<script type="text/javascript">
+		$(function(){
+			//表单选择器要选择指定的标签是，是按照冒号加上type的类型去选择的，
+			//例如：:radio、:submit、:checkek，当有多个同样的标签的时候我们还要用过滤器
+			//进行过滤选择。
+//			alert($('input').length)
+//			alert($('input[name=pass]').val())
+//			alert($(':input').length);//选择form里面所有的标签
+//			alert($(':text').length);//选择所有的text标签
+//			alert($(':password').length)//选择所有的password标签
+//			alert($(':radio[name=jnd]').val())//选择所name为jnd的radio标签
+//			alert($(':password').length)//选择所有的password标签	
+		})
+	</script>	
+		
+	</body>
+</html>

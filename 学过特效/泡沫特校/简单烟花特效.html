@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body style="background: black;">
+	</body>
+	<script type="text/javascript">
+		document.onclick=function(ev){
+			var x=event.clientX;
+			var y=event.clientY;
+			var adiv=[];
+//			var sdiv=null;
+//			var i=0;
+			
+			
+			
+			
+			var odiv=document.createElement("div");
+			odiv.style.width="3px";
+			odiv.style.height="30px";
+			odiv.style.background="red";
+			odiv.style.position="absolute";
+			odiv.style.left=x +"px";
+			odiv.style.top=document.documentElement.clientHeight+"px";
+			document.body.appendChild(odiv);
+			
+			var t =setInterval(function(){
+				if (odiv.offsetTop<=y) {
+					clearInterval(t);
+					document.body.removeChild(odiv);
+					fun();
+					
+				}
+				
+					odiv.style.top=odiv.offsetTop-30+"px"
+			
+//     			console.log(odiv.offsetTop<=y)
+					
+			},30)
+			
+			function fun(){
+//				var sdiv=null;
+				for (var i=0;i<=50;i++) {
+					var sdiv=document.createElement("div");
+					sdiv.style.width="3px";
+					sdiv.style.height="3px";
+					sdiv.style.background="red";
+//					sdiv.style.background='#'+Math.ceil(Math.random()*0xEFFFFF+0x0FFFFF).toString(16);
+					sdiv.style.position="absolute";
+					sdiv.style.left=x +"px";
+					sdiv.style.top=y+"px";
+					
+					sdiv.speedX=Math.random()*40-20;   //x轴 的移动速度
+					sdiv.speedY=Math.random()*40-20;
+					
+//					var a=Math.random()*360;
+//          //oDiv.speedX=Math.random()*40-20;
+//          //oDiv.speedY=Math.random()*40-20;
+//        			sdiv.speedX=Math.sin(a*180/Math.PI)*20*Math.random();
+//        			sdiv.speedY=Math.cos(a*180/Math.PI)*20*Math.random();
+					
+					document.body.appendChild(sdiv)
+					adiv.push(sdiv)
+//					console.log(adiv.push(sdiv))
+				}
+			}
+			
+			setInterval(doMove, 30);
+    function doMove()
+    {
+        for(i=0;i<adiv.length;i++)
+        {
+            adiv[i].style.left=adiv[i].offsetLeft+adiv[i].speedX+'px';
+            adiv[i].style.top=adiv[i].offsetTop+adiv[i].speedY+'px';
+            adiv[i].speedY+=1;
+            if(adiv[i].offsetLeft<0 || adiv[i].offsetLeft>document.documentElement.clientWidth 
+            	|| adiv[i].offsetTop<0 || adiv[i].offsetTop>document.documentElement.clientHeight)
+            {
+                document.body.removeChild(adiv[i]);
+                aDiv.splice(i, 1);
+            }
+        }
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+	</script>
+</html>

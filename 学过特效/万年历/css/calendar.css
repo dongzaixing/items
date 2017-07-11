@@ -1,0 +1,69 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	padding: 50px;
+	color: #F3F8FD;
+}
+#box{
+	width:400px;
+	height:600px;
+	padding: 30px;
+	background: #2B2B2B;
+	margin: 0 auto;
+	box-shadow: 5px 5px 5px #333;
+}
+
+h3{
+	font-size: 35px;
+}
+h5{
+	font-size: 18px;
+	color: blueviolet;
+	margin: 20px 0;
+}
+.yearM{
+	font-size: 20px;
+}
+.yearM p{
+	float: right;
+}
+.yearM .arrow{
+	padding: 0 10px;
+}
+.con{
+	width:100%;
+	height:470px;
+	padding: 20px 20px;
+	box-sizing: border-box;
+	/*background: lightskyblue;*/
+}
+.date{
+	font-size: 20px;
+	text-align: center;
+}
+.date span{
+	display: inline-block;
+	width:51px;
+	height: 55px;
+}
+ul li{
+	font-size: 22px;
+	list-style: none;
+	display: inline-block;
+	width:51px;
+	height: 55px;
+	text-align: center;
+	line-height: 55px;
+}
+li:hover{
+	background: springgreen;
+}
+.hGray{
+	opacity: .3;
+}
+.bGray{
+	opacity: .3;
+}

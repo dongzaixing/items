@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				background: #ccc;
+			}
+			#box{
+				width:800px;
+				height:600px;
+				border: 2px solid orchid;
+				margin: 0 auto;
+				position: relative;
+			}
+		
+		
+			img{
+				width:300px;
+				height:200px;
+				border: 5px solid skyblue;
+				position: absolute;
+			}
+			img:nth-child(1){
+				top: 0;
+				left: 0px;
+				z-index: 1;
+			}
+			img:nth-child(2){
+				top: 100px;
+				left: 50px;
+				z-index: 2;
+				
+			}
+			img:nth-child(3){
+				top: 200px;
+				left: 100px;
+				z-index: 3;
+				
+			}
+			img:nth-child(4){
+				top: 350px;
+				left: 250px;
+				z-index: 4;
+				
+			}
+			img:nth-child(5){
+				top: 200px;
+				left: 400px;
+				z-index: 3;
+				
+			}
+			img:nth-child(6){
+				top: 100px;
+				left: 450px;
+				z-index: 2;
+				
+			}
+			img:nth-child(7){
+				top: 0;
+				left:500px;
+				z-index: 1;
+				
+			}
+			
+		
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<img src="img/22.jpg"/>
+			<img src="img/23.jpg"/>
+			<img src="img/24.jpg"/>
+			<img title="aa" src="img/25.jpg"/>
+			<img src="img/26.jpg"/>
+			<img src="img/27.jpg"/>
+			<img src="img/26.jpg"/>
+		</div>
+		
+		
+		
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>	
+	<script type="text/javascript">
+		$(function(){
+			$('img').click(function(){
+				$('img[title=aa]').stop(true,true);
+				$(this).stop(true,true);
+				var zIndex1=$(this).css('z-index')
+				var top1=$(this).position().top;
+				var left1=$(this).position().left;
+//				console.log(zIndex1)
+//				alert($('img[title=top]').css('z-index'));
+				
+				var zIndex2=$('img[title=aa]').css('z-index');
+				var top2=$('img[title=aa]').position().top;
+				var left2=$('img[title=aa]').position().left;
+				console.log(zIndex2)
+				$('img[title=aa]').animate({'left':left1,'top':top1},1000).css({'z-index':zIndex1}).removeAttr('title');
+				$(this).animate({'left':left2,'top':top2},1000).css({'z-index':zIndex2}).attr({'title':'aa'});
+				
+				
+			})
+			
+		})
+	</script>
+	</body>
+</html>

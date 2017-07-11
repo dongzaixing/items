@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8" />
+<title>韩雪冬网站效果</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+<script>
+window.onload = function (){
+
+    }
+</script>
+</head>
+
+<body>
+<embed src="skyCity.mp3" width="0" height="0"></embed>
+
+<div id="automatic">
+    <div id="ico1"></div>
+	<div class="prev_div" id="prev">
+        <span class="ico"></span>
+        <span class="txt"></span>
+    </div>
+    <div id="ico2"></div>
+	<div class="next_div" id="next">
+        <span class="ico"></span>
+        <span class="txt"></span>
+    </div>
+	<div class="line"></div>
+    <ul id="list">
+        <li class="pos_0"><a href="#"><img src="images/21.jpg" width="100" /></a></li>
+        <li class="pos_1"><a href="#"><img src="images/22.jpg" width="270" /></a></li>
+        <li class="pos_2"><a href="#"><img src="images/23.jpg" width="510" /></a></li>
+        <li class="pos_3"><a href="#"><img src="images/24.jpg" width="680" /></a></li>
+        <li class="pos_4"><a href="#"><img src="images/25.jpg" width="510" /></a></li>
+        <li class="pos_5"><a href="#"><img src="images/26.jpg" width="270" /></a></li>
+        <li class="pos_6"><a href="#"><img src="images/27.jpg" width="270" /></a></li>
+        <!--<li class="pos_6"><a href="#"><img src="images/7.jpg" width="270" /></a></li>-->
+    </ul>
+
+</div>
+<p id="footer"></p>
+	<script type="text/javascript" src="js/tools.js"></script>
+	
+	<script>
+		var oli=document.querySelectorAll('li');
+		var prve=document.querySelector('#prev');
+		var next=document.querySelector('#next');
+		var arr=[];
+		var time;
+		var Click=false;//设置是否点击过按钮的开关
+		for(var i=0;i<oli.length;i++){//用for循环去获取每一个li的相关信息
+			arr[i]={
+				'left':oli[i].offsetLeft,
+				'top':oli[i].offsetTop,
+				'width':css(oli[i],'width'),
+				'height':css(oli[i],'height'),
+				'opacity':css(oli[i],'opacity'),
+				'zIndex':css(oli[i],'zIndex')
+			}
+		}
+		time=setInterval(function(){//自动轮播
+			arr.unshift(arr.pop());
+			run();
+		},2500)
+		//后退
+		prve.onclick=function(){
+			clearInterval(time);
+			Click=true;
+			arr.unshift(arr.pop());
+			run();
+			prev.onmouseout=function(){
+				if(Click==true){//鼠标移出时判断是否点击过按钮
+					time=setInterval(function(){//如果是,就调用计时器
+						arr.unshift(arr.pop());
+						run();
+					},2500)
+					Click=false;
+				}
+			}
+		}
+		//前进
+		next.onclick=function(){
+			clearInterval(time);
+			Click=true;
+			arr.push(arr.shift());
+			run();
+			next.onmouseout=function(){
+				if(Click==true){//鼠标移出时判断是否点击过按钮
+					time=setInterval(function(){//如果是,就调用计时器
+						arr.push(arr.shift());
+						run();
+					},2500)
+					Click=false;
+				}
+			}
+		}
+		//封装函数
+		function run(){
+			for(var i=0;i<arr.length;i++){
+				var img=oli[i].getElementsByTagName("img")[0];
+				var int={//创建对象,这个对象是用来给Mmove函数当参数的
+					'element':oli[i],//运动对象
+					'target':{//目标值
+						'left':arr[i].left,
+						'top':arr[i].top,
+						'width':arr[i].width,
+						'height':arr[i].height,
+						'opacity':arr[i].opacity
+					},
+					'time':500,//时间
+					'type':'linear'//运动类型
+				}
+				Mmove(int);//调用运动函数
+				oli[i].style.zIndex=arr[i].zIndex;//改变层高
+				var int2={//改变图片的对象参数
+					'element':img,//运动对象
+					'target':{//运动对象的目标值
+						'width':arr[i].width,
+						'height':arr[i].height,
+						'left':arr[i].left,
+						'top':arr[i].top
+					},
+					'time':500,//运动时间
+					'type':'linear'//运动类型
+				}
+				Mmove(int2);//调用运动函数
+			}
+		}
+	</script>
+</body>
+</html>

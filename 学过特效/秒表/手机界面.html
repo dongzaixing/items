@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>手机界面</title>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<style type="text/css">
+			.container{
+				position: absolute;
+				top: 0;
+				right: 310px;
+			}
+			.cont{
+				position: absolute;
+				top: 0;
+				right: 630px;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<img src="img/pho1.png"/>
+		</div>
+		<div class="cont">
+			<img src="img/pho2.png"/>
+		</div>
+	<script type="text/javascript">
+		var time=null;
+		$(function(){
+			$('.container').hover(function(){
+				$('.cont').css({'display':'block'})
+			},function(){
+				time=setTimeout(function(){
+					$('.cont').css({'display':'none'})
+				},1000)
+			})
+			$('.cont').hover(function(){
+				clearTimeout(time)
+				$('.cont').css({'display':'block'})
+			},function(){
+				time=setTimeout(function(){
+					$('.cont').css({'display':'none'})
+				},500)
+			})
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		})
+	</script>
+	
+	</body>
+</html>
